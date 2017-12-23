@@ -23,6 +23,7 @@ var simpleReplies =  {
     "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code")
 }
 
+//Complex replies call functions
 var complexReplies = {
     "help": new Reply(sendCommandList, "Shows a list of commands"),
     "echo": new Reply(sendEcho, "Echoes the first argument")
@@ -50,12 +51,17 @@ function sendCommandList(message, args)
 {
     let commands = "__**List of commands:**__\n";
 
-    for (rep in complexReplies) {
-        commands = commands.concat("\n>" + rep + " - " + complexReplies[rep].description);
+    function concat(rep, dict)
+    {
+        commands = commands.concat("\n>" + rep + " - " + dict[rep].description);
     }
 
+    for (rep in complexReplies) {
+        concat(rep, complexReplies);
+    } 
+
     for (rep in simpleReplies) {
-        commands = commands.concat("\n>" + rep + " - " + simpleReplies[rep].description);
+        concat(rep, simpleReplies);
     }
 
     send(message, commands);
@@ -63,9 +69,9 @@ function sendCommandList(message, args)
 
 function sendEcho(message, args)
 {
-    if(args.length){
+    if (args.length) {
         send(message, args.join(' '));
-    }else{
+    } else {
         send(message, "You didn't give me anything to echo :(");
     }
 }
