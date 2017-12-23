@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 const Config  = require('./config');
+const Reply   = require('./bot_replies');
 
-const client = new Discord.Client();
-const loginToken = Config.getToken();
+const client        = new Discord.Client();
+const loginToken    = Config.getToken();
+const tryReply      = Reply.tryReply;
 
 
 client.on('ready', () => 
@@ -13,27 +15,13 @@ client.on('ready', () =>
 // Create an event listener for messages
 client.on('message', message => 
 {
-    if (message.author.id === "394055022436155392")
+    if (message.author.id === client.user.id)
     {
+        //Prevent bot replying to itself
         return;
     }
-    if (message.content === 'ping') 
-    {
-        message.channel.send('pong');
-    }
-  
-    if (message.content === 'pong') 
-    {
-        message.channel.send('ping');
-    }
-    /*
-    if (message.author.id == "115025985405059076") 
-    {
-        var thinking = client.emojis.find("name", "thinking");
-        message.react(thinking.id);
-    }
-    */
     
+    tryReply(message, message.content);
 });
 
 // Log our bot in
