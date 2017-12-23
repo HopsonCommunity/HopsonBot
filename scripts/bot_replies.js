@@ -9,15 +9,22 @@ module.exports =
     }
 }
 
+var simpleReplies = {
+    "ping": "pong",
+    "pong": "ping",
+    "source": "You can find my source code here: https://github.com/HopsonCommunity/HopsonBot!"
+};
+
 function reply(message, content) 
 {
-    if (content === 'ping') 
+    content = content.toLowerCase();
+    if (content in simpleReplies)
     {
-        message.channel.send('pong');
+        send(message, simpleReplies[content]);
     }
-    
-    if (content === 'pong') 
-    {
-        message.channel.send('ping');
-    } 
+}
+
+function send(msg, text)
+{
+    msg.channel.send(text);
 }
