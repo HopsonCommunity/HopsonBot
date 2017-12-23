@@ -10,9 +10,7 @@ module.exports =
 }
 
 var simpleReplies = {
-    "ping": "pong",
-    "pong": "ping",
-    "source": "You can find my source code here: https://github.com/HopsonCommunity/HopsonBot!"
+    "source": "You can find my source code here: https://github.com/HopsonCommunity/HopsonBot!",
 };
 
 function reply(message, content) 
@@ -22,9 +20,27 @@ function reply(message, content)
     {
         send(message, simpleReplies[content]);
     }
+    else 
+    {
+        if (content == "help")
+        {
+            sendCommandList(message);
+        }
+    }
 }
 
-function send(msg, text)
+function send(message, text)
 {
-    msg.channel.send(text);
+    message.channel.send(text);
+}
+
+function sendCommandList(message)
+{
+    let commands = "List of commands:";
+    for (reply in simpleReplies)
+    {
+        commands = commands.concat("\n>" + reply);
+        console.log(reply);
+    }
+    send(message, commands);
 }
