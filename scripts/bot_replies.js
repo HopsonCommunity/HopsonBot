@@ -37,10 +37,10 @@ function send(message, text)
 function sendCommandList(message)
 {
     let commands = "List of commands:";
-    for (reply in simpleReplies)
+    for (rep in simpleReplies)
     {
-        commands = commands.concat("\n>" + reply);
-        console.log(reply);
+        commands = commands.concat("\n>" + rep);
+        console.log(rep);
     }
     send(message, commands);
 }
