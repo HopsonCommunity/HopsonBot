@@ -26,7 +26,8 @@ var simpleReplies =  {
 //Complex replies call functions
 var complexReplies = {
     "help": new Reply(sendCommandList, "Shows a list of commands"),
-    "echo": new Reply(sendEcho, "Echoes the first argument")
+    "echo": new Reply(sendEcho, "Echoes the first argument"),
+    "ping": new Reply(sendPing, "Sends the current ping")
 }
 
 //Tries to reply to a message
@@ -74,6 +75,13 @@ function sendEcho(message, args)
     } else {
         send(message, "You didn't give me anything to echo :(");
     }
+}
+
+function sendPing(message, args)
+{
+    let ping = message.client.ping;
+    let output = "Ping: " + ping.toString();
+    send(message, output);
 }
 
 function send(message, text)
