@@ -24,23 +24,29 @@ var simpleReplies =  {
 }
 
 var complexReplies = {
-    "help": new Reply(sendCommandList, "Shows a list of commands")
+    "help": new Reply(sendCommandList, "Shows a list of commands"),
+    "echo": new Reply(sendEcho, "Echoes the first argument")
 }
 
 //Tries to reply to a message
 function reply(message, content) 
 {
-    content = content.toLowerCase();
-    if (content in simpleReplies) {
-        send(message, simpleReplies[content].rep);
+    content = content.split(" ");
+    command = content[0].toLowerCase();
+    args = content.splice(1);
+
+    console.log(command, args);
+
+    if (command in simpleReplies) {
+        send(message, simpleReplies[command].rep);
     }
-    else if (content in complexReplies)  {
-        complexReplies[content].rep(message);
+    else if (command in complexReplies)  {
+        complexReplies[command].rep(message, args);
     }
 }
 
 //Sends the list of commands
-function sendCommandList(message)
+function sendCommandList(message, args)
 {
     let commands = "__**List of commands:**__\n";
 
@@ -53,6 +59,15 @@ function sendCommandList(message)
     }
 
     send(message, commands);
+}
+
+function sendEcho(message, args)
+{
+    if(args.length){
+        send(message, args.join(' '));
+    }else{
+        send(message, "You didn't give me anything to echo :(");
+    }
 }
 
 function send(message, text)
