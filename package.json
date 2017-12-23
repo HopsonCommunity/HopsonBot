@@ -1,0 +1,23 @@
+{
+  "name": "hopsonbot",
+  "version": "1.0.0",
+  "description": "Bot for my Discord community server.",
+  "main": "scripts/bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node scripts/bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HopsonCommunity/HopsonBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HopsonCommunity/HopsonBot/issues"
+  },
+  "homepage": "https://github.com/HopsonCommunity/HopsonBot#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}
