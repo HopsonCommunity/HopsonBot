@@ -25,9 +25,9 @@ var simpleReplies =  {
 
 //Complex replies call functions
 var complexReplies = {
-    "help":     new Reply (sendCommandList, "Shows a list of commands"),
-    "echo":     new Reply (sendEcho,        "Echoes the first argument"),
-    "ping":     new Reply (sendPing,        "Sends the current ping"),
+    "help":     new Reply (sendCommandList,     "Shows a list of commands"),
+    "echo":     new Reply (sendEcho,            "Echoes the first argument"),
+    "ping":     new Reply (sendPing,            "Sends the current ping"),
 }
 
 //Tries to reply to a message
@@ -36,14 +36,19 @@ function reply(message, content)
     content = content.split(" ");
     command = content[0].toLowerCase();
     args = content.splice(1);
-
-    console.log(command, args);
+    let isCommand = false;
 
     if (command in simpleReplies) {
         send(message, simpleReplies[command].rep);
+        isCommand = true;
     }
     else if (command in complexReplies)  {
         complexReplies[command].rep(message, args);
+        isCommand = true;
+    }
+
+    if (isCommand) {
+
     }
 }
 
@@ -81,6 +86,7 @@ function sendPing(message, args)
 {
     send(message, "Ping: " + message.client.ping.toString());
 }
+
 
 function send(message, text)
 {
