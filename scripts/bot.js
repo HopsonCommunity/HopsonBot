@@ -15,8 +15,7 @@ client.on('ready', () =>
 // Create an event listener for messages
 client.on('message', message => 
 {
-    if (message.author.id === client.user.id)
-    {
+    if (message.author.id === client.user.id) {
         //Prevent bot replying to itself
         return;
     }

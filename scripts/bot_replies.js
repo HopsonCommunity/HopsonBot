@@ -2,8 +2,7 @@ module.exports =
 {
     tryReply : function(message, content)
     {
-        if (content[0] === ">") 
-        {
+        if (content[0] === ">")  {
             reply(message, content.slice(1))
         }
     }
@@ -12,8 +11,7 @@ module.exports =
 //Simple "struct" for replying to messages
 class Reply
 {
-    constructor(rep, description) 
-    {
+    constructor(rep, description)  {
         this.rep = rep;
         this.description = description;
     }
@@ -21,13 +19,11 @@ class Reply
 
 
 //Dictionary of the different replies
-var simpleReplies = 
-{
+var simpleReplies =  {
     "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code")
 }
 
-var complexReplies = 
-{
+var complexReplies = {
     "help": new Reply(sendCommandList, "Shows a list of commands")
 }
 
@@ -35,12 +31,10 @@ var complexReplies =
 function reply(message, content) 
 {
     content = content.toLowerCase();
-    if (content in simpleReplies)
-    {
+    if (content in simpleReplies) {
         send(message, simpleReplies[content].rep);
     }
-    else if (content in complexReplies)
-    {
+    else if (content in complexReplies)  {
         complexReplies[content].rep(message);
     }
 }
@@ -50,13 +44,11 @@ function sendCommandList(message)
 {
     let commands = "__**List of commands:**__\n";
 
-    for (rep in complexReplies)
-    {
+    for (rep in complexReplies) {
         commands = commands.concat("\n>" + rep + " - " + complexReplies[rep].description);
     }
 
-    for (rep in simpleReplies)
-    {
+    for (rep in simpleReplies) {
         commands = commands.concat("\n>" + rep + " - " + simpleReplies[rep].description);
     }
 
