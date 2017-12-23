@@ -10,7 +10,7 @@ module.exports =
 }
 
 var simpleReplies = {
-    "source": "You can find my source code here: https://github.com/HopsonCommunity/HopsonBot!",
+    "source": "You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !",
 };
 
 function reply(message, content) 
