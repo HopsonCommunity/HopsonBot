@@ -11,8 +11,8 @@ module.exports =
 //Simple "struct" for replying to messages
 class Reply
 {
-    constructor(rep, description, acceptsArgs = false)  {
-        this.rep = rep;
+    constructor(action, description, acceptsArgs = false)  {
+        this.action = action;
         this.description = description;
         this.acceptsArgs = acceptsArgs;
         console.log(rep, this.acceptsArgs);
@@ -63,13 +63,13 @@ function reply(message, content)
         if (!simpleReplies[command].acceptsArgs && args.length > 0) {
             return;
         }
-        send(message, simpleReplies[command].rep);
+        send(message, simpleReplies[command].action);
     }
     else if (command in complexReplies)  {
         if (!complexReplies[command].acceptsArgs && args.length > 0) {
             return;
         }
-        complexReplies[command].rep(message, args);
+        complexReplies[command].action(message, args);
     }
 }
 
@@ -109,6 +109,7 @@ function sendPing(message, args)
     send(message, "Ping: " + message.client.ping.toString());
 }
 
+//Helper function for "modRole", validates the args are in the form of "add/remove role1 role2 role3" and checks if the roles are valid
 function validateModRoles(message, args)
 {
     //Check if there is a list number of args
