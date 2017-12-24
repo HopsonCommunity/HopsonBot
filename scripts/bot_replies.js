@@ -151,6 +151,10 @@ function modRole(message, args)
         //Data stuff
         let modifer = args[0].toLowerCase();
         let langs   = args.slice(1)
+        //Remove duplicates
+        langs = langs.filter(function(item, index, arr) {
+            return arr.indexOf(item) == index;
+        });
         let roles   = getRoleList(langs);
 
         if (modifer === "add") {
