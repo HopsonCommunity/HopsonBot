@@ -42,7 +42,7 @@ var simpleReplies =  {
 
 //Complex replies call functions
 var complexReplies = {
-    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++"),
+    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++ Python"),
     "echo":     new Reply (sendEcho,            "Echoes the first argument"),
     "ping":     new Reply (sendPing,            "Sends the current ping"),
 
@@ -107,32 +107,34 @@ function sendPing(message, args)
     send(message, "Ping: " + message.client.ping.toString());
 }
 
-function validateModRoles(args)
+function validateModRoles(message, args)
 {
-    let modifer = args[0];
-    if (args.length != 2) {
-        console.log("Invalid arg count");
+    
+    if (args.length < 2) {
+        send(message, "You didn't provide me enough information. I need to know whether you want to add or remove roles, and the name of the roles.")
         return false;
     }   
+    let modifer = args[0].toLowerCase();
     if (modifer != "remove" && modifer != "add") {
-        console.log("Invalid modifer");
+        send(message, "I need to know whether you want to add or remove roles.")
         return false;
     }
+    let languages = args.slice(1);
+    console.log(languages);
     return true;
 }
 
 function modRole(message, args)
 {
-    if (validateModRoles(args))
+    if (validateModRoles(message, args))
     {
         //let role = message.guild.roles.find("name", "Test");
         // message.member.addRole(role);
 
-        let modifer = args[0];
-        console.log("Able to add/ remove role!");
+        let modifer = args[0].toLowerCase();
+        let languages = args.slice(1);
         if (modifer === "add") {
             
-           
         }
         else if (modifer === "remove") {
     
