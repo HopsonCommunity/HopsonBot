@@ -17,20 +17,7 @@ class Reply
     }
 }
 
-
-//Dictionary of the different replies
-var simpleReplies =  {
-    "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
-}
-
-//Complex replies call functions
-var complexReplies = {
-    "help":     new Reply (sendCommandList,     "Shows a list of commands"),
-    "echo":     new Reply (sendEcho,            "Echoes the first argument"),
-    "ping":     new Reply (sendPing,            "Sends the current ping"),
-    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++")
-}
-
+//Roles the user is able to add/ remove to himself
 var avaliableRoles = [
     "C++",
     "Wot++",
@@ -46,6 +33,21 @@ var avaliableRoles = [
     "Pyton",
     "ASM"
 ];
+
+//Dictionary of the different replies
+var simpleReplies =  {
+    "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
+    "roles":  new Reply("Roles:\n* " + avaliableRoles.join("\n* "), "Displays list of roles user is able to add and remove using the 'role' command")
+}
+
+//Complex replies call functions
+var complexReplies = {
+    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++"),
+    "echo":     new Reply (sendEcho,            "Echoes the first argument"),
+    "ping":     new Reply (sendPing,            "Sends the current ping"),
+
+    "help":     new Reply (sendCommandList,     "Shows a list of commands") //Keep this one last
+}
 
 //Tries to reply to a message
 function reply(message, content) 
@@ -76,16 +78,16 @@ function sendCommandList(message, args)
 
     function concat(rep, dict)
     {
-        commands = commands.concat("\n>" + rep + " - " + dict[rep].description);
+        commands = commands.concat("\n>" + rep + "\t-\t" + dict[rep].description);
+    }
+
+    for (rep in simpleReplies) {
+        concat(rep, simpleReplies);
     }
 
     for (rep in complexReplies) {
         concat(rep, complexReplies);
     } 
-
-    for (rep in simpleReplies) {
-        concat(rep, simpleReplies);
-    }
 
     send(message, commands);
 }
