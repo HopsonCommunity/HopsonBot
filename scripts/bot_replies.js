@@ -145,26 +145,26 @@ function modRole(message, args)
             }
             return roleList;
         }
-        //let role = message.guild.roles.find("name", "Test");
-        // message.member.addRole(role);
-
+        
+        //Get some data
         let modifer = args[0].toLowerCase();
         let langs   = args.slice(1)
         let roles   = getRoleList(langs);
-        let verb    = "";
 
+        //Add or remove roles
         if (modifer === "add") {
             for (role of roles) {
                 message.member.addRole(role);
             }
-            verb = "added";
+            var verb = "added";
         }
         else if (modifer === "remove") {
             for (role of roles) {
                 message.member.removeRole(role);
             }
-            verb = "removed";
+            var verb = "removed";
         }
+        //Generate output
         let o = langs.length == 1 ? "role" : "roles";
         let id = message.author.id.toString();
         let output = "I have " + verb + " the following " + o + " to <@" + id + ">:\n* " + langs.join("\n* ");
