@@ -15,6 +15,7 @@ class Reply
         this.rep = rep;
         this.description = description;
         this.acceptsArgs = acceptsArgs;
+        console.log(rep, this.acceptsArgs);
     }
 }
 
@@ -57,25 +58,18 @@ function reply(message, content)
     content = content.split(" ");
     command = content[0].toLowerCase();
     args = content.splice(1);
-    let isCommand = false;
 
     if (command in simpleReplies) {
-        if (!command.acceptsArgs && args.length > 0) {
+        if (!simpleReplies[command].acceptsArgs && args.length > 0) {
             return;
         }
         send(message, simpleReplies[command].rep);
-        isCommand = true;
     }
     else if (command in complexReplies)  {
-        if (!command.acceptsArgs && args.length > 0) {
+        if (!complexReplies[command].acceptsArgs && args.length > 0) {
             return;
         }
         complexReplies[command].rep(message, args);
-        isCommand = true;
-    }
-
-    if (isCommand) {
-
     }
 }
 
