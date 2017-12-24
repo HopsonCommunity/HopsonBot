@@ -15,7 +15,6 @@ class Reply
         this.action = action;
         this.description = description;
         this.acceptsArgs = acceptsArgs;
-        console.log(rep, this.acceptsArgs);
     }
 }
 
@@ -83,11 +82,11 @@ function sendCommandList(message, args)
         commands = commands.concat("\n>" + rep + "\t-\t" + dict[rep].description);
     }
 
-    for (rep in simpleReplies) {
+    for (rep of simpleReplies) {
         concat(rep, simpleReplies);
     }
 
-    for (rep in complexReplies) {
+    for (rep of complexReplies) {
         concat(rep, complexReplies);
     } 
 
@@ -163,12 +162,14 @@ function modRole(message, args)
                 message.member.addRole(role);
             }
             var verb = "added";
+            var dir  = "to";
         }
         else if (modifer === "remove") {
             for (role of roles) {
                 message.member.removeRole(role);
             }
             var verb = "removed";
+            var dir  = "from";
         }
         else {
             console.log("How did it even get here?");
@@ -176,7 +177,7 @@ function modRole(message, args)
         }
         let o = langs.length == 1 ? "role" : "roles";
         let id = message.author.id.toString();
-        let output = "I have " + verb + " the following " + o + " to <@" + id + ">:\n* " + langs.join("\n* ");
+        let output = "I have " + verb + " the following " + o + " " + dir + " <@" + id + ">:\n* " + langs.join("\n* ");
         send(message, output)
     }
 }
