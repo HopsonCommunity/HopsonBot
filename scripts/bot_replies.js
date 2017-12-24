@@ -48,7 +48,7 @@ var complexReplies = {
     "echo":     new Reply (sendEcho,    "Echoes the user's message", true),
     "ping":     new Reply (sendPing,    "Sends the current ping"),
     "rolecount":new Reply (sendRoleCount, "Says how many members are in each role"),
-    "roleusers":new Reply (sendRoleUsers, "Lists people with said role", true),
+    "roleusers":new Reply (sendRoleUsers, "Lists people with said role [Admins only]", true),
 
     "help":     new Reply (sendCommandList,     "Shows a list of commands") //Keep this one last
 }
@@ -195,11 +195,19 @@ function modRole(message, args)
 function sendRoleCount(message, args)
 {
     let roles = message.guild.roles.array();
-    let output = "Roles:\n";
+    let output = "```\nRoles ".padEnd(25, " ");// - - - - - - Number of members with role:\n";
+    output = output.concat("Members\n* ".padStart(10, " "));
     for (role of roles) {
-        if (role.name == "@everyone") continue;
-        output = output.concat("Name:\t" + role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
+        if (role.name == "@everyone") {
+            continue;
+        }
+        output = output.concat("* ");
+        output = output.concat(role.name.padEnd(25, " "));
+        output = output.concat(role.members.array().length);
+        output = output.concat("\n");
+        //output = output.concat("**role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
     }
+    output = output.concat("\n```");
     send(message, output);
 }
 
