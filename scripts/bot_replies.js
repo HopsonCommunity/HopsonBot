@@ -20,7 +20,7 @@ class Reply
 
 //Dictionary of the different replies
 var simpleReplies =  {
-    "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code")
+    "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
 }
 
 //Complex replies call functions
@@ -28,7 +28,24 @@ var complexReplies = {
     "help":     new Reply (sendCommandList,     "Shows a list of commands"),
     "echo":     new Reply (sendEcho,            "Echoes the first argument"),
     "ping":     new Reply (sendPing,            "Sends the current ping"),
+    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++")
 }
+
+var avaliableRoles = [
+    "C++",
+    "Wot++",
+    "OpenGL",
+    "Linux",
+    "Windows",
+    "SFML",
+    "SDL",
+    "Java",
+    "C#",
+    "C-Language",
+    "Rust",
+    "Pyton",
+    "ASM"
+];
 
 //Tries to reply to a message
 function reply(message, content) 
@@ -84,9 +101,42 @@ function sendEcho(message, args)
 
 function sendPing(message, args)
 {
+    send(message, "Ping: " + Math.round(message.client.ping).toString());
     send(message, "Ping: " + message.client.ping.toString());
 }
 
+function validateModRoles(args)
+{
+    let modifer = args[0];
+    if (args.length != 2) {
+        console.log("Invalid arg count");
+        return false;
+    }   
+    if (modifer != "remove" && modifer != "add") {
+        console.log("Invalid modifer");
+        return false;
+    }
+    return true;
+}
+
+function modRole(message, args)
+{
+    if (validateModRoles(args))
+    {
+        //let role = message.guild.roles.find("name", "Test");
+        // message.member.addRole(role);
+
+        let modifer = args[0];
+        console.log("Able to add/ remove role!");
+        if (modifer === "add") {
+            
+           
+        }
+        else if (modifer === "remove") {
+    
+        }
+    }
+}
 
 function send(message, text)
 {
