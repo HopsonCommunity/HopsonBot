@@ -109,18 +109,28 @@ function sendPing(message, args)
 
 function validateModRoles(message, args)
 {
-    
+    //Check if there is a list number of args
     if (args.length < 2) {
         send(message, "You didn't provide me enough information. I need to know whether you want to add or remove roles, and the name of the roles.")
         return false;
     }   
+
+    //Check if  the modifier is valid
     let modifer = args[0].toLowerCase();
     if (modifer != "remove" && modifer != "add") {
         send(message, "I need to know whether you want to add or remove roles.")
         return false;
     }
+
+    //Check if the role is actually in the list of avaliable roles
     let languages = args.slice(1);
-    console.log(languages);
+    for (language of languages)  {
+        console.log(language, avaliableRoles.indexOf(language));
+        if (avaliableRoles.indexOf(language) == -1) {
+            send(message, "I do not recognise the " + language + " role, sorry. Make sure you have correct casing.");
+            return false;
+        }
+    }
     return true;
 }
 
@@ -133,6 +143,7 @@ function modRole(message, args)
 
         let modifer = args[0].toLowerCase();
         let languages = args.slice(1);
+        send(message, languages.join(", "));
         if (modifer === "add") {
             
         }
