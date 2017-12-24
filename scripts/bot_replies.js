@@ -30,7 +30,7 @@ var avaliableRoles = [
     "C#",
     "C-Language",
     "Rust",
-    "Pyton",
+    "Python",
     "ASM"
 ];
 
@@ -125,7 +125,6 @@ function validateModRoles(message, args)
     //Check if the role is actually in the list of avaliable roles
     let languages = args.slice(1);
     for (language of languages)  {
-        console.log(language, avaliableRoles.indexOf(language));
         if (avaliableRoles.indexOf(language) == -1) {
             send(message, "I do not recognise the " + language + " role, sorry. Make sure you have correct casing.");
             return false;
@@ -138,18 +137,38 @@ function modRole(message, args)
 {
     if (validateModRoles(message, args))
     {
+        function getRoleList(rolesStrings) 
+        {
+            let roleList = []
+            for (r of rolesStrings) {
+                roleList.push(message.guild.roles.find("name", r));
+            }
+            return roleList;
+        }
         //let role = message.guild.roles.find("name", "Test");
         // message.member.addRole(role);
 
         let modifer = args[0].toLowerCase();
-        let languages = args.slice(1);
-        send(message, languages.join(", "));
+        let langs   = args.slice(1)
+        let roles   = getRoleList(langs);
+        let verb    = "";
+
         if (modifer === "add") {
-            
+            for (role of roles) {
+                message.member.addRole(role);
+            }
+            verb = "added";
         }
         else if (modifer === "remove") {
-    
+            for (role of roles) {
+                message.member.removeRole(role);
+            }
+            verb = "removed";
         }
+        let o = langs.length == 1 ? "role" : "roles";
+        let id = message.author.id.toString();
+        let output = "I have " + verb + " the following " + o + " to <@" + id + ">:\n* " + langs.join("\n* ");
+        send(message, output)
     }
 }
 
