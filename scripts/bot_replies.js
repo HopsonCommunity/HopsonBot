@@ -43,9 +43,9 @@ var simpleReplies =  {
 
 //Complex replies call functions
 var complexReplies = {
-    "role":     new Reply (modRole,     "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++ Python"),
-    "roles":    new Reply (modRole,     "Same as 'role'"),
-    "echo":     new Reply (sendEcho,    "Echoes the user's message"),
+    "role":     new Reply (modRole,     "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++ Python", true),
+    "roles":    new Reply (modRole,     "Same as 'role'", true),
+    "echo":     new Reply (sendEcho,    "Echoes the user's message", true),
     "ping":     new Reply (sendPing,    "Sends the current ping"),
 
     "help":     new Reply (sendCommandList,     "Shows a list of commands") //Keep this one last
