@@ -47,8 +47,16 @@ var complexReplies = {
     "roles":    new Reply (modRole,     "Same as 'role'", true),
     "echo":     new Reply (sendEcho,    "Echoes the user's message", true),
     "ping":     new Reply (sendPing,    "Sends the current ping"),
+    "rolecount":new Reply (sendRoleCount, "Says how many members are in each role"),
+    "roleusers":new Reply (sendRoleUsers, "Lists people with said role", true),
 
     "help":     new Reply (sendCommandList,     "Shows a list of commands") //Keep this one last
+}
+
+function isSentByAdmin(message) 
+{
+    let res = message.member.roles.find("name", "Admins");
+    return res != null;
 }
 
 //Tries to reply to a message
@@ -79,14 +87,14 @@ function sendCommandList(message, args)
 
     function concat(rep, dict)
     {
-        commands = commands.concat("\n>" + rep + "\t-\t" + dict[rep].description);
+        commands = commands.concat("\n**>" + rep + "**\t-\t" + dict[rep].description);
     }
 
-    for (rep of simpleReplies) {
+    for (rep in simpleReplies) {
         concat(rep, simpleReplies);
     }
 
-    for (rep of complexReplies) {
+    for (rep in complexReplies) {
         concat(rep, complexReplies);
     } 
 
@@ -175,6 +183,8 @@ function modRole(message, args)
             console.log("How did it even get here?");
             return; 
         }
+        
+        //Generate a reply
         let o = langs.length == 1 ? "role" : "roles";
         let id = message.author.id.toString();
         let output = "I have " + verb + " the following " + o + " " + dir + " <@" + id + ">:\n* " + langs.join("\n* ");
@@ -182,7 +192,42 @@ function modRole(message, args)
     }
 }
 
+function sendRoleCount(message, args)
+{
+    let roles = message.guild.roles.array();
+    let output = "Roles:\n";
+    for (role of roles) {
+        if (role.name == "@everyone") continue;
+        output = output.concat("Name:\t" + role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
+    }
+    send(message, output);
+}
+
+function sendRoleUsers(message, args) 
+{
+    if (!isSentByAdmin(message)) {
+        send(message, "Sorry, this command is for admins only.");
+        return;
+    }
+    role = message.guild.roles.find("name", args[0]);
+    if (role == null) {
+        send(message, "Role " + args[0] + " doesn't exist.");
+    } 
+    else {
+        let users = [];
+        let memberList = role.members.array();
+
+        for (user of memberList) {
+            users.push(user.displayName);
+        }
+
+        let out = "**Users with role " + args[0] + "**:\n -> " + users.join("\n -> ");
+        send(message, out);
+    }
+}
+
 function send(message, text)
 {
     message.channel.send(text);
+    
 }

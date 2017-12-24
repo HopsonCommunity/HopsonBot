@@ -23,5 +23,6 @@ client.on('message', message =>
     tryReply(message, message.content);
 });
 
+
 // Log our bot in
 client.login(loginToken);
