@@ -11,9 +11,10 @@ module.exports =
 //Simple "struct" for replying to messages
 class Reply
 {
-    constructor(rep, description)  {
+    constructor(rep, description, acceptsArgs = false)  {
         this.rep = rep;
         this.description = description;
+        this.acceptsArgs = acceptsArgs;
     }
 }
 
@@ -36,15 +37,16 @@ var avaliableRoles = [
 
 //Dictionary of the different replies
 var simpleReplies =  {
-    "source": new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
-    "roles":  new Reply("Roles:\n* " + avaliableRoles.join("\n* "), "Displays list of roles user is able to add and remove using the 'role' command")
+    "source"    : new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
+    "rolelist"  : new Reply("Roles:\n* " + avaliableRoles.join("\n* "), "Displays list of roles user is able to add and remove using the 'role' command")
 }
 
 //Complex replies call functions
 var complexReplies = {
-    "role":     new Reply (modRole,             "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++ Python"),
-    "echo":     new Reply (sendEcho,            "Echoes the first argument"),
-    "ping":     new Reply (sendPing,            "Sends the current ping"),
+    "role":     new Reply (modRole,     "Add/ Remove language roles. For a list of avaliable roles, say '>roles' Useage: `>role {add/ remove} {roleName} eg >role add C++ Python"),
+    "roles":    new Reply (modRole,     "Same as 'role'"),
+    "echo":     new Reply (sendEcho,    "Echoes the user's message"),
+    "ping":     new Reply (sendPing,    "Sends the current ping"),
 
     "help":     new Reply (sendCommandList,     "Shows a list of commands") //Keep this one last
 }
@@ -58,10 +60,16 @@ function reply(message, content)
     let isCommand = false;
 
     if (command in simpleReplies) {
+        if (!command.acceptsArgs && args.length > 0) {
+            return;
+        }
         send(message, simpleReplies[command].rep);
         isCommand = true;
     }
     else if (command in complexReplies)  {
+        if (!command.acceptsArgs && args.length > 0) {
+            return;
+        }
         complexReplies[command].rep(message, args);
         isCommand = true;
     }
@@ -145,25 +153,27 @@ function modRole(message, args)
             }
             return roleList;
         }
-        //let role = message.guild.roles.find("name", "Test");
-        // message.member.addRole(role);
 
+        //Data stuff
         let modifer = args[0].toLowerCase();
         let langs   = args.slice(1)
         let roles   = getRoleList(langs);
-        let verb    = "";
 
         if (modifer === "add") {
             for (role of roles) {
                 message.member.addRole(role);
             }
-            verb = "added";
+            var verb = "added";
         }
         else if (modifer === "remove") {
             for (role of roles) {
                 message.member.removeRole(role);
             }
-            verb = "removed";
+            var verb = "removed";
+        }
+        else {
+            console.log("How did it even get here?");
+            return; 
         }
         let o = langs.length == 1 ? "role" : "roles";
         let id = message.author.id.toString();
