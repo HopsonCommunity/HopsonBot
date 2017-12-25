@@ -25,11 +25,44 @@ client.on('message', message =>
 
 client.on('messageUpdate', (oldMessage, newMessage) => 
 {
-    let botLog = oldMessage.guild.channels.find('name', "bot_log");
-    let output = "__**Message was updated**__\n";
-    output += oldMessage + "\n";
-    output += newMessage + "\n";
-    botLog.send(output);
+    let memberName  = oldMessage.member.displayName;
+    let channelName = oldMessage.channel.name;
+    let botLog      = oldMessage.guild.channels.find('name', "bot_log");
+
+    //Send embed message
+    botLog.send({embed: {
+        color: 3447003,
+        author: {
+            name: client.user.username,
+            icon_url: client.user.avatarURL
+        },
+        title: "Message was updated in",
+        Fields: [  
+        {
+            name: "Channel",
+            value: channelName
+        },
+        {
+            name: "User",
+            value: memberName
+        },
+        {
+            name: "Old Message",
+            value: oldMessage
+        },
+        {
+            name: "New Message",
+            value: newMessage
+        }
+        ],
+        timestamp: new Date(),
+        footer: {
+            icon_url: client.user.avatarURL,
+            text: ":)"
+          }
+        }
+    });
+
 });
 
 // Log our bot in
