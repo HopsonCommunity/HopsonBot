@@ -23,6 +23,14 @@ client.on('message', message =>
     tryReply(message, message.content);
 });
 
+client.on('messageUpdate', (oldMessage, newMessage) => 
+{
+    let botLog = oldMessage.guild.channels.find('name', "bot_log");
+    let output = "__**Message was updated**__\n";
+    output += oldMessage + "\n";
+    output += newMessage + "\n";
+    botLog.send(output);
+});
 
 // Log our bot in
 client.login(loginToken);
