@@ -19,7 +19,7 @@ class Reply
 }
 
 //Roles the user is able to add/ remove to himself
-var avaliableRoles = [
+var availableRoles = [
     "C++",
     "Wot++",
     "OpenGL",
@@ -38,7 +38,7 @@ var avaliableRoles = [
 //Dictionary of the different replies
 var simpleReplies =  {
     "source"    : new Reply("You can find my source code here: https://github.com/HopsonCommunity/HopsonBot !", "Gives GitHub link of the bot's source code"),
-    "rolelist"  : new Reply("Roles:\n* " + avaliableRoles.join("\n* "), "Displays list of roles user is able to add and remove using the 'role' command")
+    "rolelist"  : new Reply("Roles:\n* " + availableRoles.join("\n* "), "Displays list of roles user is able to add and remove using the 'role' command")
 }
 
 //Complex replies call functions
@@ -112,8 +112,8 @@ function sendEcho(message, args)
 
 function sendPing(message, args)
 {
-    send(message, "Ping: " + Math.round(message.client.ping).toString());
-    send(message, "Ping: " + message.client.ping.toString());
+    send(message, `Ping: ${Math.round(message.client.ping).toString()}`);
+    send(message, `Ping: ${message.client.ping.toString()}`);
 }
 
 //Helper function for "modRole", validates the args are in the form of "add/remove role1 role2 role3" and checks if the roles are valid
@@ -135,8 +135,8 @@ function validateModRoles(message, args)
     //Check if the role is actually in the list of avaliable roles
     let languages = args.slice(1);
     for (language of languages)  {
-        if (avaliableRoles.indexOf(language) == -1) {
-            send(message, "I do not recognise the " + language + " role, sorry. Make sure you have correct casing.");
+        if (availableRoles.indexOf(language) == -1) {
+            send(message, `I do not recognise the ${language} role, sorry. Make sure you have correct casing.`);
             return false;
         }
     }
@@ -187,16 +187,16 @@ function modRole(message, args)
         //Generate a reply
         let o = langs.length == 1 ? "role" : "roles";
         let id = message.author.id.toString();
-        let output = "I have " + verb + " the following " + o + " " + dir + " <@" + id + ">:\n* " + langs.join("\n* ");
+        let output = `I have ${verb} the following ${o} ${dir} <@${id}>:\n* ${langs.join("\n* ")}`;
         send(message, output)
     }
 }
 
 function sendRoleCount(message, args)
 {
-    let roles = message.guild.roles.array();
-    let output = "```\nRoles ".padEnd(25, " ");// - - - - - - Number of members with role:\n";
+    /*let output = "```\nRoles ".padEnd(25, " ");// - - - - - - Number of members with role:\n";
     output = output.concat("Members\n* ".padStart(10, " "));
+
     for (role of roles) {
         if (role.name == "@everyone") {
             continue;
@@ -206,8 +206,27 @@ function sendRoleCount(message, args)
         output = output.concat(role.members.array().length);
         output = output.concat("\n");
         //output = output.concat("**role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
-    }
-    output = output.concat("\n```");
+	}*/
+
+    let roles = message.guild.roles.array();
+	let embed = {
+		"title": "ROLES",
+		"fields": []
+	};
+
+	for (role of roles) {
+		if (role.name == "@everyone") continue;
+		Object.values(embed)[1].push({
+			"name": role.name,
+			"value": `Members: ${role.members.array().length}`,
+			"inline": true
+		});
+	}
+
+	let output = {
+		"embed": embed
+	}
+    //output = output.concat("\n```");
     send(message, output);
 }
 
@@ -236,6 +255,5 @@ function sendRoleUsers(message, args)
 
 function send(message, text)
 {
-    message.channel.send(text);
-    
+    message.channel.send(text); 
 }
