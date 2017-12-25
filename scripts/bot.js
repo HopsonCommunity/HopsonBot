@@ -25,6 +25,7 @@ client.on('message', message =>
 
 client.on('messageUpdate', (oldMessage, newMessage) => 
 {
+    /*
     let memberName  = oldMessage.member.displayName;
     let channelName = oldMessage.channel.name;
     let botLog      = oldMessage.guild.channels.find('name', "bot_log");
@@ -62,7 +63,7 @@ client.on('messageUpdate', (oldMessage, newMessage) =>
           }
         }
     });
-
+    */  
 });
 
 // Log our bot in

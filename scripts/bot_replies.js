@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = 
 {
     tryReply : function(message, content)
@@ -192,42 +194,38 @@ function modRole(message, args)
     }
 }
 
+/*
+    Sends the number of users in each role
+*/
 function sendRoleCount(message, args)
 {
-    /*let output = "```\nRoles ".padEnd(25, " ");// - - - - - - Number of members with role:\n";
-    output = output.concat("Members\n* ".padStart(10, " "));
+    try {
+        //Create an embed object for embedded output
+        let roles = message.guild.roles.array();
+        let embed = {
+            "title": "ROLES",
+            "fields": []
+        };
 
-    for (role of roles) {
-        if (role.name == "@everyone") {
-            continue;
+        //Add each role to the embeded output
+        for (role of roles) {
+            if (role.name == "@everyone") continue;
+            Object.values(embed)[1].push({
+                "name": role.name,
+                "value": `Members: ${role.members.array().length}`,
+                "inline": true
+            });
         }
-        output = output.concat("* ");
-        output = output.concat(role.name.padEnd(25, " - "));
-        output = output.concat(role.members.array().length);
-        output = output.concat("\n");
-        //output = output.concat("**role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
-	}*/
 
-    let roles = message.guild.roles.array();
-	let embed = {
-		"title": "ROLES",
-		"fields": []
-	};
-
-	for (role of roles) {
-		if (role.name == "@everyone") continue;
-		Object.values(embed)[1].push({
-			"name": role.name,
-			"value": `Members: ${role.members.array().length}`,
-			"inline": true
-		});
-	}
-
-	let output = {
-		"embed": embed
-	}
-    //output = output.concat("\n```");
-    send(message, output);
+        //Create and send the outuput
+        let output = {
+            "embed": embed
+        }
+        send(message, output);
+    } 
+    catch(err) {
+        console.log(err);
+    }
 }
 
 function sendRoleUsers(message, args) 
