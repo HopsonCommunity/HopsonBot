@@ -30,6 +30,10 @@ The key of these maps is "String" and the value is an object of type `Reply`, wh
 
 action: This is either a message (simple replies) or a function (complex replies). Complex reply functions must take in two args: `message`, which is the object representing a user's message to the Discord channel, and `args`, which is a list of arguments after the command. For example, for `echo`, args is the message to echo.
 
+descripion: String of what your command does, used by the command `help`, which sends a message saying what every command does.
+
+acceptsArgs: If your command accepts args, this must be marked as true.
+
 #### Simple Replies:
 These are replies/ commands which do nothing except output some (hardcoded) text.
 
