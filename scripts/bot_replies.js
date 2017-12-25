@@ -202,7 +202,7 @@ function sendRoleCount(message, args)
             continue;
         }
         output = output.concat("* ");
-        output = output.concat(role.name.padEnd(25, " "));
+        output = output.concat(role.name.padEnd(25, " - "));
         output = output.concat(role.members.array().length);
         output = output.concat("\n");
         //output = output.concat("**role.name + " \t\t\t - Members:\t" + role.members.array().length + "\n");
