@@ -1,5 +1,4 @@
-const SimpleCommands = require("./simple_commands.json");
-const Bot            = require("./hopson_bot");
+const Bot = require("./hopson_bot");
 
 module.exports = 
 {
@@ -41,7 +40,6 @@ function tryRespondToCommand(message, command, args)
         Bot.sendMessage(message.channel, simpleCommands[command].action);
     }
 }
-
 
 //Add commands 
 addSimpleCommand(
