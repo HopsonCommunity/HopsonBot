@@ -17,20 +17,29 @@ module.exports =
 }
 
 //Set up the commands
-let simpleCommands  = new Map();
+var simpleCommands = new Map();
 
 function addSimpleCommand(name, output, description) 
 {
     simpleCommands.set(name, new Command(output, description, false));
+    console.log(`Simple command added!\nName: "${name}"\nOutput: "${output}"\nDescription: "${description}"\n`);
+
 }
 
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args) 
 {
-    console.log("Command sent: ${command}\n");
-    console.log("Map of commands: ${simpleCommands}\n")
-    if (command in simpleCommands) {
+    console.log("Numaber of args " + args.length);
+    console.log("Command sent: "   + command);
+    console.log("Map of commands");
+    console.log(simpleCommands);
+    if (simpleCommands.has(command)) {
         if (args.length > 0) return;
+        console.log("Action is: ");
+        console.log(typeof simpleCommands["source"].action);
+        console.log("\n");
+        console.log(typeof simpleCommands[command].action);
+        console.log("\n\n\n\n");
         Bot.sendMessage(message.channel, simpleCommands[command].action);
     }
 }
