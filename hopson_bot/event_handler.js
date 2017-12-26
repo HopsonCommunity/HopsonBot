@@ -1,4 +1,5 @@
 Bot = require("./hopson_bot");
+CommandHandler = require("./command_handler");
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -23,6 +24,7 @@ module.exports = class EventHandler
             console.log("Client has closed with status code ${event.code} and reason {event.reason}")
         });  
 
+        //Event for messages sent to any of the discord channels
         this.client.on("message", (message) => 
         {
             this.handleMessage(message);
@@ -35,7 +37,15 @@ module.exports = class EventHandler
     */
     handleMessage(message) 
     {
+        //Ignore messages sent by bots
+        if (message.author.bot) {
+            return;
+        }
         
+        //A message starting with > indicates it is a command 
+        if (message.content.startsWith(">")) {
+            CommandHandler.handleCommand(message);
+        }
     }
 }
 //Event for when a user sends a message
