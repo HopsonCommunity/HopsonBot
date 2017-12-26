@@ -1,5 +1,6 @@
-const Bot       = require("./hopson_bot");
+const Bot       = require ("./hopson_bot");
 const Command   = require ("./command")
+const Roles     = require ("./roles.json")
 
 module.exports = 
 {
@@ -12,14 +13,13 @@ module.exports =
         let command = content[0].toLowerCase();
         let args    = content.slice(1);
 
-        console.log(content);
-        console.log();
         tryRespondToCommand(message, command, args);
     }
 }
 
-//Maps to hold the two command types
+//Init some maps and list to hold data to be used by command handler
 var simpleCommands = new Map();
+var roles = Roles.roles;
 
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args) 
@@ -33,7 +33,7 @@ function tryRespondToCommand(message, command, args)
 }
 
 
-//Add commands 
+//Add simple "print" commands
 function addSimpleCommand(name, output, description) 
 {
     simpleCommands.set(name, new Command(output, description, false));
@@ -46,11 +46,7 @@ addSimpleCommand(
     "Sends a link to the source code for this bot."
 );
 
-/*
-//Add commands 
 addSimpleCommand(
-    "source",
-    "You can find my source code at https://github.com/HopsonCommunity/HopsonBot",
-    "Sends a link to the source code for this bot."
-);
-*/
+    "rolelist",
+    `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${roles.join("\n> ")}`,
+    "Displays list of roles user is able to add and remove");
