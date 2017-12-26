@@ -1,6 +1,8 @@
-const Bot       = require ("./hopson_bot");
-const Command   = require ("./command")
-const Roles     = require ("./roles.json")
+const Bot = require("./hopson_bot");
+
+const Command   = require("./command");
+const Roles     = require("./roles.json");
+const RoleMod   = require("./role_modifier");
 
 module.exports = 
 {
@@ -19,8 +21,9 @@ module.exports =
 }
 
 //Init some maps and list to hold data to be used by command handler
-var simpleCommands = new Map();
-var roles = Roles.roles;
+var simpleCommands      = new Map();
+var functionCommands    = new Map()
+var roles               = Roles.roles;
 
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args) 
@@ -31,16 +34,48 @@ function tryRespondToCommand(message, command, args)
             return;
         Bot.sendMessage(message.channel, simpleCommands.get(command).action);
     }
+    else if  (functionCommands.has(command)) {
+        let commandHandle = functionCommands.get(command);
+        if (!commandHandle.acceptsArgs && args.length > 0)
+            return;
+        commandHandle.action(message, args);
+    }
 }
 
 
-//Add simple "print" commands
+//Simple function replies
+function sendHelpList(message, args)
+{
+    let output = "**__List of commands:__**\n\n";
+
+    function addOutput(m) {
+        m.forEach(function(val, key, map) {
+            output += `__**>${key}**__\n${val.description}\n\n`;
+        });
+    }
+    //Add in the simple commands
+    addOutput(simpleCommands);
+    addOutput(functionCommands);
+    Bot.sendMessage(message.channel, output);
+}
+
+
+//Adds simple "print" commands
 function addSimpleCommand(name, output, description) 
 {
     simpleCommands.set(name, new Command(output, description, false));
     console.log(`Simple command added! \nName: "${name}" \nOutput: "${output}"  \nDescription:  "${description}"\n`);
 }
 
+//Adds commands which call a function
+function addFunctionCommand(name, func, description, acceptsArgs) 
+{
+    functionCommands.set(name, new Command(func, description, acceptsArgs));
+    console.log(`Function command added! \nName: "${name}" \Function: "${func}"  \nDescription:  "${description}"\nArgs: ${acceptsArgs}`);
+}
+
+
+//Add the "simple commands"
 addSimpleCommand(
     "source",
     "You can find my source code at https://github.com/HopsonCommunity/HopsonBot",
@@ -49,5 +84,14 @@ addSimpleCommand(
 
 addSimpleCommand(
     "rolelist",
-    `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${roles.join("\n> ")}`,
-    "Displays list of roles user is able to add and remove");
+    `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${roles.join("\n> ")}.`,
+    "Displays list of roles you are able to add and remove."
+);
+
+//Add the "function commands"
+addFunctionCommand(
+    "help", 
+    sendHelpList, 
+    "Sends a list of commands.",
+    false
+);
