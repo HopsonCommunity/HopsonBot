@@ -1,4 +1,5 @@
-const Bot = require("./hopson_bot");
+const Bot       = require("./hopson_bot");
+const Command   = require ("./command")
 
 module.exports = 
 {
@@ -15,15 +16,6 @@ module.exports =
     }
 }
 
-class Command
-{
-    constructor(action, description, acceptsArgs) {
-        this.action         = action;
-        this.description    = description;
-        this.acceptsArgs    = acceptsArgs;
-    }
-}
-
 //Set up the commands
 let simpleCommands  = new Map();
 
@@ -35,6 +27,8 @@ function addSimpleCommand(name, output, description)
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args) 
 {
+    console.log("Command sent: ${command}\n");
+    console.log("Map of commands: ${simpleCommands}\n")
     if (command in simpleCommands) {
         if (args.length > 0) return;
         Bot.sendMessage(message.channel, simpleCommands[command].action);
