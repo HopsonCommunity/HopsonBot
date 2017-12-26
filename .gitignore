@@ -1,6 +1,6 @@
-scripts/config.js
+hopson_bot/config.js
 node_modules/
 package-lock.json
-scripts/node_modules/
-scripts/package-lock.json
+hopson_bot/node_modules/
+hopson_bot/package-lock.json
 *.swp

@@ -1,0 +1,9 @@
+{
+    "commands": [
+        {
+            "command": "source",
+            "output": "You can find my source code at https://github.com/HopsonCommunity/HopsonBot",
+            "description": "Sends a link to the source code for this bot."
+        }
+    ]
+}
