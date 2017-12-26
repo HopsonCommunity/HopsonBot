@@ -4,6 +4,7 @@ const Roles     = require ("./roles.json")
 
 module.exports = 
 {
+    //Says it on the tin
     handleCommand : function(message) 
     {
         let content = message.content.slice(1); //Remove the ">" from the message

@@ -1,5 +1,5 @@
-Bot = require("./hopson_bot");
-CommandHandler = require("./command_handler");
+Bot             = require("./hopson_bot");
+CommandHandler  = require("./command_handler");
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
