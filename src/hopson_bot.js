@@ -17,7 +17,8 @@ var exp = module.exports =
     getClient : function() 
     {
         return client;
-    }
+    },
+
 }
 
 //Start the event handler

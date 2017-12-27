@@ -11,11 +11,6 @@ module.exports = class EventHandler
         this.quiz   = new Quiz.Quiz()
     }
 
-    test() 
-    {
-        console.log("Does exist!\n\n\n");
-    }
-
     //Start the bot
     run() 
     {
@@ -60,4 +55,4 @@ module.exports = class EventHandler
         }
     }
 }
-//Event for when a user sends a message
+

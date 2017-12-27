@@ -1,4 +1,5 @@
 const Bot = require("./hopson_bot");
+const EventHandle = require('./event_handler')
 
 module.exports =
 {
