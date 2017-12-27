@@ -1,13 +1,13 @@
 const Bot = require("./hopson_bot");
 
 const Command   = require("./command");
-const Roles     = require("./roles.json");
+const Roles     = require("../data/roles.json");
 const RoleMod   = require("./role_modifier");
 
-module.exports = 
+module.exports =
 {
     //Says it on the tin
-    handleCommand : function(message) 
+    handleCommand : function(message)
     {
         let content = message.content.slice(1); //Remove the ">" from the message
 
@@ -26,12 +26,12 @@ var functionCommands    = new Map()
 var roles               = Roles.roles;
 
 //Looks to see if the command sent is actually a command, and then responds to it
-function tryRespondToCommand(message, command, args) 
+function tryRespondToCommand(message, command, args)
 {
     Bot.logMessage(`Command "${command}" sent in channel "${message.channel}" by "${message.member.displayName}"`)
     //Check to see if it a simple command sent
     if (simpleCommands.has(command)) {
-        if (args.length > 0) 
+        if (args.length > 0)
             return;
         Bot.sendMessage(message.channel, simpleCommands.get(command).action);
     }
@@ -68,14 +68,14 @@ function sendHelpList(message, args)
 
 
 //Adds simple "print" commands
-function addSimpleCommand(name, output, description) 
+function addSimpleCommand(name, output, description)
 {
     simpleCommands.set(name, new Command(output, description, false));
     Bot.logMessage(`Simple command added! \nName: "${name}"\nDescription:  "${description}"`);
 }
 
 //Adds commands which call a function
-function addFunctionCommand(name, func, description, acceptsArgs) 
+function addFunctionCommand(name, func, description, acceptsArgs)
 {
     functionCommands.set(name, new Command(func, description, acceptsArgs));
     Bot.logMessage(`Function command added! \nName: "${name}"\nDescription:  "${description}"\nArgs: ${acceptsArgs}`);
@@ -97,16 +97,16 @@ addSimpleCommand(
 
 //Add the "function commands"
 addFunctionCommand(
-    "help", 
-    sendHelpList, 
+    "help",
+    sendHelpList,
     "Sends a list of commands.",
     false
 );
 
 
 addFunctionCommand(
-    "role", 
-    RoleMod.tryModifyRole, 
+    "role",
+    RoleMod.tryModifyRole,
     "Allows the user to add or remove role(s) from '>rolelist'\nUseage: '>role add C++ Java'",
     true
 );

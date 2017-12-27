@@ -1,18 +1,18 @@
 
 const Discord   = require('discord.js');
-const Config    = require('./config');
+const Config    = require('../data/config');
 
 //Log into discord
 const client = new Discord.Client();
 client.login(Config.getToken());
 
-module.exports = 
+module.exports =
 {
     logMessage : function(message) {
         message += "\n";
         console.log(message);
     },
-    sendMessage : function(channel, message) 
+    sendMessage : function(channel, message)
     {
         console.log(`Message sent by bot in channel "${channel.name}"\n\n`);
         channel.send(message);
