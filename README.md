@@ -1,5 +1,5 @@
 # HopsonBot
-Discord bot for the Hopson Community Server, written using Discord.js
+HopsonBot is a Discord bot for the [Hopson Community Server](https://discordapp.com/invite/xvQaysR), written using Discord.js.
 
 ## Contributing
 ### Getting the bot to work
