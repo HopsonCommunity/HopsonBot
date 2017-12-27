@@ -4,7 +4,7 @@ const Config    = require('../data/config');
 
 //Log into discord
 const client = new Discord.Client();
-client.login(Config.getToken());
+client.login(Config.token);
 
 module.exports =
 {
