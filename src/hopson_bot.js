@@ -16,7 +16,8 @@ module.exports =
     {
         console.log(`Message sent by bot in channel "${channel.name}"\n\n`);
         channel.send(message);
-    }
+    },
+    client : client
 }
 
 //Start the event handler

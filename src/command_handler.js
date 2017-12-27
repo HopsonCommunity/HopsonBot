@@ -37,11 +37,11 @@ function tryRespondToCommand(message, command, args)
     }
 
     //Check to see if it is a function command sent
-    if  (functionCommands.has(command)) {
+    if (functionCommands.has(command)) {
         let commandHandle = functionCommands.get(command);
-        if (!commandHandle.acceptsArgs && args.length > 0){
+        if (!commandHandle.acceptsArgs && args.length > 0)
             return;
-        }
+
         commandHandle.action(message, args);
     }
     else {
@@ -86,12 +86,12 @@ function addFunctionCommand(name, func, description, acceptsArgs)
 addSimpleCommand(
     "source",
     "You can find my source code at https://github.com/HopsonCommunity/HopsonBot",
-    "Sends a link to the source code for this bot."
+    "Displays the link to this bot's GitHub repository."
 );
 
 addSimpleCommand(
     "rolelist",
-    `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${roles.join("\n> ")}.`,
+    `**Roles you can add to yourself using the \`>role add <name>\` command:**\n> ${roles.join("\n> ")}`,
     "Displays list of roles you are able to add and remove."
 );
 
@@ -99,14 +99,13 @@ addSimpleCommand(
 addFunctionCommand(
     "help",
     sendHelpList,
-    "Sends a list of commands.",
+    "Displays this list of commands.",
     false
 );
-
 
 addFunctionCommand(
     "role",
     RoleMod.tryModifyRole,
-    "Allows the user to add or remove role(s) from '>rolelist'\nUseage: '>role add C++ Java'",
+    "Allows the user to give or remove \"skill\" roles from themselves. Available roles are displayed in **`>rolelist`**.\nUsage example: **`>role add C++ Java`** & **`>role remove Rust`**",
     true
 );

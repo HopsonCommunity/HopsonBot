@@ -4,7 +4,7 @@
   "description": "Bot for my Discord community server.",
   "main": "scripts/bot.js",
   "scripts": {
-    "start": "node hopson_bot/hopson_bot.js"
+    "start": "node src/hopson_bot.js"
   },
   "repository": {
     "type": "git",
