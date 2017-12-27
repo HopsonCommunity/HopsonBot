@@ -25,10 +25,18 @@ var simpleCommands      = new Map();
 var functionCommands    = new Map()
 var roles               = Roles.roles;
 
+//Returns true if the user is indeed an admin (has admin role)
+function isAdmin(user) 
+{
+    return user.roles.find("name", "Admins") != null;
+}
+
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args)
 {
-    Bot.logMessage(`Command "${command}" sent in channel "${message.channel}" by "${message.member.displayName}"`)
+    if (isAdmin(message.member)) {
+        console.log("Sent by admin");
+    }
     //Check to see if it a simple command sent
     if (simpleCommands.has(command)) {
         if (args.length > 0)
@@ -47,6 +55,7 @@ function tryRespondToCommand(message, command, args)
     else {
         return;
     }
+    Bot.logMessage(`Command "${command}" sent in channel "${message.channel.name}" by "${message.member.displayName}"`)
 }
 
 
