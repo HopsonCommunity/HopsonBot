@@ -1,6 +1,9 @@
-src/config.js
+data/config.json
+data/config.js
 node_modules/
+run.bat
 package-lock.json
 src/node_modules/
 src/package-lock.json
 *.swp
+

@@ -1,17 +1,17 @@
 {
     "roles": [
         "C++",
+        "C-Language",
+        "Java",
+        "Python",
+        "C#",
+        "Rust",
+        "ASM",
         "Wot++",
         "OpenGL",
-        "Linux",
-        "Windows",
         "SFML",
         "SDL",
-        "Java",
-        "C#",
-        "C-Language",
-        "Rust",
-        "Python",
-        "ASM"
+        "Linux",
+        "Windows"
     ]
 }
