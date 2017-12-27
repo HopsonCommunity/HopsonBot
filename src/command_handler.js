@@ -119,3 +119,10 @@ addFunctionCommand(
     "Allows the user to add or remove role(s) from '>rolelist'\nUseage: '>role add C++ Java'",
     true
 );
+
+addFunctionCommand(
+    "quiz",
+    RoleMod.tryModifyRole,
+    "Starts or ends a quiz\n Useage: '>quiz start' '>quiz end'",
+    true
+);

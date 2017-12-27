@@ -1,5 +1,6 @@
 Bot             = require("./hopson_bot");
 CommandHandler  = require("./command_handler");
+Quiz            = require("./quiz")
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -7,6 +8,7 @@ module.exports = class EventHandler
     constructor(client) 
     {
         this.client = client;
+        this.quiz   = new Quiz()
     }
 
     //Start the bot
@@ -46,6 +48,8 @@ module.exports = class EventHandler
         if (message.content.startsWith(">")) {
             CommandHandler.handleCommand(message);
         }
+
+        //If a quiz is currently active, then it may be someone trying to answer it
     }
 }
 //Event for when a user sends a message
