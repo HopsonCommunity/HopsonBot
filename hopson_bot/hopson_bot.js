@@ -8,9 +8,13 @@ client.login(Config.getToken());
 
 module.exports = 
 {
+    logMessage : function(message) {
+        message += "\n";
+        console.log(message);
+    },
     sendMessage : function(channel, message) 
     {
-        console.log(`Message sent by bot in channel **"${channel.name}"**`);
+        console.log(`Message sent by bot in channel "${channel.name}"\n`);
         channel.send(message);
     }
 }

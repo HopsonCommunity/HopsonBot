@@ -12,7 +12,7 @@ module.exports =
         let content = message.content.slice(1); //Remove the ">" from the message
 
         //Extract the arguments and the command from the message
-        content     = content.split();
+        content     = content.split(" ");
         let command = content[0].toLowerCase();
         let args    = content.slice(1);
 
@@ -28,17 +28,24 @@ var roles               = Roles.roles;
 //Looks to see if the command sent is actually a command, and then responds to it
 function tryRespondToCommand(message, command, args) 
 {
-    console.log("Command sent: "   + command);
+    Bot.logMessage(`Command "${command}" sent in channel "${message.channel}" by "${message.member.displayName}"`)
+    //Check to see if it a simple command sent
     if (simpleCommands.has(command)) {
         if (args.length > 0) 
             return;
         Bot.sendMessage(message.channel, simpleCommands.get(command).action);
     }
-    else if  (functionCommands.has(command)) {
+
+    //Check to see if it is a function command sent
+    if  (functionCommands.has(command)) {
         let commandHandle = functionCommands.get(command);
-        if (!commandHandle.acceptsArgs && args.length > 0)
+        if (!commandHandle.acceptsArgs && args.length > 0){
             return;
+        }
         commandHandle.action(message, args);
+    }
+    else {
+        return;
     }
 }
 
@@ -53,7 +60,7 @@ function sendHelpList(message, args)
             output += `__**>${key}**__\n${val.description}\n\n`;
         });
     }
-    //Add in the simple commands
+    //Add in the simple commands to the final outputtted message
     addOutput(simpleCommands);
     addOutput(functionCommands);
     Bot.sendMessage(message.channel, output);
@@ -64,14 +71,14 @@ function sendHelpList(message, args)
 function addSimpleCommand(name, output, description) 
 {
     simpleCommands.set(name, new Command(output, description, false));
-    console.log(`Simple command added! \nName: "${name}" \nOutput: "${output}"  \nDescription:  "${description}"\n`);
+    Bot.logMessage(`Simple command added! \nName: "${name}"\nDescription:  "${description}"`);
 }
 
 //Adds commands which call a function
 function addFunctionCommand(name, func, description, acceptsArgs) 
 {
     functionCommands.set(name, new Command(func, description, acceptsArgs));
-    console.log(`Function command added! \nName: "${name}" \Function: "${func}"  \nDescription:  "${description}"\nArgs: ${acceptsArgs}`);
+    Bot.logMessage(`Function command added! \nName: "${name}"\nDescription:  "${description}"\nArgs: ${acceptsArgs}`);
 }
 
 
@@ -94,4 +101,12 @@ addFunctionCommand(
     sendHelpList, 
     "Sends a list of commands.",
     false
+);
+
+
+addFunctionCommand(
+    "role", 
+    RoleMod.tryModifyRole, 
+    "Allows the user to add or remove role(s) from '>rolelist'\nUseage: '>role add C++ Java'",
+    true
 );
