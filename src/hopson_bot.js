@@ -1,12 +1,9 @@
-
 const Discord   = require('discord.js');
 const Config    = require('../data/config');
-
 //Log into discord
 const client = new Discord.Client();
-client.login(Config.getToken());
 
-var exports = module.exports =
+var exp = module.exports =
 {
     logMessage : function(message) {
         message += "\n";
@@ -25,9 +22,6 @@ var exports = module.exports =
 
 //Start the event handler
 const EventHandler  = require("./event_handler")
-let eventHandle = new EventHandler(client).run();
+exp.eventHandle = new EventHandler(client).run();
 
-exports.getEventHandler = function() 
-{
-    return eventHandle;
-}
+client.login(Config.getToken());

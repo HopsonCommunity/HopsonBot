@@ -3,6 +3,7 @@ const Bot = require("./hopson_bot");
 const Command   = require("./command");
 const Roles     = require("../data/roles.json");
 const RoleMod   = require("./role_modifier");
+const Quiz      = require("./quiz")
 
 module.exports =
 {
@@ -58,7 +59,6 @@ function tryRespondToCommand(message, command, args)
     Bot.logMessage(`Command "${command}" sent in channel "${message.channel.name}" by "${message.member.displayName}"`)
 }
 
-
 //Simple function replies
 function sendHelpList(message, args)
 {
@@ -73,6 +73,11 @@ function sendHelpList(message, args)
     addOutput(simpleCommands);
     addOutput(functionCommands);
     Bot.sendMessage(message.channel, output);
+}
+
+function handleQuizCommand()
+{
+
 }
 
 
@@ -122,7 +127,7 @@ addFunctionCommand(
 
 addFunctionCommand(
     "quiz",
-    RoleMod.tryModifyRole,
+    Quiz.handleQuizCommand,
     "Starts or ends a quiz\n Useage: '>quiz start' '>quiz end'",
     true
 );

@@ -1,2 +1,2 @@
-npm start
+node src/hopson_bot.js
 pause

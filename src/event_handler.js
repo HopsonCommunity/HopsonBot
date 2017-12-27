@@ -8,7 +8,12 @@ module.exports = class EventHandler
     constructor(client) 
     {
         this.client = client;
-        this.quiz   = new Quiz()
+        this.quiz   = new Quiz.Quiz()
+    }
+
+    test() 
+    {
+        console.log("Does exist!\n\n\n");
     }
 
     //Start the bot
@@ -50,6 +55,9 @@ module.exports = class EventHandler
         }
 
         //If a quiz is currently active, then it may be someone trying to answer it
+        if (this.quiz.isActive) {
+
+        }
     }
 }
 //Event for when a user sends a message
