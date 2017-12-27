@@ -4,7 +4,6 @@
   "description": "Bot for my Discord community server.",
   "main": "scripts/bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node hopson_bot/hopson_bot.js"
   },
   "repository": {
