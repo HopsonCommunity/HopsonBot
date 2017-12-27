@@ -16,6 +16,10 @@ module.exports =
     {
         console.log(`Message sent by bot in channel "${channel.name}"\n\n`);
         channel.send(message);
+    },
+    getClient : function() 
+    {
+        return client;
     }
 }
 
