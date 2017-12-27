@@ -6,9 +6,10 @@ module.exports =
     //Validates a role modifying message is legit, and if it is then modify the user's role
     tryModifyRole: function(message, args) 
     {
-        let [isValid, result] = isValidCommand(args);
-        console.log(args);
-        console.log(isValid);
+        let action = args[0];
+        let languages = args.slice(1);
+
+        let [isValid, result] = isValidCommand(action, languages);
         if (isValid) {
             
         } 
@@ -19,12 +20,21 @@ module.exports =
 }
 
 //Checks if the command sent is valid
-function isValidCommand(args) 
+function isValidCommand(action, languages) 
 {
-    let action = args[0];
-    console.log(action);
+    //Validify the command's action (add/ remove)
     if (action != "add" && action != "remove") {
-        return [false, "Please state whether you want to 'add' or 'remove' a role."];
+        return [false, "Please state whether you want me to 'add' or 'remove' a role."];
+    }
+
+    //Validify language list
+    if (languages.length === 0) {
+        return [false, "Please give me a list of languages from '>rolelist'."];
+    }
+    for (language of languages) {
+        if (Roles.roles.indexOf(language) == -1) {
+            return [false, `I do not recognise the role "${language}".`];
+        }
     }
     return [true, ""];
 }
