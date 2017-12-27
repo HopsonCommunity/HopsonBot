@@ -1,6 +1,4 @@
-src/config.js
+data/config.js
 node_modules/
 package-lock.json
-src/node_modules/
-src/package-lock.json
 *.swp
