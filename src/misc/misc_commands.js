@@ -1,4 +1,5 @@
 const Bot = require("../hopson_bot")
+const Util = require('./util')
 
 // Contains the possible results for the 8ball
 var ball_results = ["Yes.", "Reply hazy, try again.", "Without a doubt.",
@@ -23,17 +24,11 @@ module.exports =
 		}
 		
 		// Get result
-		var result = getRandomInt(0, ball_results.length);
+		var result = Util.getRandomInt(0, ball_results.length);
 
 		// Print the result to the user
 		console.log("result: " + result);
 		Bot.sendMessage(message.channel, `🎱 The Magic 8-Ball says: "${ball_results[result]}"🎱`);
     }
-}
-
-// Generates a random integer
-function getRandomInt(min, max)
-{
-    return Math.floor((Math.random() * (max - min) + min));
 }
    
