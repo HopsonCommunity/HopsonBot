@@ -49,6 +49,18 @@ module.exports = class Quiz
         Bot.sendMessage(this.quizChannel, output);
     }
 
+   //Validates a question to be added
+   validateQuestionAdd(args)
+   {
+
+   }
+
+   //on tin
+   tryAddQuestion(channel, args) 
+   {
+
+   }
+
     //Prints the list of valid question categroies
     listCategories(channel)
     {
@@ -56,17 +68,28 @@ module.exports = class Quiz
             `Quiz Categories:\n>${Questions.categories.join("\n>")}`);
     }
 
-    //Validates a question to be added
-    validateQuestionAdd(args)
+    showHelp(channel)
     {
+        let output = "**Quiz commands:**\n";
 
+        output += "__**start**__\m";
+        output += "Starts a new quiz.\n";
+        output += "Usage: '>quiz start'\n\n";
+
+        output += "__**end**__\m";
+        output += "Ends a quiz, given one is already active in the channel.\n";
+        output += "Usage: '>quiz end'\n\n";
+
+        output += "__**add**__\n";
+        output += "Adds a new question into the quiz.\n";
+        output += "Usage: '>quiz add '<category>' '<question>' '<answer>'\n\n";
+
+        output += "__**cats**__\n";
+        output += "Prints the list of question categories.\n";
+        output += "Usage: '>quiz cats'\n\n";
+        Bot.sendMessage(channel, output);
     }
 
-    //on tin
-    tryAddQuestion(channel, args) 
-    {
-
-    }
 
     //Attempts to end a quiz
     tryEndQuiz(channel) 
