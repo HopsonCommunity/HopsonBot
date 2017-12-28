@@ -32,6 +32,11 @@ module.exports = class EventHandler
         {
             this.handleMessage(message);
         });
+
+        this.client.on("messageDelete", (message) =>
+        {
+            this.handleDelete(message);
+        });
     }
 
     /*
@@ -56,6 +61,17 @@ module.exports = class EventHandler
             console.log(content);
             this.quiz.submitAnswer(message, content);
         }
+    }
+
+    handleDelete(message)
+    {
+        let content = message.content;
+        let author  = message.author;
+        let channel = message.channel;
+
+        let botlog = this.client.channels.get("362124431801450526");
+
+        Bot.sendMessage(botlog, `Message deleted in channel ${channel} : \n\n${message}\n\n sent by ${author}`);
     }
 }
 
