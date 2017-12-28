@@ -1,8 +1,8 @@
 const Bot           = require("./hopson_bot");
 const EventHandle   = require('./event_handler');
-const Questions     = require('../data/quiz_questions.json');
 const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
+const fs            = require('fs');
 
 const questionsFile = "data/quiz_questions.json";
 
@@ -23,8 +23,7 @@ module.exports = class Quiz
         this.quizActive     = false;
         this.quizChannel    = null;     //The channel the quiz is currently in
         this.question       = null;
-
-        this.questions  = Questions.questions;
+        this.addQuestion("a", "b", "c");
     }
 
     //Attempts to begin a quiz
@@ -44,8 +43,8 @@ module.exports = class Quiz
     //Activates a new question for the quiz
     initNewQuestion() 
     {
-        let qIndex = Util.getRandomInt(0, this.questions.length);
         let inFile = JSONFile.readFileSync(questionsFile);
+        let qIndex = Util.getRandomInt(0, inFile.questions.length);
         this.question = new Question(inFile.questions[qIndex]);
 
         let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:**: ${this.question.question}`;
@@ -55,8 +54,9 @@ module.exports = class Quiz
     //Prints the list of valid question categroies
     listCategories(channel)
     {
+        let inFile = JSONFile.readFileSync(questionsFile);
         Bot.sendMessage(channel, 
-            `Quiz Categories:\n>${Questions.categories.join("\n>")}`);
+            `Quiz Categories:\n>${inFile.categories.join("\n>")}`);
     }
 
     //Shows the list of quiz commands
@@ -83,25 +83,40 @@ module.exports = class Quiz
     }
 
     //Adds a question to the JSON file
-    addQuestion(category, question, answer) 
+    addQuestion(category, q, a) 
     {
-        if (!category in Questions.categories) {
-            Bot.sendMessage(`Category ${category} doesn't exist. To see the list, use ">quiz categories", and use correct casing.`)
-        }
+        fs.readFile(questionsFile, 'utf8', function read(err, data){
+            if(err) {
+                console.log(err)
+            } 
+            else {
+                let qFile = JSON.parse(data);
+                qFile.questions.push({
+                    cat: category,
+                    queston: q,
+                    answer: a
+                });
+                let qOut = JSON.stringify(qFile, null, 4);
+                fs.writeFile(questionsFile, qOut, function(err){console.log(err);});
+            }
+        });
     }
 
     //on tin
     tryAddQuestion(channel, args) 
     {
+        let inFile = JSONFile.readFileSync(questionsFile);
         args = args.slice(1);
         if (args.length == 0 || args.length < 3) {
             Bot.sendMessage(channel, "You have not provided me with enough information to add a question; I must know the category, question, and the answer to the question.");
         }
+
+
         let category = args[0];
         args = args.slice(1);
         console.log(args);
         console.log(category);
-        if (Questions.categories.indexOf(category) === -1) {
+        if (inFile.categories.indexOf(category) === -1) {
             Bot.sendMessage(channel, `Category "${category}" doesn't exist. To see the list, use __*>quiz cats*__, and use correct casing.`)
         }
 

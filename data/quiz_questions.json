@@ -11,17 +11,17 @@
         {
             "cat": "Video-Games",
             "question": "What was Mario from Super Mario Bros. original name?",
-            "answer":   "jumpman"
+            "answer": "jumpman"
         },
         {
             "cat": "Video-Games",
             "question": "What was the forest area from Super Mario World called?",
-            "answer":   "forest of illusion"
+            "answer": "forest of illusion"
         },
         {
             "cat": "Video-Games",
             "question": "What was the second Ratchet and Clank game called in the UK? [Hint: Ratchet and Clank: <???>]",
-            "answer":   "locked and loaded"
-        }
+            "answer": "locked and loaded"
+        },
     ]
 }
