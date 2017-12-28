@@ -24,7 +24,7 @@ module.exports = class EventHandler
         //Event for when bot is dissconnected
         this.client.on("disconnect", (event) =>  
         {
-            console.log("Client has closed with status code ${event.code} and reason {event.reason}")
+            console.log(`Client has closed with status code ${event.code} and reason ${event.reason}`)
         });  
 
         //Event for messages sent to any of the discord channels
