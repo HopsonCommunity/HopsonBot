@@ -40,19 +40,21 @@ module.exports = class EventHandler
     */
     handleMessage(message) 
     {
+        let content = message.content;
         //Ignore messages sent by bots
         if (message.author.bot) {
             return;
         }
         
         //A message starting with > indicates it is a command 
-        if (message.content.startsWith(">")) {
+        if (content.startsWith(">")) {
             this.commandHandler.handleCommand(message);
         }
 
         //If a quiz is currently active, then it may be someone trying to answer it
-        if (this.quiz.isActive) {
-
+        if (this.quiz.quizActive) {
+            console.log(content);
+            this.quiz.submitAnswer(message, content);
         }
     }
 }

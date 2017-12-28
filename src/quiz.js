@@ -15,12 +15,12 @@ module.exports = class Quiz
         this.questions  = Questions.questions;
     }
 
-    addQuestion(category, question, answer) 
+    //Adds a question 
+    tryAddQuestion(category, question, answer) 
     {
         if (!category in Questions.categories) {
             Bot.sendMessage(`Category ${category} doesn't exist. To see the list, use ">quiz categories", and use correct casing.`)
         }
-        console.log("Boi, this shit exists!");
     }
 
     //Attempts to begin a quiz
@@ -49,12 +49,6 @@ module.exports = class Quiz
         Bot.sendMessage(this.quizChannel, output);
     }
 
-   //Validates a question to be added
-   validateQuestionAdd(args)
-   {
-
-   }
-
    //on tin
    tryAddQuestion(channel, args) 
    {
@@ -68,6 +62,7 @@ module.exports = class Quiz
             `Quiz Categories:\n>${Questions.categories.join("\n>")}`);
     }
 
+    //Shows the list of quiz commands
     showHelp(channel)
     {
         let output = "**Quiz commands:**\n";
@@ -90,6 +85,14 @@ module.exports = class Quiz
         Bot.sendMessage(channel, output);
     }
 
+    endQuiz()
+    {
+        this.quizActive = false;
+        this.quizChannel = null;
+        this.currAnswer  = "";
+        this.currQuestion = "";
+    }
+
 
     //Attempts to end a quiz
     tryEndQuiz(channel) 
@@ -101,11 +104,18 @@ module.exports = class Quiz
             Bot.sendMessage(channel, `Sorry, you can not end a quiz from a different channel from which is currently active, which is **'${this.quizChannel.name}'**.`);
         }
         else {
-            this.quizActive = false;
-            this.quizChannel = null;
-            this.currAnswer  = "";
-            this.currQuestion = "";
+            this.endQuiz();
             Bot.sendMessage(channel, `Quiz has been stopped manually`)
+        }
+    }
+
+    submitAnswer(message, answer)
+    {
+        if (!this.quizActive) return;
+        if (this.quizChannel != message.channel) return;
+        if (answer == this.currAnswer) {
+            Bot.sendMessage(this.quizChannel, "Answer success!");
+            this.endQuiz();
         }
     }
 }

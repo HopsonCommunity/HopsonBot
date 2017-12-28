@@ -91,7 +91,7 @@ module.exports = class CommandHandler
 
         //The bot ofc needs to know what to do: starting or ending a quiz
         if(args.length == 0) {
-            Bot.sendMessage(message.channel, "You must tell me if want to 'start' or 'end' a quiz."); 
+            Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
             return;
         }
 
