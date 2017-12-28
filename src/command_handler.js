@@ -94,10 +94,12 @@ module.exports = class CommandHandler
             return;
         }
 
-        let actions = ["start",
-                       "end", 
-                       "add", 
-                       "cats"];
+        //Valid quiz commands
+        let actions = [ "start",
+                        "end", 
+                        "add", 
+                        "cats",
+                        "help"];
 
         //Try begin/ start quiz
         let command = args[0].toLowerCase();
@@ -108,10 +110,12 @@ module.exports = class CommandHandler
             Bot.sendMessage(message.channel, "To avoid spam, quizzes only work on the #use-bots-here channel.");
         }
         else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call
-            if      (command === "start"        ) this.eventHandle.quiz.tryStartQuiz(message.channel);
-            else if (command === "end"          ) this.eventHandle.quiz.tryEndQuiz  (message.channel);
-            else if (command === "add"          ) return;
-            else if (command === "cats"         ) return;
+            let quiz = this.eventHandle.quiz;
+            if      (command === "start"        ) quiz.tryStartQuiz    (message.channel);
+            else if (command === "end"          ) quiz.tryEndQuiz      (message.channel);
+            else if (command === "add"          ) quiz.tryAddQuestion  (message.channel, args);
+            else if (command === "cats"         ) quiz.listCategories  (message.channel);
+            else if (command === "help"         ) quiz.showHelp        (message.channel);
         }
     }
 
@@ -164,7 +168,7 @@ module.exports = class CommandHandler
         this.addFunctionCommand(
             "quiz",
             this.handleQuizCommand.bind(this),
-            "Access quiz commands. For more info, please use command `>quiz-help`",
+            "Access quiz commands. For more info, please use command `>quiz help`",
             true
         );
 

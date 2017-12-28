@@ -1,7 +1,7 @@
-const Bot = require("./hopson_bot");
-const EventHandle = require('./event_handler');
-const Questions   = require('../data/quiz_questions.json');
-const Util        = require("./misc/util");
+const Bot           = require("./hopson_bot");
+const EventHandle   =  require('./event_handler');
+const Questions     = require('../data/quiz_questions.json');
+const Util          = require("./misc/util");
 
 module.exports = class Quiz
 {
@@ -37,6 +37,7 @@ module.exports = class Quiz
         }
     }
 
+    //Activates a new question for the quiz
     initNewQuestion() 
     {
         let questionN       = Util.getRandomInt(0, this.questions.length);
@@ -46,6 +47,25 @@ module.exports = class Quiz
         let output = 
         `**New Question**\n**Category**: ${cat}\n**Question:**: ${this.currQuestion}`;
         Bot.sendMessage(this.quizChannel, output);
+    }
+
+    //Prints the list of valid question categroies
+    listCategories(channel)
+    {
+        Bot.sendMessage(channel, 
+            `Quiz Categories:\n>${Questions.categories.join("\n>")}`);
+    }
+
+    //Validates a question to be added
+    validateQuestionAdd(args)
+    {
+
+    }
+
+    //on tin
+    tryAddQuestion(channel, args) 
+    {
+
     }
 
     //Attempts to end a quiz
