@@ -1,4 +1,18 @@
 {
+    "channels": [ 
+        "start",
+        "end", 
+        "add", 
+        "cats",
+        "help"
+    ],
+    "commands": [ 
+        "start",
+        "end", 
+        "add", 
+        "cats",
+        "help"
+    ],
     "categories": [
         "Any",
         "Video-Games",

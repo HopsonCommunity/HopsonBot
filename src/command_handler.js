@@ -1,9 +1,9 @@
 const Bot = require("./hopson_bot");
-
 const Command   = require("./command");
 const Roles     = require("../data/roles.json");
 const RoleMod   = require("./role_modifier");
-const Quiz      = require("./quiz")
+const Quiz      = require("./quiz");
+const QuizJSON  = require("../data/quiz_questions.json");
 const Misc      = require("./misc/misc_commands");
 
 module.exports = class CommandHandler 
@@ -91,29 +91,13 @@ module.exports = class CommandHandler
             Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
             return;
         }
-
-        //Valid quiz commands
-        let actions = [ "start",
-                        "end", 
-                        "add", 
-                        "cats",
-                        "help"];
-        let validChanels = [
-            "bot_testing",
-            "use-bots-here",
-            "trusted_house",
-            "voice-text-chat",
-            "member-voice-text-chat",
-            "bot_testing"
-        ]
-
         //Try begin/ start quiz
         let command = args[0].toLowerCase();
-        if (actions.indexOf(command) === -1) {
+        if (QuizJSON.commands.indexOf(command) === -1) {
             Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${actions.join(", ")}`);
         }
-        else if (validChanels.indexOf(cName) == -1) {
-            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${validChanels.join("\n>")}`);
+        else if (QuizJSON.channels.indexOf(cName) == -1) {
+            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
         }
         else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call
             let quiz = this.eventHandle.quiz;
