@@ -8,8 +8,8 @@ module.exports = class EventHandler
     constructor(client) 
     {
         this.client         = client;
-        this.quiz           = new Quiz.Quiz()
-        this.commandHandler = new CommandHandler();
+        this.quiz           = new Quiz()
+        this.commandHandler = new CommandHandler(this);
     }
 
     //Start the bot

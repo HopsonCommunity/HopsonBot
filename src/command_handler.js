@@ -8,12 +8,13 @@ const Misc      = require("./misc/misc_commands");
 
 module.exports = class CommandHandler 
 {
-    constructor() 
+    constructor(eventHandler) 
     {
         //Init some maps and list to hold data to be used by command handler
-        this.simpleCommands      = new Map();
-        this.functionCommands    = new Map();
-        this.roles               = Roles.roles;
+        this.simpleCommands     = new Map();
+        this.functionCommands   = new Map();
+        this.roles              = Roles.roles;
+        this.eventHandle        = eventHandler;
 
         this.initCommands();
     }
@@ -83,6 +84,32 @@ module.exports = class CommandHandler
         Bot.sendMessage(message.channel, output);
     }
 
+    handleQuizCommand(message, args) 
+    {
+        let cName = message.channel.name;
+
+        //The bot ofc needs to know what to do: starting or ending a quiz
+        if(args.length == 0) {
+            Bot.sendMessage(message.channel, "You must tell me if want to 'start' or 'end' a quiz."); 
+            return;
+        }
+
+        //Try begin/ start quiz
+        let command = args[0].toLowerCase();
+        if (command != "start" && command != "end") {
+            Bot.sendMessage(message.channel, "You must tell me if want to 'start' or 'end' a quiz."); 
+        }
+        else if (cName != "bot_testing" && cName != "use-bots-here") {
+            Bot.sendMessage(message.channel, "To avoid spam, quizzes only work on the #use-bots-here channel.");
+        }
+        else {
+            command == "start" ?
+                this.eventHandle.quiz.tryStartQuiz(message.channel) : 
+                this.eventHandle.quiz.tryEndQuiz  (message.channel);
+        }
+    }
+
+
     //Adds simple "print" commands
     addSimpleCommand(name, output, description)
     {
@@ -130,7 +157,7 @@ module.exports = class CommandHandler
 
         this.addFunctionCommand(
             "quiz",
-            Quiz.handleQuizCommand,
+            this.handleQuizCommand.bind(this),
             "Starts or ends a quiz\nUseage: '>quiz start' '>quiz end'",
             true
         );
