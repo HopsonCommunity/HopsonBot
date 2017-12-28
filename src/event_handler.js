@@ -101,6 +101,7 @@ module.exports = class EventHandler
     handleEdit(oldMessage, newMessage)
     {
         if(oldMessage.author.bot) return;
+        if(oldMessage.content === newMessage.content) return;
 
         let botlog = this.client.channels.get("362124431801450526");
         let time = (new Date()).toISOString();
