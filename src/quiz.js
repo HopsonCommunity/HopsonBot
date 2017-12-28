@@ -11,7 +11,16 @@ module.exports = class Quiz
         this.quizChannel    = null;     //The channel the quiz is currently in
         this.currQuestion   = null;
         this.currAnswer     = null;
+
         this.questions  = Questions.questions;
+    }
+
+    addQuestion(category, question, answer) 
+    {
+        if (!category in Questions.categories) {
+            Bot.sendMessage(`Category ${category} doesn't exist. To see the list, use ">quiz categories", and use correct casing.`)
+        }
+        console.log("Boi, this shit exists!");
     }
 
     //Attempts to begin a quiz
@@ -24,11 +33,11 @@ module.exports = class Quiz
             this.quizActive = true;
             this.quizChannel = channel;
             Bot.sendMessage(channel, "Quiz has begun!");
-            this.initNewQuestions();
+            this.initNewQuestion();
         }
     }
 
-    initNewQuestions() 
+    initNewQuestion() 
     {
         let questionN       = Util.getRandomInt(0, this.questions.length);
         let cat             = this.questions[questionN].cat;
@@ -51,6 +60,8 @@ module.exports = class Quiz
         else {
             this.quizActive = false;
             this.quizChannel = null;
+            this.currAnswer  = "";
+            this.currQuestion = "";
             Bot.sendMessage(channel, `Quiz has been stopped manually`)
         }
     }
