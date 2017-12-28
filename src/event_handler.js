@@ -37,6 +37,16 @@ module.exports = class EventHandler
         {
             this.handleDelete(message);
         });
+
+        this.client.on("messageUpdate", (oldMessage, newMessage) =>
+        {
+            this.handleEdit(oldMessage, newMessage);
+        });
+
+        this.client.on("userUpdate", (oldUser, newUser) =>
+        {
+            this.handleUserUpdate(oldMessage, newMessage);
+        });
     }
 
     /*
@@ -73,5 +83,17 @@ module.exports = class EventHandler
 
         Bot.sendMessage(botlog, `Message deleted in channel ${channel} : \n\n${message}\n\n sent by ${author}`);
     }
+
+    handleEdit(oldMessage, newMessage)
+    {
+
+    }
+
+    handleUserUpdate(oldUser, newUser)
+    {
+        
+    }
+
+
 }
 
