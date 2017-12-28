@@ -42,11 +42,12 @@ module.exports = class EventHandler
         {
             this.handleEdit(oldMessage, newMessage);
         });
-
+/*
         this.client.on("userUpdate", (oldUser, newUser) =>
         {
             this.handleUserUpdate(oldMessage, newMessage);
         });
+*/
     }
 
     /*
@@ -69,7 +70,7 @@ module.exports = class EventHandler
         //If a quiz is currently active, then it may be someone trying to answer it
         if (this.quiz.quizActive) {
             console.log(content);
-            this.quiz.submitAnswer(message, content);
+            this.quiz.submitAnswer(message, content.toLowerCase());
         }
     }
 
@@ -88,12 +89,12 @@ module.exports = class EventHandler
     {
 
     }
-
+/*
     handleUserUpdate(oldUser, newUser)
     {
         
     }
-
+*/
 
 }
 
