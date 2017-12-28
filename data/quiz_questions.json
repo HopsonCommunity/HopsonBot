@@ -52,6 +52,66 @@
             "cat": "Geography",
             "question": "What is the capitol of England?",
             "answer": "London"
+        },
+        {
+            "cat": "Geography",
+            "question": "What USA state will you find the city of Orlando?",
+            "answer": "Florida"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What type is the pokémon bidoof?",
+            "answer": "Normal"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What type of Pokemon is Weedle?",
+            "answer": "bug"
+        },
+        {
+            "cat": "Geography",
+            "question": "What was the city of Istanbul called before 1930?",
+            "answer": "Constantinople"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the capital city of France?",
+            "answer": "Paris"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "Who was the original creator of C++?",
+            "answer": "Bjarne Stroustrup"
+        },
+        {
+            "cat": "Movies",
+            "question": "Who was the director of the 1997 film 'Titanic'?",
+            "answer": "James Cameron"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What is the most famous game by Bay12Games?",
+            "answer": "Dwarf Fortress"
+        },
+        {
+            "cat": "Nature",
+            "question": "What is a group of lions called? [1 word]",
+            "answer": "Pride"
+        },
+        {
+            "cat": "Movies",
+            "question": "Who is the first word Anakin says after being fit into Darth Vader's suit?",
+            "answer": "No"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "Who was the lead game designer of Skyrim?",
+            "answer": "Todd Howard"
+        },
+        {
+            "cat": "Movies",
+            "question": "What was the first Star Wars movie released? Hint: Star Wars: <your answer here>",
+            "answer": "A New Hope"
         }
     ]
 }
