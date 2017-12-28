@@ -45,10 +45,10 @@ module.exports = class Quiz
     initNewQuestion() 
     {
         let qIndex = Util.getRandomInt(0, this.questions.length);
-        JSONFile.readFile(questionsFile, function(err, inFile) {
-            this.question = new Question(inFile.questions[qIndex]);
-        }.bind(this))
-        let output = `**New Question**\n**Category**: ${this.question.cat}\n**Question:**: ${this.question.question}`;
+        let inFile = JSONFile.readFileSync(questionsFile);
+        this.question = new Question(inFile.questions[qIndex]);
+
+        let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:**: ${this.question.question}`;
         Bot.sendMessage(this.quizChannel, output);
     }
 
