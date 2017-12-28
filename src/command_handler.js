@@ -4,6 +4,7 @@ const Command   = require("./command");
 const Roles     = require("../data/roles.json");
 const RoleMod   = require("./role_modifier");
 const Quiz      = require("./quiz")
+const Misc      = require("./misc/misc_commands");
 
 module.exports = class CommandHandler 
 {
@@ -160,5 +161,13 @@ module.exports = class CommandHandler
             "Starts or ends a quiz\nUseage: '>quiz start' '>quiz end'",
             true
         );
+
+        this.addFunctionCommand(
+            "8ball",
+            Misc.eightBall,
+            "If you cannot make a decision, why not try using an 8ball?",
+            true
+        );	
     }
 }
+
