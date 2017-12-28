@@ -138,10 +138,7 @@ module.exports = class CommandHandler
             `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${this.roles.join("\n> ")}.`,
             "Displays list of roles you are able to add and remove."
         );
-
-
-
-
+        
         //Add the "function commands"
         this.addFunctionCommand(
             "help",

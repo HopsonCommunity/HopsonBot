@@ -1,10 +1,10 @@
 {
     "channels": [ 
-        "start",
-        "end", 
-        "add", 
-        "cats",
-        "help"
+        "bot_testing",
+        "trusted_house", 
+        "voice-text-chat", 
+        "members-voice-text-chat",
+        "use-bots-here"
     ],
     "commands": [ 
         "start",
