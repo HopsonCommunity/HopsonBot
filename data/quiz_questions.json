@@ -112,6 +112,21 @@
             "cat": "Movies",
             "question": "What was the first Star Wars movie released? Hint: Star Wars: <your answer here>",
             "answer": "A New Hope"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "What language is C++ a superset of?",
+            "answer": "C"
+        },
+        {
+            "cat": "Geography",
+            "question": "Which country lies on the border between Spain and France?",
+            "answer": "Andorra"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "What does USB stand for?",
+            "answer": "Universal Serial Bus"
         }
     ]
 }

@@ -3,6 +3,7 @@ const EventHandle   = require('./event_handler');
 const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
 const fs            = require('fs');
+const Discord       = require('discord.js')
 
 const questionsFile = "data/quiz_questions.json";
 
@@ -62,8 +63,25 @@ module.exports = class Quiz
     //Shows the list of quiz commands
     showHelp(channel)
     {
-        let output = "**__Quiz commands:__**\n\n";
+        
 
+        let output = new Discord.RichEmbed()
+            .setTitle("__**Quiz Commands**__")
+            .addField("__**start**__",
+                      "Starts a new quiz.\n" +  
+                      "Usage: '>quiz start'") 
+            .addField("__**end**__",
+                      "Ends a quiz, given one is already active in the channel.\n" +
+                      "Usage: '>quiz end'")
+            .addField("__**add**__\n",
+                      "Adds a new question into the quiz.\n" + 
+                      "Usage: '>quiz add Maths 'What is 1 + 1?' '2'")
+            .addField("__**cats**__\n",
+                      "Prints the list of question categories.\n" + 
+                      "Usage: '>quiz cats'");
+        
+/*
+        let output = "**__Quiz commands:__**\n\n";
         output += "__**start**__\n";
         output += "Starts a new quiz.\n";
         output += "Usage: '>quiz start'\n\n";
@@ -79,6 +97,7 @@ module.exports = class Quiz
         output += "__**cats**__\n";
         output += "Prints the list of question categories.\n";
         output += "Usage: '>quiz cats'\n\n";
+        */
         Bot.sendMessage(channel, output);
     }
 
