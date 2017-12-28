@@ -15,22 +15,19 @@ module.exports =
 {
     eightBall: function(message, args)
     {
-	// Make sure the field is not empty
-	console.log("Args[0] " + args[0]);
-	if (args[0] === undefined)
-	{
-	    Bot.sendMessage(message.channel, "No question given");
-	    return;
-	}
-	
-	// Get result
-	var result = getRandomInt(0, ball_results.length);
+		// Make sure the field is not empty
+		console.log("Args[0] " + args[0]);
+		if (args[0] === undefined) {
+			Bot.sendMessage(message.channel, "No question given");
+			return;
+		}
+		
+		// Get result
+		var result = getRandomInt(0, ball_results.length);
 
-	// Print the result to the user
-	console.log("result: " + result);
-	Bot.sendMessage(message.channel,
-			"🎱 The Magic 8-Ball says: ``" + ball_results[result]
-		        + "`` 🎱");
+		// Print the result to the user
+		console.log("result: " + result);
+		Bot.sendMessage(message.channel, `🎱 The Magic 8-Ball says: "${ball_results[result]}"🎱`);
     }
 }
 
