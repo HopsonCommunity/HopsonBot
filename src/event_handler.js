@@ -42,12 +42,6 @@ module.exports = class EventHandler
         {
             this.handleEdit(oldMessage, newMessage);
         });
-/*
-        this.client.on("userUpdate", (oldUser, newUser) =>
-        {
-            this.handleUserUpdate(oldMessage, newMessage);
-        });
-*/
     }
 
     /*
@@ -73,28 +67,67 @@ module.exports = class EventHandler
             this.quiz.submitAnswer(message, content.toLowerCase());
         }
     }
-
+    
+    /*
+     * When a message is deleted log the message to #bot_log
+     */
     handleDelete(message)
     {
-        let content = message.content;
-        let author  = message.author;
-        let channel = message.channel;
-
         let botlog = this.client.channels.get("362124431801450526");
+        let time = (new Date()).toISOString();
+        
+        Bot.sendMessage(botlog, {embed: {
+                                    color: 16711680,
+                                    description: "Message Deleted",
+                                    fields: [{
+                                                name: "Message Author",
+                                                value: `${message.author} `
+                                            },
+                                            {
+                                                name: "Channel",
+                                                value: `${message.channel} `
 
-        Bot.sendMessage(botlog, `Message deleted in channel ${channel} : \n\n${message}\n\n sent by ${author}`);
+                                            },
+                                            {
+                                                name: "Message",
+                                                value: `${message.content} `
+                                            }],
+                                    timestamp: `${time}`
+                                }});
     }
-
+    /*
+     * When a message is edited log the old and new message to #bot_log
+     */
     handleEdit(oldMessage, newMessage)
     {
+        if(oldMessage.author.bot) return;
 
-    }
-/*
-    handleUserUpdate(oldUser, newUser)
-    {
+        let botlog = this.client.channels.get("362124431801450526");
+        let time = (new Date()).toISOString();
         
-    }
-*/
+        Bot.sendMessage(botlog, {embed: {
+                                    color: 16737280,
+                                    description: "Message Edited",
+                                    fields: [{
+                                                name: "Message Author",
+                                                value: `${oldMessage.author}`
+                                            },
+                                            {
+                                                name: "Channel",
+                                                value: `${oldMessage.channel}`
 
+                                            },
+                                            {
+                                                name: "Old Message",
+                                                value: `${oldMessage.content}`
+                                            },
+                                            {
+                                                name: "New Message",
+                                                value: `${newMessage.content}`
+                                            }],
+                                    timestamp: `${time}`
+                                }});
+
+    }
 }
 
