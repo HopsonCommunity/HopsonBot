@@ -6,14 +6,23 @@ const JSONFile      = require('jsonfile');
 
 const questionsFile = "data/quiz_questions.json";
 
+class Question 
+{
+    constructor(jsonField)
+    {
+        this.category = jsonField.cat;
+        this.question = jsonField.question;
+        this.answer   = jsonField.answer;
+    }
+}
+
 module.exports = class Quiz
 {
     constructor()
     {
         this.quizActive     = false;
         this.quizChannel    = null;     //The channel the quiz is currently in
-        this.currQuestion   = null;
-        this.currAnswer     = null;
+        this.question       = null;
 
         this.questions  = Questions.questions;
     }
@@ -36,13 +45,10 @@ module.exports = class Quiz
     initNewQuestion() 
     {
         let qIndex = Util.getRandomInt(0, this.questions.length);
-        var cat = null;
         JSONFile.readFile(questionsFile, function(err, inFile) {
-            cat                 = inFile.questions[qIndex].cat;
-            this.currQuestion   = inFile.questions[qIndex].question;
-            this.currAnswer     = inFile.questions[qIndex].answer;
-        });
-        let output =  `**New Question**\n**Category**: ${cat}\n**Question:**: ${this.currQuestion}`;
+            this.question = new Question(inFile.questions[qIndex]);
+        }.bind(this))
+        let output = `**New Question**\n**Category**: ${this.question.cat}\n**Question:**: ${this.question.question}`;
         Bot.sendMessage(this.quizChannel, output);
     }
 
@@ -110,8 +116,6 @@ module.exports = class Quiz
     {
         this.quizActive = false;
         this.quizChannel = null;
-        this.currAnswer  = "";
-        this.currQuestion = "";
     }
 
 
@@ -136,7 +140,7 @@ module.exports = class Quiz
              this.quizChannel != message.channel) {
             return;
         }
-        if (answer == this.currAnswer) {
+        if (answer == this.question.answer) {
             Bot.sendMessage(this.quizChannel, "Answer success!");
             this.endQuiz();
         }
