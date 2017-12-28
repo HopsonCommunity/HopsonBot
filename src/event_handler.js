@@ -7,8 +7,9 @@ module.exports = class EventHandler
 {
     constructor(client) 
     {
-        this.client = client;
-        this.quiz   = new Quiz.Quiz()
+        this.client         = client;
+        this.quiz           = new Quiz.Quiz()
+        this.commandHandler = new CommandHandler();
     }
 
     //Start the bot
@@ -46,7 +47,7 @@ module.exports = class EventHandler
         
         //A message starting with > indicates it is a command 
         if (message.content.startsWith(">")) {
-            CommandHandler.handleCommand(message);
+            this.commandHandler.handleCommand(message);
         }
 
         //If a quiz is currently active, then it may be someone trying to answer it
