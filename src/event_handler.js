@@ -24,7 +24,7 @@ module.exports = class EventHandler
         //Event for when bot is dissconnected
         this.client.on("disconnect", (event) =>  
         {
-            console.log("Client has closed with status code ${event.code} and reason {event.reason}")
+            console.log(`Client has closed with status code ${event.code} and reason ${event.reason}`)
         });  
 
         //Event for messages sent to any of the discord channels
@@ -32,6 +32,22 @@ module.exports = class EventHandler
         {
             this.handleMessage(message);
         });
+
+        this.client.on("messageDelete", (message) =>
+        {
+            this.handleDelete(message);
+        });
+
+        this.client.on("messageUpdate", (oldMessage, newMessage) =>
+        {
+            this.handleEdit(oldMessage, newMessage);
+        });
+/*
+        this.client.on("userUpdate", (oldUser, newUser) =>
+        {
+            this.handleUserUpdate(oldMessage, newMessage);
+        });
+*/
     }
 
     /*
@@ -54,8 +70,31 @@ module.exports = class EventHandler
         //If a quiz is currently active, then it may be someone trying to answer it
         if (this.quiz.quizActive) {
             console.log(content);
-            this.quiz.submitAnswer(message, content);
+            this.quiz.submitAnswer(message, content.toLowerCase());
         }
     }
+
+    handleDelete(message)
+    {
+        let content = message.content;
+        let author  = message.author;
+        let channel = message.channel;
+
+        let botlog = this.client.channels.get("362124431801450526");
+
+        Bot.sendMessage(botlog, `Message deleted in channel ${channel} : \n\n${message}\n\n sent by ${author}`);
+    }
+
+    handleEdit(oldMessage, newMessage)
+    {
+
+    }
+/*
+    handleUserUpdate(oldUser, newUser)
+    {
+        
+    }
+*/
+
 }
 

@@ -76,11 +76,8 @@ module.exports = class CommandHandler
             });
         }
         //Add in the simple commands to the final outputtted message
-        console.log("Yo");
         addOutput(this.simpleCommands);
-        console.log("Yo2");
         addOutput(this.functionCommands);
-        console.log("Yo3");
         Bot.sendMessage(message.channel, output);
     }
 
@@ -150,6 +147,9 @@ module.exports = class CommandHandler
             "Displays list of roles you are able to add and remove."
         );
 
+
+
+
         //Add the "function commands"
         this.addFunctionCommand(
             "help",
@@ -157,7 +157,6 @@ module.exports = class CommandHandler
             "Sends a list of commands.",
             false
         );
-
 
         this.addFunctionCommand(
             "role",

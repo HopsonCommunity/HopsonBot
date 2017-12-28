@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/HopsonCommunity/HopsonBot#readme",
   "dependencies": {
-    "discord.js": "^11.2.1"
+    "discord.js": "^11.2.1",
+    "jsonfile": "^4.0.0"
   }
 }
