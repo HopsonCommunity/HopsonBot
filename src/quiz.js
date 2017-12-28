@@ -79,25 +79,7 @@ module.exports = class Quiz
             .addField("__**cats**__\n",
                       "Prints the list of question categories.\n" + 
                       "Usage: '>quiz cats'");
-        
-/*
-        let output = "**__Quiz commands:__**\n\n";
-        output += "__**start**__\n";
-        output += "Starts a new quiz.\n";
-        output += "Usage: '>quiz start'\n\n";
 
-        output += "__**end**__\n";
-        output += "Ends a quiz, given one is already active in the channel.\n";
-        output += "Usage: '>quiz end'\n\n";
-
-        output += "__**add**__\n";
-        output += "Adds a new question into the quiz.\n";
-        output += "Usage: '>quiz add Maths 'What is 1 + 1?' '2'\n\n";
-
-        output += "__**cats**__\n";
-        output += "Prints the list of question categories.\n";
-        output += "Usage: '>quiz cats'\n\n";
-        */
         Bot.sendMessage(channel, output);
     }
 

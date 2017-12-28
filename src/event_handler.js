@@ -1,6 +1,7 @@
 Bot             = require("./hopson_bot");
 CommandHandler  = require("./command_handler");
 Quiz            = require("./quiz")
+Discord       = require('discord.js')
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -81,11 +82,13 @@ module.exports = class EventHandler
                                     description: "Message Deleted",
                                     fields: [{
                                                 name: "Message Author",
-                                                value: `${message.author} `
+                                                value: `${message.author} `,
+                                                inline: true
                                             },
                                             {
                                                 name: "Channel",
-                                                value: `${message.channel} `
+                                                value: `${message.channel} `,
+                                                inline: true
 
                                             },
                                             {
@@ -104,26 +107,35 @@ module.exports = class EventHandler
 
         let botlog = this.client.channels.get("362124431801450526");
         let time = (new Date()).toISOString();
-        
+/*
+        Bot.sendMessage(botlog, new Discord.RichEmbed()
+            .setDescription("Message Edited")
+            .setColor(16737280)
+            .addField("Message Author", oldMessage.author,  true)
+            .addField("Channel",        oldMessage.channel, true)
+            .addBlankField()
+            .addField("Old Message", oldMessage.content, true)
+            .addField("New Message", newMessage.content, true));
+*/
         Bot.sendMessage(botlog, {embed: {
                                     color: 16737280,
                                     description: "Message Edited",
                                     fields: [{
                                                 name: "Message Author",
-                                                value: `${oldMessage.author}`
+                                                value: `${oldMessage.author}`,
                                             },
                                             {
                                                 name: "Channel",
-                                                value: `${oldMessage.channel}`
+                                                value: `${oldMessage.channel}`,
 
                                             },
                                             {
                                                 name: "Old Message",
-                                                value: `${oldMessage.content}`
+                                                value: `${oldMessage.content}`,
                                             },
                                             {
                                                 name: "New Message",
-                                                value: `${newMessage.content}`
+                                                value: `${newMessage.content}`,
                                             }],
                                     timestamp: `${time}`
                                 }});
