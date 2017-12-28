@@ -98,14 +98,22 @@ module.exports = class CommandHandler
                         "add", 
                         "cats",
                         "help"];
+        let validChanels = [
+            "bot_testing",
+            "use-bots-here",
+            "trusted_house",
+            "voice-text-chat",
+            "member-voice-text-chat",
+            "bot_testing"
+        ]
 
         //Try begin/ start quiz
         let command = args[0].toLowerCase();
         if (actions.indexOf(command) === -1) {
             Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${actions.join(", ")}`);
         }
-        else if (cName != "bot_testing" && cName != "use-bots-here") {
-            Bot.sendMessage(message.channel, "To avoid spam, quizzes only work on the #use-bots-here channel.");
+        else if (validChanels.indexOf(cName) == -1) {
+            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${validChanels.join("\n>")}`);
         }
         else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call
             let quiz = this.eventHandle.quiz;

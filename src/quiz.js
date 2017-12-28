@@ -64,11 +64,11 @@ module.exports = class Quiz
     {
         let output = "**__Quiz commands:__**\n\n";
 
-        output += "__**start**__\m";
+        output += "__**start**__\n";
         output += "Starts a new quiz.\n";
         output += "Usage: '>quiz start'\n\n";
 
-        output += "__**end**__\m";
+        output += "__**end**__\n";
         output += "Ends a quiz, given one is already active in the channel.\n";
         output += "Usage: '>quiz end'\n\n";
 
