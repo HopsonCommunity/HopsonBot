@@ -23,5 +23,20 @@
             "question": "What was the second Ratchet and Clank game called in the UK? [Hint: Ratchet and Clank: <???>]",
             "answer": "locked and loaded"
         },
+        {
+            "cat": "Maths",
+            "question": "What is 2 + 2?",
+            "answer": "4"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 2 + 2?",
+            "answer": "4"
+        },
+        {
+            "cat": "Maths",
+            "question": "What's the derivate of e?",
+            "answer": "e"
+        }
     ]
 }

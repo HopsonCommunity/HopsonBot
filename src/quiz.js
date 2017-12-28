@@ -24,7 +24,6 @@ module.exports = class Quiz
         this.quizActive     = false;
         this.quizChannel    = null;     //The channel the quiz is currently in
         this.question       = null;
-        this.addQuestion("a", "b", "c");
     }
 
     //Attempts to begin a quiz
@@ -116,19 +115,31 @@ module.exports = class Quiz
 
         //Check if the category input is valid
         let category = args[0];
-        args = args.slice(1);
-        console.log(args);
-        console.log(category);
         if (inFile.categories.indexOf(category) === -1) {
             Bot.sendMessage(channel, `Category "${category}" doesn't exist. To see the list, use __*>quiz cats*__, and use correct casing.`)
             return;
         }
 
-
-        function extractString(args) 
-        {
-
+        function parseFail() {
+            Bot.sendMessage(channel, `For me to recognise a question/ answer, you must start and end your question with"`);
         }
+
+        //Try extract the question and answer from 
+        args = args.slice(1);
+        //Get question
+        let [res1, question, newArgs] = Util.extractStringFromArray(args);
+        if (!res1) {
+            parseFail();
+            return;
+        }
+        //Get answer
+        let [res2, answer, f] = Util.extractStringFromArray(newArgs);
+        if (!res2) {
+            parseFail();
+            return;
+        }
+        this.addQuestion(category, question, answer);
+        Bot.sendMessage(channel, `Question added to my quiz log!\n**Category:** "${category}"\n**Question:** "${question}"\n**Answer:** "${answer}"`);
     }
 
     endQuiz()
