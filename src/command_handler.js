@@ -94,9 +94,9 @@ module.exports = class CommandHandler
         //Try begin/ start quiz
         let command = args[0].toLowerCase();
         if (QuizJSON.commands.indexOf(command) === -1) {
-            Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${actions.join(", ")}`);
+            Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${QuizJSON.commands.join(", ")}`);
         }
-        else if (QuizJSON.channels.indexOf(cName) == -1) {
+        else if (QuizJSON.channels.indexOf(cName) === -1) {
             Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
         }
         else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call

@@ -47,7 +47,7 @@ module.exports = class Quiz
         let qIndex = Util.getRandomInt(0, inFile.questions.length);
         this.question = new Question(inFile.questions[qIndex]);
 
-        let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:**: ${this.question.question}`;
+        let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:** ${this.question.question}`;
         Bot.sendMessage(this.quizChannel, output);
     }
 
@@ -170,7 +170,7 @@ module.exports = class Quiz
              this.quizChannel != message.channel) {
             return;
         }
-        if (answer == this.question.answer) {
+        if (answer.toLowerCase() == this.question.answer.toLowerCase()) {
             Bot.sendMessage(this.quizChannel, "Answer success!");
             this.endQuiz();
         }

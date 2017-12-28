@@ -1,15 +1,15 @@
 {
-    "channels": [ 
+    "channels": [
         "bot_testing",
-        "trusted_house", 
-        "voice-text-chat", 
+        "trusted_house",
+        "voice-text-chat",
         "members-voice-text-chat",
         "use-bots-here"
     ],
-    "commands": [ 
+    "commands": [
         "start",
-        "end", 
-        "add", 
+        "end",
+        "add",
         "cats",
         "help"
     ],
@@ -19,23 +19,24 @@
         "Movies",
         "Nature",
         "Maths",
-        "Computer-Science"
+        "Computer-Science",
+        "Geography"
     ],
     "questions": [
         {
             "cat": "Video-Games",
             "question": "What was Mario from Super Mario Bros. original name?",
-            "answer": "jumpman"
+            "answer": "Jumpman"
         },
         {
             "cat": "Video-Games",
             "question": "What was the forest area from Super Mario World called?",
-            "answer": "forest of illusion"
+            "answer": "Forest of Illusion"
         },
         {
             "cat": "Video-Games",
             "question": "What was the second Ratchet and Clank game called in the UK? [Hint: Ratchet and Clank: <???>]",
-            "answer": "locked and loaded"
+            "answer": "Locked and Loaded"
         },
         {
             "cat": "Maths",
@@ -46,6 +47,11 @@
             "cat": "Maths",
             "question": "What's the derivate of e?",
             "answer": "e"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the capitol of England?",
+            "answer": "London"
         }
     ]
 }
