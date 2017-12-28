@@ -6,6 +6,7 @@ const fs            = require('fs');
 
 const questionsFile = "data/quiz_questions.json";
 
+//Struct holding data about a question
 class Question 
 {
     constructor(jsonField)
@@ -90,13 +91,13 @@ module.exports = class Quiz
                 console.log(err)
             } 
             else {
-                let qFile = JSON.parse(data);
-                qFile.questions.push({
+                let qFile = JSON.parse(data);   //Read file into a json object
+                qFile.questions.push({          //Add question to the questions array
                     cat: category,
-                    queston: q,
+                    question: q,
                     answer: a
                 });
-                let qOut = JSON.stringify(qFile, null, 4);
+                let qOut = JSON.stringify(qFile, null, 4);  //Rewrite the file
                 fs.writeFile(questionsFile, qOut, function(err){console.log(err);});
             }
         });
@@ -105,19 +106,22 @@ module.exports = class Quiz
     //on tin
     tryAddQuestion(channel, args) 
     {
+        //Check question length
         let inFile = JSONFile.readFileSync(questionsFile);
         args = args.slice(1);
         if (args.length == 0 || args.length < 3) {
             Bot.sendMessage(channel, "You have not provided me with enough information to add a question; I must know the category, question, and the answer to the question.");
+            return;
         }
 
-
+        //Check if the category input is valid
         let category = args[0];
         args = args.slice(1);
         console.log(args);
         console.log(category);
         if (inFile.categories.indexOf(category) === -1) {
             Bot.sendMessage(channel, `Category "${category}" doesn't exist. To see the list, use __*>quiz cats*__, and use correct casing.`)
+            return;
         }
 
 
