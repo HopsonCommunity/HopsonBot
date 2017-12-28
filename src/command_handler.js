@@ -177,7 +177,14 @@ module.exports = class CommandHandler
             Misc.eightBall,
             "If you cannot make a decision, why not try using an 8ball?",
             true
-        );	
+        );
+
+	this.addFunctionCommand(
+	    "poll",
+	    Misc.pollCommand,
+	    "Create a poll with reactions as responses",
+	    true
+	);
     }
 }
 
