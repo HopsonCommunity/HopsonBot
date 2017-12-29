@@ -1,7 +1,7 @@
 Bot             = require("./hopson_bot");
 CommandHandler  = require("./command_handler");
 Quiz            = require("./quiz")
-Discord       = require('discord.js')
+Discord         = require('discord.js')
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -75,29 +75,19 @@ module.exports = class EventHandler
     handleDelete(message)
     {
         let botlog = this.client.channels.get("362124431801450526");
-        let time = (new Date()).toISOString();
-        
-        Bot.sendMessage(botlog, {embed: {
-                                    color: 16711680,
-                                    description: "Message Deleted",
-                                    fields: [{
-                                                name: "Message Author",
-                                                value: `${message.author} `,
-                                                inline: true
-                                            },
-                                            {
-                                                name: "Channel",
-                                                value: `${message.channel} `,
-                                                inline: true
+        let time = Date().slice(0,-11);
+        let content = message.content;
 
-                                            },
-                                            {
-                                                name: "Message",
-                                                value: `${message.content} `
-                                            }],
-                                    timestamp: `${time}`
-                                }});
+        if(content.length > 1000) content = content.slice(0,1000) + " ...";
+        let embed = new Discord.RichEmbed()
+            .setDescription(`${message.author} in ${message.channel} at ${time}`)
+            .setColor(16711680)
+            .addField("Deleted Message", content);
+        
+        Bot.sendMessage(botlog, embed);
     }
+
+            
     /*
      * When a message is edited log the old and new message to #bot_log
      */
@@ -107,40 +97,20 @@ module.exports = class EventHandler
         if(oldMessage.content === newMessage.content) return;
 
         let botlog = this.client.channels.get("362124431801450526");
-        let time = (new Date()).toISOString();
-/*
-        Bot.sendMessage(botlog, new Discord.RichEmbed()
-            .setDescription("Message Edited")
+        let time = Date().slice(0,-11);
+        let oldContent = oldMessage.content;
+        let newContent = newMessage.content;
+
+        if(oldContent.length > 1000) oldContent = oldContent.slice(0,1000) + " ...";
+        if(newContent.length > 1000) newContent = newContent.slice(0,1000) + " ...";
+
+        let embed = new Discord.RichEmbed()
+            .setDescription(`${oldMessage.author} in ${oldMessage.channel} at ${time}`)
             .setColor(16737280)
-            .addField("Message Author", oldMessage.author,  true)
-            .addField("Channel",        oldMessage.channel, true)
-            .addBlankField()
-            .addField("Old Message", oldMessage.content, true)
-            .addField("New Message", newMessage.content, true));
-*/
-        Bot.sendMessage(botlog, {embed: {
-                                    color: 16737280,
-                                    description: "Message Edited",
-                                    fields: [{
-                                                name: "Message Author",
-                                                value: `${oldMessage.author}`,
-                                            },
-                                            {
-                                                name: "Channel",
-                                                value: `${oldMessage.channel}`,
+            .addField("Old Message", oldContent)
+            .addField("New Message", newContent);
 
-                                            },
-                                            {
-                                                name: "Old Message",
-                                                value: `${oldMessage.content}`,
-                                            },
-                                            {
-                                                name: "New Message",
-                                                value: `${newMessage.content}`,
-                                            }],
-                                    timestamp: `${time}`
-                                }});
-
+        Bot.sendMessage(botlog, embed);
     }
 }
 
