@@ -26,22 +26,26 @@
         {
             "cat": "Video-Games",
             "question": "What was Mario from Super Mario Bros. original name?",
-            "answer": "Jumpman"
+            "answer": "Jumpman",
+            "author": "115025985405059076"
         },
         {
             "cat": "Video-Games",
             "question": "What was the forest area from Super Mario World called?",
-            "answer": "Forest of Illusion"
+            "answer": "Forest of Illusion",
+            "author": "115025985405059076"
         },
         {
             "cat": "Video-Games",
             "question": "What was the second Ratchet and Clank game called in the UK? [Hint: Ratchet and Clank: <???>]",
-            "answer": "Locked and Loaded"
+            "answer": "Locked and Loaded",
+            "author": "115025985405059076"
         },
         {
             "cat": "Maths",
             "question": "What is 2 + 2?",
-            "answer": "4"
+            "answer": "4",
+            "author": "115025985405059076"
         },
         {
             "cat": "Maths",
@@ -50,78 +54,93 @@
         },
         {
             "cat": "Geography",
-            "question": "What is the capitol of England?",
-            "answer": "London"
+            "question": "What is the capital city of England?",
+            "answer": "London",
+            "author": "115025985405059076"
         },
         {
             "cat": "Geography",
             "question": "What USA state will you find the city of Orlando?",
-            "answer": "Florida"
+            "answer": "Florida",
+            "author": "115025985405059076"
         },
         {
             "cat": "Video-Games",
             "question": "What type is the pokémon bidoof?",
-            "answer": "Normal"
+            "answer": "Normal",
+            "author": "202103129330810880"
         },
         {
             "cat": "Video-Games",
             "question": "What type of Pokemon is Weedle?",
-            "answer": "bug"
+            "answer": "bug",
+            "author": "115025985405059076"
         },
         {
             "cat": "Geography",
             "question": "What was the city of Istanbul called before 1930?",
-            "answer": "Constantinople"
+            "answer": "Constantinople",
+            "author": "115025985405059076"
         },
         {
             "cat": "Geography",
             "question": "What is the capital city of France?",
-            "answer": "Paris"
+            "answer": "Paris",
+            "author": "115025985405059076"
         },
         {
             "cat": "Computer-Science",
             "question": "Who was the original creator of C++?",
-            "answer": "Bjarne Stroustrup"
+            "answer": "Bjarne Stroustrup",
+            "author": "115025985405059076"
         },
         {
             "cat": "Movies",
             "question": "Who was the director of the 1997 film 'Titanic'?",
-            "answer": "James Cameron"
+            "answer": "James Cameron",
+            "author": "115025985405059076"
         },
         {
             "cat": "Video-Games",
             "question": "What is the most famous game by Bay12Games?",
-            "answer": "Dwarf Fortress"
+            "answer": "Dwarf Fortress",
+            "author": "202103129330810880"
         },
         {
             "cat": "Nature",
             "question": "What is a group of lions called? [1 word]",
-            "answer": "Pride"
+            "answer": "Pride",
+            "author": "115025985405059076"
         },
         {
             "cat": "Video-Games",
             "question": "Who was the lead game designer of Skyrim?",
-            "answer": "Todd Howard"
+            "answer": "Todd Howard",
+            "author": "115025985405059076"
         },
         {
             "cat": "Movies",
             "question": "What was the first Star Wars movie released? Hint: Star Wars: <your answer here>",
-            "answer": "A New Hope"
+            "answer": "A New Hope",
+            "author": "115025985405059076"
         },
         {
             "cat": "Computer-Science",
             "question": "What language is C++ a superset of?",
-            "answer": "C"
+            "answer": "C",
+            "author": "115025985405059076"
         },
         {
             "cat": "Geography",
             "question": "Which country lies on the border between Spain and France?",
-            "answer": "Andorra"
+            "answer": "Andorra",
+            "author": "115025985405059076"
         },
         {
             "cat": "Computer-Science",
             "question": "What does USB stand for?",
-            "answer": "Universal Serial Bus"
+            "answer": "Universal Serial Bus",
+            "author": "115025985405059076"
         },
         {
             "cat": "Maths",
@@ -131,27 +150,62 @@
         {
             "cat": "Nature",
             "question": "How many legs do all insects have?",
-            "answer": "6"
+            "answer": "6",
+            "author": "115025985405059076"
         },
         {
             "cat": "Nature",
             "question": "What is the only type of bird which has the ability to fly backwards?",
-            "answer": "hummingbird"
+            "answer": "hummingbird",
+            "author": "115025985405059076"
         },
         {
             "cat": "Nature",
             "question": "What shape is a goats pupil?",
-            "answer": "rectangle"
-        },
-        {
-            "cat": "Maths",
-            "question": "Imagine four points on a sphere, what is the probability that this tetrahedron contains the sphere's center? (answer in %)",
-            "answer": "12.5"
+            "answer": "rectangle",
+            "author": "115025985405059076"
         },
         {
             "cat": "Movies",
             "question": "How many stars are on the Paramount studio logo?",
-            "answer": "22"
+            "answer": "22",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the capital city of Japan?",
+            "answer": "Tokyo",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "In Minecraft, what is the surface block of the Mushroom biome?",
+            "answer": "Mycelium",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is the seventh number of the Fibbonacci sequence?",
+            "answer": "13",
+            "author": "231104432102834176"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What is the tallest mountain in Skyrim? [4 words]",
+            "answer": "Throat of the World",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "A NOR gate is considered a universal gates; What is the other universal gate?",
+            "answer": "NAND",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 9 squared?",
+            "answer": "81",
+            "author": "115025985405059076"
         }
     ]
 }

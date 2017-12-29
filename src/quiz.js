@@ -15,6 +15,7 @@ class Question
         this.category = jsonField.cat;
         this.question = jsonField.question;
         this.answer   = jsonField.answer;
+        this.author   = jsonField.author;
     }
 }
 
@@ -48,8 +49,15 @@ module.exports = class Quiz
         let qIndex = Util.getRandomInt(0, inFile.questions.length);
         this.question = new Question(inFile.questions[qIndex]);
 
-        let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:** ${this.question.question}`;
-        Bot.sendMessage(this.quizChannel, output);
+        //let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:** ${this.question.question}`;
+       // Bot.sendMessage(this.quizChannel, output);
+
+
+        Bot.sendMessage(this.quizChannel, new Discord.RichEmbed()
+            .setTitle("New Question")
+            .addField("**Category**", this.question.category)
+            .addField("**Question**", this.question.question)
+            .addField("**Question Author**", `<@${this.question.author}>`));
     }
 
     //Prints the list of valid question categroies
@@ -84,7 +92,7 @@ module.exports = class Quiz
     }
 
     //Adds a question to the JSON file
-    addQuestion(category, q, a) 
+    addQuestion(category, qu, ans, authorID) 
     {
         fs.readFile(questionsFile, 'utf8', function read(err, data){
             if(err) {
@@ -94,8 +102,9 @@ module.exports = class Quiz
                 let qFile = JSON.parse(data);   //Read file into a json object
                 qFile.questions.push({          //Add question to the questions array
                     cat: category,
-                    question: q,
-                    answer: a
+                    question: qu,
+                    answer: ans,
+                    author: authorID
                 });
                 let qOut = JSON.stringify(qFile, null, 4);  //Rewrite the file
                 fs.writeFile(questionsFile, qOut, function(err){console.log(err);});
@@ -104,7 +113,7 @@ module.exports = class Quiz
     }
 
     //on tin
-    tryAddQuestion(channel, args) 
+    tryAddQuestion(channel, args, userID) 
     {
         //Check question length
         let inFile = JSONFile.readFileSync(questionsFile);
@@ -139,8 +148,13 @@ module.exports = class Quiz
             parseFail();
             return;
         }
-        this.addQuestion(category, question, answer);
-        Bot.sendMessage(channel, `Question added to my quiz log!\n**Category:** "${category}"\n**Question:** "${question}"\n**Answer:** "${answer}"`);
+        this.addQuestion(category, question, answer, userID);
+        Bot.sendMessage(channel, new Discord.RichEmbed()
+            .setTitle("New Question Added to my quiz log!")
+            .addField("**Category**", category)
+            .addField("**Question**", question)
+            .addField("**Answer**", answer)
+            .addField("**Question Author**", `<@${userID}>`));
     }
 
     endQuiz()

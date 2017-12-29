@@ -103,7 +103,7 @@ module.exports = class CommandHandler
             let quiz = this.eventHandle.quiz;
             if      (command === "start" ) quiz.tryStartQuiz    (message.channel);
             else if (command === "end"   ) quiz.tryEndQuiz      (message.channel);
-            else if (command === "add"   ) quiz.tryAddQuestion  (message.channel, args);//smh u had to be different :triumph:
+            else if (command === "add"   ) quiz.tryAddQuestion  (message.channel, args, message.member.id);//smh u had to be different :triumph:
             else if (command === "cats"  ) quiz.listCategories  (message.channel);
             else if (command === "help"  ) quiz.showHelp        (message.channel);
         }

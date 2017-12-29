@@ -56,7 +56,7 @@ module.exports = class EventHandler
         if (message.author.bot) {
             return;
         }
-        
+
         //A message starting with > indicates it is a command 
         if (content.startsWith(">")) {
             this.commandHandler.handleCommand(message);
