@@ -111,6 +111,7 @@ module.exports = class EventHandler
             .addField("New Message", newContent);
 
         Bot.sendMessage(botlog, embed);
+        this.handleMessage(newMessage);
     }
 }
 
