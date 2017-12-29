@@ -75,12 +75,10 @@ module.exports = class EventHandler
     handleDelete(message)
     {
         let botlog = this.client.channels.get("362124431801450526");
-        let time = Date().slice(0,-11);
+        let time = (new Date()).toLocaleString('en-GB');
         let content = message.content;
 
-        if (content.length === 0) {
-            return;
-        }
+        if (content.length === 0) return;
 
         if(content.length > 1000) content = content.slice(0,1000) + " ...";
         let embed = new Discord.RichEmbed()
@@ -101,7 +99,7 @@ module.exports = class EventHandler
         if(oldMessage.content === newMessage.content) return;
 
         let botlog = this.client.channels.get("362124431801450526");
-        let time = Date().slice(0,-11);
+        let time = (new Date()).toLocaleString('en-GB');
         let oldContent = oldMessage.content;
         let newContent = newMessage.content;
 
@@ -118,4 +116,3 @@ module.exports = class EventHandler
         this.handleMessage(newMessage);
     }
 }
-
