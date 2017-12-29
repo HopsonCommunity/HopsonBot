@@ -218,6 +218,126 @@
             "question": "In what city will you find the Burj Khalifa?",
             "answer": "Dubai",
             "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the westernmost country in Europe?",
+            "answer": "Iceland",
+            "author": "231104432102834176"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What is the only game from the Mother/Earthbound series that hasn't yet been brought to the US?",
+            "answer": "Mother 3",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the most commonly spoken language in the world?",
+            "answer": "Chinese ",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the longest river in the world?",
+            "answer": "Amazon",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Nature",
+            "question": "What trees do acorns grow on?",
+            "answer": "Oak",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the largest country in the world in terms of surface area?",
+            "answer": "Russia",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What shape is at the center of the national flag of Japan?",
+            "answer": "Circle",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "Who is credited for breaking the Nazi's ciphers via the use of the Enigma Machine?",
+            "answer": "Alan Turing",
+            "author": "150049709698973696"
+        },
+        {
+            "cat": "Geography",
+            "question": "In which USA state is Mount Rushmore located?",
+            "answer": "South Dakota",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "Which sea borders the south of France?",
+            "answer": "Mediterranean",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "In which USA state is Area 51 located?",
+            "answer": "Nevada",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "Who created the monster in the movie 'Frankenstein'?",
+            "answer": "Dr Frankenstein",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Nature",
+            "question": "What is the temperature to which all particles freeze?",
+            "answer": "-273.15",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "Movies",
+            "question": "What was the maiden name of Harry Potter's mother?",
+            "answer": "Lily",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "What was the name of the main antagonist from the horror film 'Sinister'?",
+            "answer": "Bughuul",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the largest island in the Caribbean?",
+            "answer": "Cuba",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Nature",
+            "question": "What is the fastest fish in the ocean?",
+            "answer": "Sailfish",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "In 'Mean Girls', what continent did Cady Heron live in before moving to the USA?",
+            "answer": "Africa",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "What is Darth Vader's real name?",
+            "answer": "Anakin Skywalker",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "In what region of Tamriel is the game TES: Oblivion set?",
+            "answer": "cyrodiil",
+            "author": "115025985405059076"
         }
     ]
 }

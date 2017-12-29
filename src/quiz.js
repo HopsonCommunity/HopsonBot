@@ -19,45 +19,97 @@ class Question
     }
 }
 
+//Handles a single session of a quiz
+class QuizSession 
+{
+    constructor(channel) 
+    {
+        this.channel    = channel;     //The channel the quiz is currently in
+        this.question   = this.getQuestion();
+        this.scores     = new Map();
+
+        Bot.sendMessage(this.channel, "Quiz has begun!");
+    }
+
+    getQuestion() 
+    {
+        let inFile = JSONFile.readFileSync(questionsFile);
+        let qIndex = Util.getRandomInt(0, inFile.questions.length);
+        let question =  new Question(inFile.questions[qIndex]);
+        Bot.sendMessage(this.channel, new Discord.RichEmbed()
+            .setTitle("New Question")
+            .addField("**Category**", question.category)
+            .addField("**Question**", question.question)
+            .addField("**Question Author**", `<@${question.author}>`));
+        return question;
+    }
+
+    endQuiz()
+    {
+        Bot.sendMessage(this.channel, "Quiz has ended!");
+        this.outputScores("Final");
+    }
+
+    addPointTo(user)
+    {
+        if(this.scores.has(user)) {
+            let score = this.scores.get(user);
+            this.scores.set(user, score + 1);
+        }
+        else if (this.scores.size < 23){
+            this.scores.set(user, 1);
+        }
+    }
+
+    outputScores(title) 
+    {
+        let output = new Discord.RichEmbed()
+            .setTitle(title + " Scores");
+
+        this.scores.forEach(function(score, user, map) {
+            //output.addField(`<@${user.id}>`, score.toString(), true);
+            output.addField(user.displayName, score.toString(), true);
+        });
+
+        Bot.sendMessage(this.channel, output);
+    }
+        
+
+    submitAnswer(user, answer)
+    {
+        if (answer.toLowerCase() == this.question.answer.toLowerCase()) {
+            Bot.sendMessage(this.channel, new Discord.RichEmbed()
+                .setTitle("Answered sucessfully!")
+                .addField("Answered By", `<@${user.id}>`));
+            this.addPointTo(user);
+            this.outputScores("Current");
+            this.question = this.getQuestion();
+            return true;
+        }
+        return false;
+    }
+}
+
+//The main "quiz manager" class
 module.exports = class Quiz
 {
     constructor()
     {
-        this.quizActive     = false;
-        this.quizChannel    = null;     //The channel the quiz is currently in
-        this.question       = null;
+        this.quizActive = false;
+        this.session    = null;
     }
 
     //Attempts to begin a quiz
     tryStartQuiz(channel)
     {
         if (this.quizActive) {
-            Bot.sendMessage(channel, `Sorry, a quiz is currently active in ${this.quizChannel.name}`);
+            Bot.sendMessage(channel, `Sorry, a quiz is currently active in ${this.session.channel.name}`);
         }
         else {
-            this.quizActive = true;
-            this.quizChannel = channel;
-            Bot.sendMessage(channel, "Quiz has begun!");
-            this.initNewQuestion();
+            this.quizActive     = true;
+            this.quizChannel    = channel;
+            this.session        = new QuizSession(channel);
         }
-    }
-
-    //Activates a new question for the quiz
-    initNewQuestion() 
-    {
-        let inFile = JSONFile.readFileSync(questionsFile);
-        let qIndex = Util.getRandomInt(0, inFile.questions.length);
-        this.question = new Question(inFile.questions[qIndex]);
-
-        //let output = `**New Question**\n**Category**: ${this.question.category}\n**Question:** ${this.question.question}`;
-       // Bot.sendMessage(this.quizChannel, output);
-
-
-        Bot.sendMessage(this.quizChannel, new Discord.RichEmbed()
-            .setTitle("New Question")
-            .addField("**Category**", this.question.category)
-            .addField("**Question**", this.question.question)
-            .addField("**Question Author**", `<@${this.question.author}>`));
     }
 
     //Prints the list of valid question categroies
@@ -71,8 +123,6 @@ module.exports = class Quiz
     //Shows the list of quiz commands
     showHelp(channel)
     {
-        
-
         let output = new Discord.RichEmbed()
             .setTitle("__**Quiz Commands**__")
             .addField("__**start**__",
@@ -94,6 +144,7 @@ module.exports = class Quiz
     //Adds a question to the JSON file
     addQuestion(category, qu, ans, authorID) 
     {
+        //Open the JSON file
         fs.readFile(questionsFile, 'utf8', function read(err, data){
             if(err) {
                 console.log(err)
@@ -149,6 +200,7 @@ module.exports = class Quiz
             parseFail();
             return;
         }
+        //Finally if all validations passed, add the question
         this.addQuestion(category, question, answer, userID);
         Bot.sendMessage(channel, new Discord.RichEmbed()
             .setTitle("New Question Added to my quiz log!")
@@ -161,34 +213,32 @@ module.exports = class Quiz
     endQuiz()
     {
         this.quizActive = false;
-        this.quizChannel = null;
+        this.session.endQuiz();
+        this.session = null;
     }
 
 
     //Attempts to end a quiz
-    tryEndQuiz(channel) 
+    tryEndQuiz(channel, user) 
     {
         if (!this.quizActive) {
             Bot.sendMessage(channel, `Sorry, a quiz is not active.`);
         }
-        else if (channel.name != this.quizChannel.name) {   //Cannot end a quiz from a different channel
-            Bot.sendMessage(channel, `Sorry, you can not end a quiz from a different channel from which is currently active, which is **'${this.quizChannel.name}'**.`);
+        else if (channel.name != this.session.channel.name) {   //Cannot end a quiz from a different channel
+            Bot.sendMessage(channel, `Sorry, you can not end a quiz from a different channel from which is currently active, which is **'${this.session.channel.name}'**.`);
         }
         else {
             this.endQuiz();
-            Bot.sendMessage(channel, `Quiz has been stopped manually`)
+            Bot.sendMessage(channel, `Quiz has been stopped manually by <@${user.id}>`)
         }
     }
 
     submitAnswer(message, answer)
     {
-        if (!this.quizActive || 
-             this.quizChannel != message.channel) {
-            return;
-        }
-        if (answer.toLowerCase() == this.question.answer.toLowerCase()) {
-            Bot.sendMessage(this.quizChannel, "Answer success!");
-            this.endQuiz();
+        if (!this.quizActive) return;
+        if (this.session.channel != message.channel) return;
+        if (this.session.submitAnswer(message.member, answer)) {
+            //this.endQuiz();
         }
     }
 }

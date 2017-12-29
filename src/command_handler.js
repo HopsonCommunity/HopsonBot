@@ -102,7 +102,7 @@ module.exports = class CommandHandler
         else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call
             let quiz = this.eventHandle.quiz;
             if      (command === "start" ) quiz.tryStartQuiz    (message.channel);
-            else if (command === "end"   ) quiz.tryEndQuiz      (message.channel);
+            else if (command === "end"   ) quiz.tryEndQuiz      (message.channel, message.member);
             else if (command === "add"   ) quiz.tryAddQuestion  (message.channel, args, message.member.id);//smh u had to be different :triumph:
             else if (command === "cats"  ) quiz.listCategories  (message.channel);
             else if (command === "help"  ) quiz.showHelp        (message.channel);
