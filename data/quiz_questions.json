@@ -122,6 +122,36 @@
             "cat": "Computer-Science",
             "question": "What does USB stand for?",
             "answer": "Universal Serial Bus"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is square root of -1?",
+            "answer": "i"
+        },
+        {
+            "cat": "Nature",
+            "question": "How many legs do all insects have?",
+            "answer": "6"
+        },
+        {
+            "cat": "Nature",
+            "question": "What is the only type of bird which has the ability to fly backwards?",
+            "answer": "hummingbird"
+        },
+        {
+            "cat": "Nature",
+            "question": "What shape is a goats pupil?",
+            "answer": "rectangle"
+        },
+        {
+            "cat": "Maths",
+            "question": "Imagine four points on a sphere, what is the probability that this tetrahedron contains the sphere's center? (answer in %)",
+            "answer": "12.5"
+        },
+        {
+            "cat": "Movies",
+            "question": "How many stars are on the Paramount studio logo?",
+            "answer": "22"
         }
     ]
 }
