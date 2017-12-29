@@ -130,6 +130,7 @@ module.exports = class Quiz
             return;
         }
 
+        //Outputs a message for when the parsing of the strings fails
         function parseFail() {
             Bot.sendMessage(channel, `For me to recognise a question/ answer, you must start and end your question with"`);
         }

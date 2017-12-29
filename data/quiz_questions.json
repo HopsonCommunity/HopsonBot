@@ -206,6 +206,18 @@
             "question": "What is 9 squared?",
             "answer": "81",
             "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is the square root of 144?",
+            "answer": "12",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "In what city will you find the Burj Khalifa?",
+            "answer": "Dubai",
+            "author": "115025985405059076"
         }
     ]
 }
