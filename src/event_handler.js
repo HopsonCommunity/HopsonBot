@@ -78,6 +78,10 @@ module.exports = class EventHandler
         let time = Date().slice(0,-11);
         let content = message.content;
 
+        if (content.length === 0) {
+            return;
+        }
+
         if(content.length > 1000) content = content.slice(0,1000) + " ...";
         let embed = new Discord.RichEmbed()
             .setDescription(`${message.author} in ${message.channel} at ${time}`)

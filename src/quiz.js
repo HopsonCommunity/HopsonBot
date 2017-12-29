@@ -19,16 +19,50 @@ class Question
     }
 }
 
+
 //Handles a single session of a quiz
 class QuizSession 
 {
     constructor(channel) 
     {
+        this.skips      = 0;
         this.channel    = channel;     //The channel the quiz is currently in
         this.question   = this.getQuestion();
         this.scores     = new Map();
-
+        this.printQuestion();
         Bot.sendMessage(this.channel, "Quiz has begun!");
+    }
+
+    sendMessage(message)
+    {
+        Bot.sendMessage(this.channel, message);
+    }
+
+    nextQuestion() 
+    {
+        this.skips = 0;
+        this.question = this.getQuestion();
+        this.printQuestion();
+    }
+
+    addSkip() 
+    {
+        console.log("Skip registered");
+        this.skips++;
+        let skipsNeeded = Math.floor(this.scores.size / 2);
+        if (this.skips >= this.skipsNeeded) {
+            this.sendMessage(new Discord.RichEmbed()
+            .setTitle("Question Skipped!")
+            .addField("Question", this.question.question)
+            .addField("Answer", this.question.answer));
+            this.nextQuestion();
+        }
+        else {
+            this.sendMessage(new Discord.RichEmbed()
+            .setTitle("Skip attempt registered...")
+            .addField("Current Skip Votes", this.skips.toString(), true)
+            .addField("Votes Needed", skipsNeeded.toString(), true));
+        }
     }
 
     getQuestion() 
@@ -36,17 +70,21 @@ class QuizSession
         let inFile = JSONFile.readFileSync(questionsFile);
         let qIndex = Util.getRandomInt(0, inFile.questions.length);
         let question =  new Question(inFile.questions[qIndex]);
-        Bot.sendMessage(this.channel, new Discord.RichEmbed()
-            .setTitle("New Question")
-            .addField("**Category**", question.category)
-            .addField("**Question**", question.question)
-            .addField("**Question Author**", `<@${question.author}>`));
         return question;
+    }
+
+    printQuestion()
+    {
+        this.sendMessage(new Discord.RichEmbed()
+            .setTitle("New Question")
+            .addField("**Category**", this.question.category)
+            .addField("**Question**", this.question.question)
+            .addField("**Question Author**", `<@${this.question.author}>`));
     }
 
     endQuiz()
     {
-        Bot.sendMessage(this.channel, "Quiz has ended!");
+        this.sendMessage("Quiz has ended!");
         this.outputScores("Final");
     }
 
@@ -71,19 +109,19 @@ class QuizSession
             output.addField(user.displayName, score.toString(), true);
         });
 
-        Bot.sendMessage(this.channel, output);
+        this.sendMessage(output);
     }
         
 
     submitAnswer(user, answer)
     {
         if (answer.toLowerCase() == this.question.answer.toLowerCase()) {
-            Bot.sendMessage(this.channel, new Discord.RichEmbed()
+            this.sendMessage(new Discord.RichEmbed()
                 .setTitle("Answered sucessfully!")
                 .addField("Answered By", `<@${user.id}>`));
             this.addPointTo(user);
             this.outputScores("Current");
-            this.question = this.getQuestion();
+            this.nextQuestion();
             return true;
         }
         return false;
@@ -136,7 +174,13 @@ module.exports = class Quiz
                       "Usage: '>quiz add Maths 'What is 1 + 1?' '2'")
             .addField("__**cats**__\n",
                       "Prints the list of question categories.\n" + 
-                      "Usage: '>quiz cats'");
+                      "Usage: '>quiz cats'")
+            .addField("__**skip**__\n",
+                      "Skips the question. Requires 1/2 of people playing to skip.\n" + 
+                      "Usage: '>quiz skip'")
+            .addField("__**remind**__\n",
+                      "Re-prints the question.\n" + 
+                      "Usage: '>quiz remind'");
 
         Bot.sendMessage(channel, output);
     }
@@ -239,6 +283,20 @@ module.exports = class Quiz
         if (this.session.channel != message.channel) return;
         if (this.session.submitAnswer(message.member, answer)) {
             //this.endQuiz();
+        }
+    }
+
+    printQuestion() 
+    {
+        if(this.quizActive) {
+            this.session.printQuestion();
+        }
+    }
+
+    trySkip() 
+    {
+        if(this.quizActive) {
+            this.session.addSkip();
         }
     }
 }

@@ -11,7 +11,9 @@
         "end",
         "add",
         "cats",
-        "help"
+        "help",
+        "skip",
+        "remind"
     ],
     "categories": [
         "Any",
@@ -393,7 +395,7 @@
         {
             "cat": "Science",
             "question": "What will you find inbetween Mars and Jupiter?",
-            "answer": "Astroid Belt",
+            "answer": "asteroid Belt",
             "author": "115025985405059076"
         },
         {
@@ -407,6 +409,12 @@
             "question": "What is the abreviattion to the industrial metal band 'Nine Inch Nails'?",
             "answer": "NIN",
             "author": "343644106569940994"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What does RYNO stand for in the Ratchet and Clank series?",
+            "answer": "Rip Ya A New One",
+            "author": "115025985405059076"
         }
     ]
 }
