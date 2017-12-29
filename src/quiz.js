@@ -24,7 +24,7 @@ class QuizUser
 {
     constructor()
     {
-        this.score      = 1;
+        this.score      = 0;
         this.hasSkipped = false;
     }
 }

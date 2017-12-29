@@ -415,6 +415,30 @@
             "question": "What does RYNO stand for in the Ratchet and Clank series?",
             "answer": "Rip Ya A New One",
             "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "Who invented Fermat's last theorem",
+            "answer": "Fermat",
+            "author": "237264833433567233"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 9 + 10 * 2?",
+            "answer": "29",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is a^2+b^2=c^2 known as?",
+            "answer": "pythagoras theorem",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 101b2 + 100b2?",
+            "answer": "1001b2",
+            "author": "340661564556312591"
         }
     ]
 }
