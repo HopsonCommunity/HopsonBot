@@ -43,6 +43,8 @@ module.exports = class CommandHandlerBase
 
     respondToCommand(message, command, args)
     {
+        console.log(command);
+        
         if (this.isAdmin(message.member)) {
             console.log("Sent by admin");
         }

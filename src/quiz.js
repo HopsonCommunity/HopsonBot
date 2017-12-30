@@ -1,12 +1,14 @@
+const questionsFile = "data/quiz_questions.json";
+
 const Bot           = require("./hopson_bot");
 const EventHandle   = require('./event_handler');
 const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
+const QuizJSON      = require('../' + questionsFile);
 const fs            = require('fs');
 const Discord       = require('discord.js')
 const CommandHandlerBase = require("./command_handler_base")
 
-const questionsFile = "data/quiz_questions.json";
 
 //Struct holding data about a question
 class Question 
@@ -181,12 +183,12 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
             return;
         }
-        if (QuizJSON.channels.indexOf(cName) === -1) {
+        if (QuizJSON.channels.indexOf(channel.name) === -1) {
             Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
             return;
         }
 
-        let command = args[0].toLowerCase;
+        let command = args[0].toLowerCase();
         args = args.slice(1);
 
         super.respondToCommand(message, command, args);
@@ -352,5 +354,16 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         if(this.quizActive) {
             this.session.addSkip(member);
         }
+    }
+
+    initializeCommands()
+    {
+        super.addFunctionCommand(
+            "role",
+            RoleMod.tryModifyRole,
+            "Allows the user to add or remove role(s) from '>rolelist'",
+            "role add C++ Java ASM",
+            true
+        );
     }
 }

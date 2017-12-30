@@ -88,7 +88,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 
         super.addFunctionCommand(
             "quiz",
-            this.eventHandle.quiz.handleCommand,
+            this.eventHandle.quiz.handleCommand.bind(this.eventHandle.quiz),
             "Access quiz commands. For more info, please use command `>quiz help`",
             "quiz <command>",
             true
