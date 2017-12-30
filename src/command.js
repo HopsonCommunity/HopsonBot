@@ -7,6 +7,5 @@ module.exports = class Command
         this.description    = description;
         this.exampleUsage   = exampleUseage;
         this.acceptsArgs    = acceptsArgs;
-        console.log(this.exampleUsage);
     }
 }

@@ -72,6 +72,7 @@ module.exports = class CommandHandlerBase
 
         function addOutput(m) {
             m.forEach(function(val, key, map) {
+                if (key === "help") return;
                 output.addField(`**__${key}__**`, 
                                 `${val.description}\nExample: *>${val.exampleUsage}*`);
             });
