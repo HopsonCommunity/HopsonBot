@@ -439,6 +439,12 @@
             "question": "What is 101b2 + 100b2?",
             "answer": "1001b2",
             "author": "340661564556312591"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "Who created Stardew Valley all by himself?",
+            "answer": "Eric Barone",
+            "author": "343644106569940994"
         }
     ]
 }

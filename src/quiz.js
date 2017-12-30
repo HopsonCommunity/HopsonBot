@@ -4,6 +4,7 @@ const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
 const fs            = require('fs');
 const Discord       = require('discord.js')
+const CommandHandlerBase = require("./command_handler_base")
 
 const questionsFile = "data/quiz_questions.json";
 
@@ -163,12 +164,32 @@ class QuizSession
 }
 
 //The main "quiz manager" class
-module.exports = class Quiz
+module.exports = class QuizEventHandler extends CommandHandlerBase
 {
     constructor()
     {
+        super("Quiz");
         this.quizActive = false;
         this.session    = null;
+    }
+
+    //Handle the quiz commands
+    handleCommand(message, args)
+    {
+        let channel = message.channel;
+        if(args.length == 0) {
+            Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
+            return;
+        }
+        if (QuizJSON.channels.indexOf(cName) === -1) {
+            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
+            return;
+        }
+
+        let command = args[0].toLowerCase;
+        args = args.slice(1);
+
+        super.respondToCommand(message, command, args);
     }
 
     //Attempts to begin a quiz

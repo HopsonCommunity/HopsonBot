@@ -34,7 +34,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 
     //Parses any >quiz command, and does the appropriate action with it
     handleQuizCommand(message, args) 
-    {
+    {/*
         let cName = message.channel.name;
 
         //The bot ofc needs to know what to do: starting or ending a quiz
@@ -44,6 +44,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
         }
         //Try begin/ start quiz
         let command = args[0].toLowerCase();
+        
         if (QuizJSON.commands.indexOf(command) === -1) {
             Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${QuizJSON.commands.join(", ")}`);
         }
@@ -59,7 +60,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
             else if (command === "help"     ) quiz.showHelp         (message.channel);
             else if (command === "skip"     ) quiz.trySkip          (message.member);
             else if (command === "remind"   ) quiz.printQuestion    ();
-        }
+        }*/
     }
 
     initializeCommands()
@@ -87,7 +88,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 
         super.addFunctionCommand(
             "quiz",
-            this.handleQuizCommand.bind(this),
+            this.eventHandle.quiz.handleCommand,
             "Access quiz commands. For more info, please use command `>quiz help`",
             "quiz <command>",
             true
