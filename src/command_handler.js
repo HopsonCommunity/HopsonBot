@@ -68,7 +68,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
         super.addSimpleCommand(
             "source",
             "You can find my source code at https://github.com/HopsonCommunity/HopsonBot",
-            "Sends a link to the source code for this bot."
+            "Sends a link to the source code for this bot.",
         );
 
         super.addSimpleCommand(
@@ -80,7 +80,8 @@ module.exports = class CommandHandler extends CommandHandlerBase
         super.addFunctionCommand(
             "role",
             RoleMod.tryModifyRole,
-            "Allows the user to add or remove role(s) from '>rolelist'\nUseage: '>role add C++ Java'",
+            "Allows the user to add or remove role(s) from '>rolelist'",
+            "role add C++ Java ASM",
             true
         );
 
@@ -88,6 +89,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "quiz",
             this.handleQuizCommand.bind(this),
             "Access quiz commands. For more info, please use command `>quiz help`",
+            "quiz <command>",
             true
         );
 
@@ -95,6 +97,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "8ball",
             Misc.eightBall,
             "If you cannot make a decision, why not try using an 8ball?",
+            "8ball <question here>",
             true
         );
 
@@ -102,6 +105,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "poll",
             Misc.pollCommand,
             "Create a poll with reactions as responses",
+            "poll <command>",
             true
         );
     }

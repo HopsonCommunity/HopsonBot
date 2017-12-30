@@ -28,17 +28,17 @@ module.exports = class CommandHandlerBase
     }
 
     //Adds simple "print" commands
-    addSimpleCommand(name, output, description)
+    addSimpleCommand(name, output, description, example = "_O")
     {
-        this.simpleCommands.set(name, new Command(output, description, false));
-        Bot.logMessage(`Simple command added! \nName: "${name}"\nDescription:  "${description}"`);
+        example = example == "_O" ? name : example;
+        this.simpleCommands.set(name, new Command(output, description, example, false));
     }
 
     //Adds commands which call a function
-    addFunctionCommand(name, func, description, acceptsArgs)
+    addFunctionCommand(name, func, description, example = "_O", acceptsArgs)
     {
-        this.functionCommands.set(name, new Command(func, description, acceptsArgs));
-        Bot.logMessage(`Function command added! \nName: "${name}"\nDescription:  "${description}"\nArgs: ${acceptsArgs}`);
+        example = example == "_O" ? name : example;
+        this.functionCommands.set(name, new Command(func, description, example, acceptsArgs));
     }
 
     respondToCommand(message, command, args)
@@ -72,7 +72,8 @@ module.exports = class CommandHandlerBase
 
         function addOutput(m) {
             m.forEach(function(val, key, map) {
-                output.addField(`**__${key}__**`, val.description);
+                output.addField(`**__${key}__**`, 
+                                `${val.description}\nExample: *>${val.exampleUsage}*`);
             });
         }
         //Add in the simple commands to the final outputtted message
