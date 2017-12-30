@@ -121,7 +121,8 @@ class QuizSession
     //Ends the quiz
     endQuiz()
     {
-        this.sendMessage("Quiz has ended!");
+        this.sendMessage(new Discord.RichEmbed()
+            .setTitle("Quiz has ended!"));
         this.outputScores("Final");
     }
 
