@@ -61,7 +61,7 @@ class QuizSession
         }.bind(this));
         this.skipVotes = 0;
         this.question = this.getQuestion();
-        this.printQuestion();
+        this.printQuestion("New Question");
     }
 
     //Adds a member to this quiz session if they have not yet been added
@@ -112,10 +112,10 @@ class QuizSession
     }
 
     //Displays the question
-    printQuestion()
+    printQuestion(title)
     {
         this.sendMessage(new Discord.RichEmbed()
-            .setTitle("New Question")
+            .setTitle(title)
             .addField("**Category**", this.question.category)
             .addField("**Question**", this.question.question)
             .addField("**Question Author**", `<@${this.question.author}>`));
@@ -173,6 +173,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         super("Quiz");
         this.quizActive = false;
         this.session    = null;
+        this.initializeCommands();
     }
 
     //Handle the quiz commands
@@ -195,18 +196,18 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
     }
 
     //Attempts to begin a quiz
-    tryStartQuiz(channel)
+    tryStartQuiz(message, args)
     {
         if (this.quizActive) {
-            Bot.sendMessage(channel, `Sorry, a quiz is currently active in ${this.session.channel.name}`);
+            Bot.sendMessage(message.channel, 
+                            `Sorry, a quiz is currently active in ${this.session.channel.name}`);
         }
         else {
             this.quizActive     = true;
-            this.quizChannel    = channel;
-            this.session        = new QuizSession(channel);
+            this.session        = new QuizSession(message.channel);
         }
     }
-
+/*
     //Prints the list of valid question categroies
     listCategories(channel)
     {
@@ -214,7 +215,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         Bot.sendMessage(channel, 
             `Quiz Categories:\n>${inFile.categories.join("\n>")}`);
     }
-
+*/
     //Shows the list of quiz commands
     showHelp(channel)
     {
@@ -265,8 +266,11 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
     }
 
     //on tin
-    tryAddQuestion(channel, args, userID) 
+    tryAddQuestion(message, args) 
     {
+        let channel = message.channel;
+        let user    = message.member;
+
         //Check question length
         let inFile = JSONFile.readFileSync(questionsFile);
         args = args.slice(1);
@@ -320,8 +324,11 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
 
 
     //Attempts to end a quiz
-    tryEndQuiz(channel, user) 
+    tryEndQuiz(message, args) 
     {
+        let channel = message.channel;
+        let user    = message.member;
+
         if (!this.quizActive) {
             Bot.sendMessage(channel, `Sorry, a quiz is not active.`);
         }
@@ -342,28 +349,64 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         this.session.submitAnswer(message.member, answer);
     }
 
-    printQuestion() 
+    printQuestion(message, args) 
     {
         if(this.quizActive) {
-            this.session.printQuestion();
+            this.session.printQuestion("Question reminder");
         }
     }
 
-    trySkip(member) 
+    trySkip(message, args) 
     {
         if(this.quizActive) {
-            this.session.addSkip(member);
+            this.session.addSkip(message.member);
         }
     }
 
     initializeCommands()
     {
+        super.addSimpleCommand(
+            "cats",
+            `Quiz Categories:\n>${QuizJSON.categories.join("\n>")}`,
+            "Shows a list of quiz catergories.",
+            "quiz cats"
+        )
+
         super.addFunctionCommand(
-            "role",
-            RoleMod.tryModifyRole,
+            "start",
+             this.tryStartQuiz.bind(this),
             "Allows the user to add or remove role(s) from '>rolelist'",
-            "role add C++ Java ASM",
+            "quiz start",
             true
         );
+
+        super.addFunctionCommand(
+            "end",
+            this.tryEndQuiz.bind(this),
+            "Ends the quiz session.",
+            "quiz end"
+        )
+
+        super.addFunctionCommand(
+            "add",
+            this.tryAddQuestion.bind(this),
+            "Adds a new question to the quiz log, requies a quiz category, question, and answer.",
+            `quiz add Maths "What is 5 + 5?" "10"`,
+            true
+        )
+
+        super.addFunctionCommand(
+            "skip",
+            this.trySkip.bind(this),
+            "Skips the question; but requirs 1/2 of the quiz participants to do so.",
+            "quiz skip",
+        )
+
+        super.addFunctionCommand(
+            "remind",
+            this.printQuestion.bind(this),
+            "Resends the question to remind you what it was.",
+            "quiz remind",
+        )
     }
 }
