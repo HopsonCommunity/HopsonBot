@@ -12,7 +12,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 {
     constructor(eventHandler) 
     {
-        super();
+        super("Main Events");
         this.roles              = Roles.roles;
         this.eventHandle        = eventHandler;
 
@@ -30,22 +30,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
         let args    = content.slice(1);
 
         super.respondToCommand(message, command, args);
-    }
-
-    //Simple function replies
-    sendHelpList(message, args)
-    {
-        let output = "**__List of commands:__**\n\n";
-
-        function addOutput(m) {
-            m.forEach(function(val, key, map) {
-                output += `__**>${key}**__\n${val.description}\n\n`;
-            });
-        }
-        //Add in the simple commands to the final outputtted message
-        addOutput(this.simpleCommands);
-        addOutput(this.functionCommands);
-        Bot.sendMessage(message.channel, output);
     }
 
     //Parses any >quiz command, and does the appropriate action with it
@@ -91,14 +75,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "rolelist",
             `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${this.roles.join("\n> ")}.`,
             "Displays list of roles you are able to add and remove."
-        );
-        
-        //Add the "function commands"
-        super.addFunctionCommand(
-            "help",
-            this.sendHelpList.bind(this),
-            "Sends a list of commands.",
-            false
         );
 
         super.addFunctionCommand(

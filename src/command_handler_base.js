@@ -1,14 +1,24 @@
 const Bot = require("./hopson_bot");
 const Command = require ("./command.js");
+const Discord = require ('discord.js')
 
 
 module.exports = class CommandHandlerBase
 {
-    constructor()
+    constructor(name)
     {
         //Init some maps and list to hold data to be used by command handler
         this.simpleCommands     = new Map();
         this.functionCommands   = new Map();
+        this.name = name;
+
+        //Add the "function commands"
+        this.addFunctionCommand(
+            "help",
+            this.sendHelpList.bind(this),
+            "Sends a list of commands.",
+            false
+        );
     }
 
     //Returns true if the user is indeed an admin (has admin role)
@@ -51,5 +61,23 @@ module.exports = class CommandHandlerBase
             }
             commandHandle.action(message, args);
         }
+    }
+
+    //Simple function replies
+    sendHelpList(message, args)
+    {
+        let output = new Discord.RichEmbed()
+            .setTitle("Command list for " + this.name)
+            .setColor("#09f228");
+
+        function addOutput(m) {
+            m.forEach(function(val, key, map) {
+                output.addField(`**__${key}__**`, val.description);
+            });
+        }
+        //Add in the simple commands to the final outputtted message
+        addOutput(this.simpleCommands);
+        addOutput(this.functionCommands);
+        Bot.sendMessage(message.channel, output);
     }
 }
