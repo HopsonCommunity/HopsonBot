@@ -1,11 +1,14 @@
+const questionsFile = "data/quiz_questions.json";
+
 const Bot           = require("./hopson_bot");
 const EventHandle   = require('./event_handler');
 const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
+const QuizJSON      = require('../' + questionsFile);
 const fs            = require('fs');
 const Discord       = require('discord.js')
+const CommandHandlerBase = require("./command_handler_base")
 
-const questionsFile = "data/quiz_questions.json";
 
 //Struct holding data about a question
 class Question 
@@ -58,7 +61,7 @@ class QuizSession
         }.bind(this));
         this.skipVotes = 0;
         this.question = this.getQuestion();
-        this.printQuestion();
+        this.printQuestion("New Question");
     }
 
     //Adds a member to this quiz session if they have not yet been added
@@ -109,10 +112,10 @@ class QuizSession
     }
 
     //Displays the question
-    printQuestion()
+    printQuestion(title)
     {
         this.sendMessage(new Discord.RichEmbed()
-            .setTitle("New Question")
+            .setTitle(title)
             .addField("**Category**", this.question.category)
             .addField("**Question**", this.question.question)
             .addField("**Question Author**", `<@${this.question.author}>`));
@@ -121,7 +124,8 @@ class QuizSession
     //Ends the quiz
     endQuiz()
     {
-        this.sendMessage("Quiz has ended!");
+        this.sendMessage(new Discord.RichEmbed()
+            .setTitle("Quiz has ended!"));
         this.outputScores("Final");
     }
 
@@ -162,60 +166,46 @@ class QuizSession
 }
 
 //The main "quiz manager" class
-module.exports = class Quiz
+module.exports = class QuizEventHandler extends CommandHandlerBase
 {
     constructor()
     {
+        super("Quiz");
         this.quizActive = false;
         this.session    = null;
+        this.initializeCommands();
+    }
+
+    //Handle the quiz commands
+    handleCommand(message, args)
+    {
+        let channel = message.channel;
+        if(args.length == 0) {
+            Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
+            return;
+        }
+        if (QuizJSON.channels.indexOf(channel.name) === -1) {
+            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
+            return;
+        }
+
+        let command = args[0].toLowerCase();
+        args = args.slice(1);
+
+        super.respondToCommand(message, command, args);
     }
 
     //Attempts to begin a quiz
-    tryStartQuiz(channel)
+    tryStartQuiz(message, args)
     {
         if (this.quizActive) {
-            Bot.sendMessage(channel, `Sorry, a quiz is currently active in ${this.session.channel.name}`);
+            Bot.sendMessage(message.channel, 
+                            `Sorry, a quiz is currently active in ${this.session.channel.name}`);
         }
         else {
             this.quizActive     = true;
-            this.quizChannel    = channel;
-            this.session        = new QuizSession(channel);
+            this.session        = new QuizSession(message.channel);
         }
-    }
-
-    //Prints the list of valid question categroies
-    listCategories(channel)
-    {
-        let inFile = JSONFile.readFileSync(questionsFile);
-        Bot.sendMessage(channel, 
-            `Quiz Categories:\n>${inFile.categories.join("\n>")}`);
-    }
-
-    //Shows the list of quiz commands
-    showHelp(channel)
-    {
-        let output = new Discord.RichEmbed()
-            .setTitle("__**Quiz Commands**__")
-            .addField("__**start**__",
-                      "Starts a new quiz.\n" +  
-                      "Usage: '>quiz start'") 
-            .addField("__**end**__",
-                      "Ends a quiz, given one is already active in the channel.\n" +
-                      "Usage: '>quiz end'")
-            .addField("__**add**__\n",
-                      "Adds a new question into the quiz.\n" + 
-                      "Usage: '>quiz add Maths 'What is 1 + 1?' '2'")
-            .addField("__**cats**__\n",
-                      "Prints the list of question categories.\n" + 
-                      "Usage: '>quiz cats'")
-            .addField("__**skip**__\n",
-                      "Skips the question. Requires 1/2 of people playing to skip.\n" + 
-                      "Usage: '>quiz skip'")
-            .addField("__**remind**__\n",
-                      "Re-prints the question.\n" + 
-                      "Usage: '>quiz remind'");
-
-        Bot.sendMessage(channel, output);
     }
 
     //Adds a question to the JSON file
@@ -241,8 +231,11 @@ module.exports = class Quiz
     }
 
     //on tin
-    tryAddQuestion(channel, args, userID) 
+    tryAddQuestion(message, args) 
     {
+        let channel = message.channel;
+        let user    = message.member;
+
         //Check question length
         let inFile = JSONFile.readFileSync(questionsFile);
         args = args.slice(1);
@@ -294,10 +287,12 @@ module.exports = class Quiz
         this.session = null;
     }
 
-
     //Attempts to end a quiz
-    tryEndQuiz(channel, user) 
+    tryEndQuiz(message, args) 
     {
+        let channel = message.channel;
+        let user    = message.member;
+
         if (!this.quizActive) {
             Bot.sendMessage(channel, `Sorry, a quiz is not active.`);
         }
@@ -318,17 +313,64 @@ module.exports = class Quiz
         this.session.submitAnswer(message.member, answer);
     }
 
-    printQuestion() 
+    printQuestion(message, args) 
     {
         if(this.quizActive) {
-            this.session.printQuestion();
+            this.session.printQuestion("Question reminder");
         }
     }
 
-    trySkip(member) 
+    trySkip(message, args) 
     {
         if(this.quizActive) {
-            this.session.addSkip(member);
+            this.session.addSkip(message.member);
         }
+    }
+
+    initializeCommands()
+    {
+        super.addSimpleCommand(
+            "cats",
+            `Quiz Categories:\n>${QuizJSON.categories.join("\n>")}`,
+            "Shows a list of quiz catergories.",
+            "quiz cats"
+        )
+
+        super.addFunctionCommand(
+            "start",
+             this.tryStartQuiz.bind(this),
+            "Given a quiz is not already active, this will start a new quiz.",
+            "quiz start",
+            true
+        );
+
+        super.addFunctionCommand(
+            "end",
+            this.tryEndQuiz.bind(this),
+            "Ends the quiz session.",
+            "quiz end"
+        )
+
+        super.addFunctionCommand(
+            "add",
+            this.tryAddQuestion.bind(this),
+            "Adds a new question to the quiz log, requies a quiz category, question, and answer.",
+            `quiz add Maths "What is 5 + 5?" "10"`,
+            true
+        )
+
+        super.addFunctionCommand(
+            "skip",
+            this.trySkip.bind(this),
+            "Skips the question; but requirs 1/2 of the quiz participants to do so.",
+            "quiz skip",
+        )
+
+        super.addFunctionCommand(
+            "remind",
+            this.printQuestion.bind(this),
+            "Resends the question to remind you what it was.",
+            "quiz remind",
+        )
     }
 }
