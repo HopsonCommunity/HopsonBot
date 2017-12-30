@@ -207,41 +207,6 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             this.session        = new QuizSession(message.channel);
         }
     }
-/*
-    //Prints the list of valid question categroies
-    listCategories(channel)
-    {
-        let inFile = JSONFile.readFileSync(questionsFile);
-        Bot.sendMessage(channel, 
-            `Quiz Categories:\n>${inFile.categories.join("\n>")}`);
-    }
-*/
-    //Shows the list of quiz commands
-    showHelp(channel)
-    {
-        let output = new Discord.RichEmbed()
-            .setTitle("__**Quiz Commands**__")
-            .addField("__**start**__",
-                      "Starts a new quiz.\n" +  
-                      "Usage: '>quiz start'") 
-            .addField("__**end**__",
-                      "Ends a quiz, given one is already active in the channel.\n" +
-                      "Usage: '>quiz end'")
-            .addField("__**add**__\n",
-                      "Adds a new question into the quiz.\n" + 
-                      "Usage: '>quiz add Maths 'What is 1 + 1?' '2'")
-            .addField("__**cats**__\n",
-                      "Prints the list of question categories.\n" + 
-                      "Usage: '>quiz cats'")
-            .addField("__**skip**__\n",
-                      "Skips the question. Requires 1/2 of people playing to skip.\n" + 
-                      "Usage: '>quiz skip'")
-            .addField("__**remind**__\n",
-                      "Re-prints the question.\n" + 
-                      "Usage: '>quiz remind'");
-
-        Bot.sendMessage(channel, output);
-    }
 
     //Adds a question to the JSON file
     addQuestion(category, qu, ans, authorID) 
@@ -321,7 +286,6 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         this.session.endQuiz();
         this.session = null;
     }
-
 
     //Attempts to end a quiz
     tryEndQuiz(message, args) 

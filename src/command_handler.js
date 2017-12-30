@@ -32,37 +32,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
         super.respondToCommand(message, command, args);
     }
 
-    //Parses any >quiz command, and does the appropriate action with it
-    handleQuizCommand(message, args) 
-    {/*
-        let cName = message.channel.name;
-
-        //The bot ofc needs to know what to do: starting or ending a quiz
-        if(args.length == 0) {
-            Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
-            return;
-        }
-        //Try begin/ start quiz
-        let command = args[0].toLowerCase();
-        
-        if (QuizJSON.commands.indexOf(command) === -1) {
-            Bot.sendMessage(message.channel, `${command} is an invalid quiz command, the valid ones are ${QuizJSON.commands.join(", ")}`);
-        }
-        else if (QuizJSON.channels.indexOf(cName) === -1) {
-            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
-        }
-        else {//@TODO Maybe use a map/ dictionary here, to map commands/ action to the function call
-            let quiz = this.eventHandle.quiz;
-            if      (command === "start"    ) quiz.tryStartQuiz     (message.channel);
-            else if (command === "end"      ) quiz.tryEndQuiz       (message.channel, message.member);
-            else if (command === "add"      ) quiz.tryAddQuestion   (message.channel, args, message.member.id);//smh u had to be different :triumph:
-            else if (command === "cats"     ) quiz.listCategories   (message.channel);
-            else if (command === "help"     ) quiz.showHelp         (message.channel);
-            else if (command === "skip"     ) quiz.trySkip          (message.member);
-            else if (command === "remind"   ) quiz.printQuestion    ();
-        }*/
-    }
-
     initializeCommands()
     {
         //Add the "simple commands"
