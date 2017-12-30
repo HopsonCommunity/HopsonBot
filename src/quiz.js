@@ -9,6 +9,8 @@ const fs            = require('fs');
 const Discord       = require('discord.js')
 const CommandHandlerBase = require("./command_handler_base")
 
+const embedColour = 0x28abed;
+
 
 //Struct holding data about a question
 class Question 
@@ -49,7 +51,7 @@ class QuizSession
     //Sends a message to the channel where the quiz is active
     sendMessage(message)
     {
-        message.setColor(0x28abed)
+        message.setColor(embedColour);
         Bot.sendMessage(this.channel, message);
     }
 
@@ -275,6 +277,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         this.addQuestion(category, question, answer, user.id);
         Bot.sendMessage(channel, new Discord.RichEmbed()
             .setTitle("New Question Added to my quiz log!")
+            .setColor(embedColour)
             .addField("**Category**", category)
             .addField("**Question**", question)
             .addField("**Answer**", answer)
@@ -328,6 +331,32 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         }
     }
 
+    countQuestions(message, args)
+    {
+        let inFile = JSONFile.readFileSync(questionsFile);
+        let cats = inFile.categories;
+        let ques = inFile.questions;
+        let result = new Map();
+        let total = 0;
+        for (var category of cats) {
+            result.set(category, 0);
+        }
+        for (var question of ques) {
+            var val = result.get(question.cat);
+            result.set(question.cat, val + 1);
+            total++;
+        }
+        let output = new Discord.RichEmbed()
+            .setTitle("Total Questions in each Category")
+            .setColor(embedColour)
+            .addField("Total", total.toString(), true);
+
+        result.forEach(function(val, key, map) {
+            output.addField(key, val.toString(), true);
+        })
+        Bot.sendMessage(message.channel, output);
+    }
+
     initializeCommands()
     {
         super.addSimpleCommand(
@@ -372,6 +401,13 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             this.printQuestion.bind(this),
             "Resends the question to remind you what it was.",
             "quiz remind",
+        )
+
+        super.addFunctionCommand(
+            "cat-count",
+            this.countQuestions.bind(this),
+            "Counts the number of questions in each category, and outputs the results.",
+            "quiz cat-count",
         )
     }
 }

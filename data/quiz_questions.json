@@ -16,7 +16,6 @@
         "remind"
     ],
     "categories": [
-        "Any",
         "Video-Games",
         "Movies",
         "Nature",
@@ -451,6 +450,96 @@
             "question": "What is 5 + 5?",
             "answer": "10",
             "author": "115025985405059076"
+        },
+        {
+            "cat": "History",
+            "question": "The cold war ended with the death of which infamous leader?",
+            "answer": "Joseph Stalin",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "Which country in the UK does not appear on the flag of the Union Jack?",
+            "answer": "Wales",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "Which movie is the famous quote 'Houston, we have a problem' from?",
+            "answer": "Apollo 13",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "What is the capital city of the USA state of New York?",
+            "answer": "Albany",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 5 + 10?",
+            "answer": "15",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Music",
+            "question": "Complete the lyric's missing space: 'I, hurt myself today, to see if I still __'",
+            "answer": "feel",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "Maths",
+            "question": "How many numbers from 1 to 333 contain a 2?",
+            "answer": "151",
+            "author": "237264833433567233"
+        },
+        {
+            "cat": "Maths",
+            "question": "How many prime numbers are there between 1 and 100?",
+            "answer": "25",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "How many digits does the number 2^30 have?",
+            "answer": "10",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Maths",
+            "question": "How many zeros does a Googol have?",
+            "answer": "100",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "History",
+            "question": "Which state did the USA purchase from Russia in 1867?",
+            "answer": "Alaska",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Science",
+            "question": "What is the greeting of Vsauce in his videos?",
+            "answer": "Hey, Vsauce, Michael here",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Geography",
+            "question": "In alphabetical order, which 4 USA states border Mexico?(Answer like: State1 State2 State3 State4",
+            "answer": "Arizona California New Mexico Texas",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "History",
+            "question": "The period of European history that lasted from the 14th to the the 17th century is known as the...?",
+            "answer": "Renaissance",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Music",
+            "question": "What was the most controversial movie the band Nine Inch Nails created?",
+            "answer": "The Broken Movie",
+            "author": "343644106569940994"
         }
     ]
 }
