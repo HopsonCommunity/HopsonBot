@@ -236,9 +236,10 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         let channel = message.channel;
         let user    = message.member;
 
+        console.log(args);
+
         //Check question length
         let inFile = JSONFile.readFileSync(questionsFile);
-        args = args.slice(1);
         if (args.length == 0 || args.length < 3) {
             Bot.sendMessage(channel, "You have not provided me with enough information to add a question; I must know the category, question, and the answer to the question.");
             return;
@@ -271,13 +272,13 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             return;
         }
         //Finally if all validations passed, add the question
-        this.addQuestion(category, question, answer, userID);
+        this.addQuestion(category, question, answer, user.id);
         Bot.sendMessage(channel, new Discord.RichEmbed()
             .setTitle("New Question Added to my quiz log!")
             .addField("**Category**", category)
             .addField("**Question**", question)
             .addField("**Answer**", answer)
-            .addField("**Question Author**", `<@${userID}>`));
+            .addField("**Question Author**", `<@${user.id}>`));
     }
 
     endQuiz()
