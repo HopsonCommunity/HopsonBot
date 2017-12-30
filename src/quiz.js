@@ -339,7 +339,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         super.addFunctionCommand(
             "start",
              this.tryStartQuiz.bind(this),
-            "Allows the user to add or remove role(s) from '>rolelist'",
+            "Given a quiz is not already active, this will start a new quiz.",
             "quiz start",
             true
         );
