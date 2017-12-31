@@ -8,7 +8,7 @@
             "use-bots-here"
         ]
     },
-    "mofifyRoles": {
+    "modifiableRoles": {
         "293438748018999297": [
             "C++",
             "Wot++",

@@ -1,5 +1,5 @@
-const Roles = require ("../data/roles.json");
-const Bot   = require ("./hopson_bot");
+const Config    = require("../data/config.json");
+const Bot       = require ("./hopson_bot");
 
 module.exports =
 {
@@ -15,7 +15,7 @@ module.exports =
             return arr.indexOf(item) == index;
         });
 
-        let [isValid, result] = isValidCommand(action, languages);
+        let [isValid, result] = isValidCommand(action, languages, message.guild.id);
         if (isValid) {
             modifyRoles(message, action, languages);
         }
@@ -26,7 +26,7 @@ module.exports =
 }
 
 //Checks if the command sent is valid
-function isValidCommand(action, languages)
+function isValidCommand(action, languages, serverID)
 {
     //Validify the command's action (add/ remove)
     if (action != "add" && action != "remove") {
@@ -37,8 +37,8 @@ function isValidCommand(action, languages)
     if (languages.length === 0) {
         return [false, "Please give me a list of languages from '>rolelist'."];
     }
-    for (language of languages) {
-        if (Roles.roles.indexOf(language) == -1) {
+    for (var language of languages) {
+        if (Config.modifiableRoles[serverID].indexOf(language) === -1) {
             return [false, `I do not recognise the role "${language}".`];
         }
     }
