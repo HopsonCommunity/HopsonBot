@@ -51,6 +51,7 @@ module.exports = class EventHandler
     */
     handleMessage(message) 
     {
+        console.log(message.guild.id);
         let content = message.content;
         //Ignore messages sent by bots
         if (message.author.bot) {

@@ -6,15 +6,6 @@
         "members-voice-text-chat",
         "use-bots-here"
     ],
-    "commands": [
-        "start",
-        "end",
-        "add",
-        "cats",
-        "help",
-        "skip",
-        "remind"
-    ],
     "categories": [
         "Video-Games",
         "Movies",
@@ -540,6 +531,114 @@
             "question": "What was the most controversial movie the band Nine Inch Nails created?",
             "answer": "The Broken Movie",
             "author": "343644106569940994"
+        },
+        {
+            "cat": "Science",
+            "question": "Which one mostly transports blood with much oxygen: Arteries or veins?",
+            "answer": "Arteries",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Music",
+            "question": "What artist was known for composing DOOM (2016)'s soundtrack",
+            "answer": "Mick Gordon",
+            "author": "343644106569940994"
+        },
+        {
+            "cat": "Geography",
+            "question": "What country borders the south of USA?",
+            "answer": "Mexico",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Geography",
+            "question": "In which ocean will you find the mariana trench?",
+            "answer": "pacific",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Science",
+            "question": "How many manned missions landed on the moon?",
+            "answer": "6",
+            "author": "231104432102834176"
+        },
+        {
+            "cat": "Movies",
+            "question": "What was the subtitle of the first Harry Potter movie in the UK? Harry Poterr and the...",
+            "answer": "Philosopher's Stone",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Music",
+            "question": "How many strings does a bass guitar have?",
+            "answer": "4",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Movies",
+            "question": "In the Harry Potter universe, what name is given to non-magic people?",
+            "answer": "Muggle",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Movies",
+            "question": "What are the different worlds called in Inception?",
+            "answer": "dream layers",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Science",
+            "question": "In what year was *the general theory of relativity* published?",
+            "answer": "1915",
+            "author": "231104432102834176"
+        },
+        {
+            "cat": "History",
+            "question": "What year was The Great Fire of London?",
+            "answer": "1666",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Science",
+            "question": "How many biceps muscles does a human have?",
+            "answer": "4",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What is the creator of Minecraft's real name?",
+            "answer": "Markus Persson",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Maths",
+            "question": "What is 30/(1/2) + 10?",
+            "answer": "70",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Computer-Science",
+            "question": "What is a pointer technically?",
+            "answer": "Integer",
+            "author": "293835615513083918"
+        },
+        {
+            "cat": "Nature",
+            "question": "What tree type would you find apples on?",
+            "answer": "Apple",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Video-Games",
+            "question": "What is Mario, from Super Mario Bro's, real job?",
+            "answer": "Plumber",
+            "author": "115025985405059076"
+        },
+        {
+            "cat": "Nature",
+            "question": "What kind of verebrate is a dolphin?",
+            "answer": "Mammal",
+            "author": "293835615513083918"
         }
     ]
 }
