@@ -53,7 +53,9 @@ module.exports = class EventHandler
     */
     handleMessage(message) 
     {
-        console.log(message.guild.id);
+        //Print some message information, which can help with tracking down bugs
+        console.log(`Message Sent\nServer: ${message.guild.name}\nChannel: ${message.channel.name}\nUser: ${message.member.displayName}\nContent: ${message}\n`);
+
         let content = message.content;
         //Ignore messages sent by bots
         if (message.author.bot) {
