@@ -5,6 +5,7 @@ const EventHandle   = require('./event_handler');
 const Util          = require("./misc/util");
 const JSONFile      = require('jsonfile');
 const QuizJSON      = require('../' + questionsFile);
+const Config        = require('../data/config.json');
 const fs            = require('fs');
 const Discord       = require('discord.js')
 const CommandHandlerBase = require("./command_handler_base")
@@ -186,8 +187,9 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
             return;
         }
-        if (QuizJSON.channels.indexOf(channel.name) === -1) {
-            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${QuizJSON.channels.join("\n>")}`);
+        let quizChnnels = Config.quizChannels[message.guild.id];
+        if (quizChnnels.indexOf(channel.name) === -1) {
+            Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${quizChnnels.join("\n>")}`);
             return;
         }
 

@@ -6,6 +6,13 @@
             "voice-text-chat",
             "members-voice-text-chat",
             "use-bots-here"
+        ],
+        "134034981373739008": [
+            "general",
+            "bot-commands"
+        ],
+        "113418926909644800": [
+            "general"
         ]
     },
     "modifiableRoles": {
@@ -23,9 +30,21 @@
             "Rust",
             "Python",
             "ASM"
+        ],
+        "134034981373739008": [
+            "Software-Engineering",
+            "Computer-Forensics",
+            "Computer-Science",
+            "Computing",
+            "Business-Information-Systems"
+        ],
+        "113418926909644800": [
+
         ]
     },
     "adminRole": {
-        "293438748018999297": "Admins"
+        "293438748018999297": "Admins",
+        "134034981373739008": "Admin",
+        "113418926909644800": "c-y-b-o-y-s"
     }
 }
