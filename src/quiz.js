@@ -374,6 +374,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         let questions   = inFile.questions;
         let result      = new Map();
 
+        //Count the authors
         for (var question of questions) {
             let author = question.author;
             if(result.has(author)) {
