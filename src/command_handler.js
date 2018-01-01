@@ -1,10 +1,9 @@
 const Bot = require("./hopson_bot");
 const Command   = require("./command");
-const Roles     = require("../data/roles.json");
+const Config    = require('../data/config.json')
 const RoleMod   = require("./role_modifier");
-const Quiz      = require("./quiz");
-const QuizJSON  = require("../data/quiz_questions.json");
 const Misc      = require("./misc/misc_commands");
+const Discord    = require("discord.js");
 
 const CommandHandlerBase = require("./command_handler_base")
 
@@ -13,9 +12,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
     constructor(eventHandler) 
     {
         super("Main Events");
-        this.roles              = Roles.roles;
-        this.eventHandle        = eventHandler;
-
+        this.eventHandle = eventHandler;
         this.initializeCommands();
     }
 
@@ -32,6 +29,18 @@ module.exports = class CommandHandler extends CommandHandlerBase
         super.respondToCommand(message, command, args);
     }
 
+    displayModifiableRoles(message, args) 
+    {
+        let roleArray = Config.modifiableRoles[message.guild.id];
+        let output = new Discord.RichEmbed()
+            .setTitle("Modifiable Roles From >role Command");
+
+        for (var roleName of roleArray) {
+            output.addField(roleName,  "~", true);
+        }
+        Bot.sendMessage(message.channel, output);
+    }
+
     initializeCommands()
     {
         //Add the "simple commands"
@@ -41,10 +50,12 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "Sends a link to the source code for this bot.",
         );
 
-        super.addSimpleCommand(
+        super.addFunctionCommand(
             "rolelist",
-            `**Roles you can add to yourself using the "__>role add <name>__" command:**\n> ${this.roles.join("\n> ")}.`,
-            "Displays list of roles you are able to add and remove."
+            this.displayModifiableRoles,
+            "Displays list of roles you are able to add and remove.",
+            "rolelist",
+            false
         );
 
         super.addFunctionCommand(

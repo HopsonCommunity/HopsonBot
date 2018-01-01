@@ -1,6 +1,7 @@
-const Bot = require("./hopson_bot");
-const Command = require ("./command.js");
-const Discord = require ('discord.js')
+const Bot       = require("./hopson_bot");
+const Command   = require("./command.js");
+const Discord   = require('discord.js')
+const Config    = require('../data/config.json')
 
 
 module.exports = class CommandHandlerBase
@@ -22,9 +23,10 @@ module.exports = class CommandHandlerBase
     }
 
     //Returns true if the user is indeed an admin (has admin role)
-    isAdmin(member) 
+    isMessageSentByAdmin(message) 
     {
-        return member.roles.find("name", "Admins") != null;
+        let adminRoleName = Config.adminRole[message.guild.id];
+        return message.member.roles.find("name", adminRoleName) != null;
     }
 
     //Adds simple "print" commands
@@ -45,7 +47,7 @@ module.exports = class CommandHandlerBase
     {
         console.log(command);
         
-        if (this.isAdmin(message.member)) {
+        if (this.isMessageSentByAdmin(message)) {
             console.log("Sent by admin");
         }
         //Check to see if it a simple command sent
