@@ -341,6 +341,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         return richEmbed;
     }
 
+    //Creates a count of how many questions are in each category
     countQuestions(message, args)
     {
         let inFile      = JSONFile.readFileSync(questionsFile);
@@ -358,7 +359,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         }
         let output = new Discord.RichEmbed()
             .setTitle("Total Questions in each Category")
-            .richEmbed.setColor(embedColour)
+            .setColor(embedColour)
             .addField("Total", total.toString(), true);
 
         result.forEach(function(val, key, map) {
