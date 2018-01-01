@@ -333,29 +333,69 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         }
     }
 
+    genRichEmbedFromMap(richEmbed, result) {
+        result.forEach(function(val, key, map) {
+            richEmbed.addField(key, val.toString(), true);
+        });
+        richEmbed.setColor(embedColour);
+        return richEmbed;
+    }
+
     countQuestions(message, args)
     {
-        let inFile = JSONFile.readFileSync(questionsFile);
-        let cats = inFile.categories;
-        let ques = inFile.questions;
-        let result = new Map();
-        let total = 0;
+        let inFile      = JSONFile.readFileSync(questionsFile);
+        let cats        = inFile.categories;
+        let questions   = inFile.questions;
+        let result      = new Map();
+        let total       = 0;
         for (var category of cats) {
             result.set(category, 0);
         }
-        for (var question of ques) {
+        for (var question of questions) {
             var val = result.get(question.cat);
             result.set(question.cat, val + 1);
             total++;
         }
         let output = new Discord.RichEmbed()
             .setTitle("Total Questions in each Category")
-            .setColor(embedColour)
+            .richEmbed.setColor(embedColour)
             .addField("Total", total.toString(), true);
 
         result.forEach(function(val, key, map) {
             output.addField(key, val.toString(), true);
-        })
+        });
+        Bot.sendMessage(message.channel, output);
+    }
+
+    //Outputs the number of questions created by people who have created questions.
+    countAuthors(message, args) 
+    {
+        let inFile      = JSONFile.readFileSync(questionsFile);
+        let questions   = inFile.questions;
+        let result      = new Map();
+
+        for (var question of questions) {
+            let author = question.author;
+            if(result.has(author)) {
+                let currentCount = result.get(author);
+                result.set(author, currentCount + 1);
+            } else {
+                result.set(author, 1);
+            }
+        }
+        let output = new Discord.RichEmbed()
+            .setTitle("Total Questions for each Author")
+            .setColor(embedColour);
+
+        this.count = 0;
+        result.forEach(function(val, key, map) {
+            output.addField(`${val.toString()} questions by:`,`<@${key}>`, true);
+            this.count++;
+            if (this.count % 3 == 0) {
+                this.count = 0;
+                output.addBlankField();
+            }
+        }.bind(this));
         Bot.sendMessage(message.channel, output);
     }
 
@@ -410,6 +450,13 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             this.countQuestions.bind(this),
             "Counts the number of questions in each category, and outputs the results.",
             "quiz cat-count",
+        )
+
+        super.addFunctionCommand(
+            "author-count",
+            this.countAuthors.bind(this),
+            "Says how many questions the authors have submitted",
+            "quiz author-count"
         )
     }
 }
