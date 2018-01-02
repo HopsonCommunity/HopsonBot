@@ -53,6 +53,8 @@ module.exports = class EventHandler
     */
     handleMessage(message) 
     {
+        if (message.channel.type !== "text") return;
+
         //Print some message information, which can help with tracking down bugs
         console.log(`Message Sent\nServer: ${message.guild.name}\nChannel: ${message.channel.name}\nUser: ${message.member.displayName}\nContent: ${message}\n`);
 
@@ -86,6 +88,7 @@ module.exports = class EventHandler
         if (content.length === 0) return;
 
         if(content.length > 1000) content = content.slice(0,1000) + " ...";
+        
         let embed = new Discord.RichEmbed()
             .setDescription(`${message.author} in ${message.channel} at ${time}`)
             .setColor(16711680)
