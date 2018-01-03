@@ -36,13 +36,13 @@ module.exports = class EventHandler
 
         this.client.on("messageDelete", (message) =>
         {
-            if (message.guild.id === 293438748018999297)
+            if (message.guild.id === "293438748018999297")
                 this.handleDelete(message);
         });
 
         this.client.on("messageUpdate", (oldMessage, newMessage) =>
         {
-            if (oldMessage.guild.id === 293438748018999297)
+            if (oldMessage.guild.id === "293438748018999297")
                 this.handleEdit(oldMessage, newMessage);
         });
     }
