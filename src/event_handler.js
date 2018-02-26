@@ -1,7 +1,9 @@
 const Bot             = require("./hopson_bot");
 const CommandHandler  = require("./command_handler");
 const Quiz            = require("./quiz")
+const MemberJoin      = require("./member_join");
 const Discord         = require('discord.js')
+
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -44,6 +46,11 @@ module.exports = class EventHandler
         {
             if (oldMessage.guild.id === "293438748018999297")
                 this.handleEdit(oldMessage, newMessage);
+        });
+
+        this.client.on("guildMemberAdd", (member) =>
+        {
+            MemberJoin.handleJoin(member);
         });
     }
 
