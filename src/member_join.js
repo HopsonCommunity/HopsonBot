@@ -8,10 +8,7 @@ var exp = module.exports =
     handleJoin : function(member) 
     {
         let channelName = Config.memberJoinChannel[member.guild.id];
-        let adminName   = Config.adminRole[member.guild.id];
-        
         let channel     = Bot.getClient().channels.find("name", channelName);
-        let adminRole   = member.guild.roles.find("name", adminName);
 
         let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
         let creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
@@ -19,15 +16,15 @@ var exp = module.exports =
 
         Bot.sendMessage(channel, new Discord.RichEmbed()
             .setTitle("User Join")
-            //.setImage("Avatar", imgURL)
             .addField("**Name**", `<@${member.user.id}>`)
             .addField("**Account Create Data**", creation)
             .addField("**Join Date**", join)
             .addField("**Time Between Create and Join (est)**", diff.str)
         );
 
+        //Notify Hopson if account is less than 2 days old
         if (diff.notify) {
-            Bot.sendMessage(channel, `<@${adminRole.id}>`);
+            Bot.sendMessage(channel, `<@115025985405059076>`);
         }
     }
 }
@@ -48,8 +45,8 @@ function getTimeDiffernce(join, create)
         min = 60 - Math.abs(min);
     }
     
-    notify = yrs <= 0;
-    console.log(notify);
+    timeDiff = join.getTime() - create.getTime();
+    notify = timeDiff <= 172800000; //2 days
 
     return {
         str: `${yrs} years, ${mnh} months, ${day} days, ${hor} hours, ${min} minutes, ${sec} seconds`,
