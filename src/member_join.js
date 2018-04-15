@@ -19,7 +19,8 @@ var exp = module.exports =
             .addField("**Name**", `<@${member.user.id}>`)
             .addField("**Account Create Data**", creation)
             .addField("**Join Date**", join)
-            .addField("**Time Between Create and Join (est)**", diff.str)
+            .addField("**Time Between Create and Join (est)**", diff.regularDiff)
+            .addField("**Milliseconds Difference**", diff.unixTimeDiff)
         );
 
         //Notify Hopson if account is less than 2 days old
@@ -32,24 +33,20 @@ var exp = module.exports =
 
 function getTimeDiffernce(join, create)
 {
-    
-    let yrs = join.getFullYear() - create.getFullYear();
-    let mnh = join.getMonth() - create.getMonth();
-    let day  = join.getDate() - create.getDate();
-    let hor = join.getHours() - create.getHours(); 
-    let min  = join.getMinutes() - create.getMinutes(); 
-    let sec  = join.getSeconds() - create.getSeconds(); 
+    let diff = join - create;
+    let diffDate = new Date(0, 0, 0, 0, 0, 0, diff);
+    console.log(typeof(diff));
 
-    if (min < 0) {
-        hor -= 1;
-        min = 60 - Math.abs(min);
-    }
-    
-    timeDiff = join.getTime() - create.getTime();
-    notify = timeDiff <= 172800000; //2 days
+    let yearDiff  = diffDate.getFullYear() - 1900;
+    let monthDiff = diffDate.getMonth();
+    let dayDiff   = diffDate.getDate();
+    let hourDiff  = diffDate.getHours();
+    let minDiff   = diffDate.getMinutes();
+    let secDiff   = diffDate.getSeconds();
 
     return {
-        str: `${yrs} years, ${mnh} months, ${day} days, ${hor} hours, ${min} minutes, ${sec} seconds`,
-        notify: notify
-    };
+        regularDiff: `${yearDiff} years, ${monthDiff} months, ${dayDiff} days, ${hourDiff} hours, ${minDiff} minutes, ${secDiff} seconds`,
+        unixTimeDiff: `${diff}`,
+        notify: diff <= 172800000 //2 days
+    }
 }
