@@ -4,6 +4,7 @@ const Config    = require('../data/config.json')
 const RoleMod   = require("./role_modifier");
 const Misc      = require("./misc/misc_commands");
 const Discord    = require("discord.js");
+const Test       = require("./graphs")
 
 const CommandHandlerBase = require("./command_handler_base")
 
@@ -87,6 +88,13 @@ module.exports = class CommandHandler extends CommandHandlerBase
             Misc.pollCommand,
             "Create a poll with reactions as responses",
             "poll <command>",
+            true
+        );
+        super.addFunctionCommand(
+            "graph",
+            Test.test,
+            "Test",
+            "graph",
             true
         );
     }
