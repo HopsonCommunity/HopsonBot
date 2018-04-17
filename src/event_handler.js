@@ -22,6 +22,9 @@ module.exports = class EventHandler
         this.client.on("ready", () =>   
         {
             console.log("Client has logged in to server");
+            this.client.user.setPresence({game: {name : "Type >help"}})
+                .then(console.log)
+                .catch(console.error);
         });
 
         //Event for when bot is dissconnected
