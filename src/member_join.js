@@ -35,7 +35,6 @@ function getTimeDiffernce(join, create)
 {
     let diff = join - create;
     let diffDate = new Date(0, 0, 0, 0, 0, 0, diff);
-    console.log(typeof(diff));
 
     let yearDiff  = diffDate.getFullYear() - 1900;
     let monthDiff = diffDate.getMonth();

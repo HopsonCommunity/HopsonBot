@@ -42,6 +42,32 @@ module.exports = class CommandHandler extends CommandHandlerBase
         Bot.sendMessage(message.channel, output);
     }
 
+    countRoles(message, args)
+    {
+        let roles = message.guild.roles;
+        let roleList = roles.array();
+        let roleMemberCount = new Map();
+
+        for (var role of roleList) {
+            roleMemberCount.set(role.name, role.members.size);
+        }
+
+        let output = new Discord.RichEmbed().setTitle("ROLE COUNTS");
+        
+        let i = 0;
+        for (const [key, value] of roleMemberCount.entries()) {
+            if (!["Rythm", "Dyno", "Boten", "MEE6", "@everyone"].includes(key)) {
+                //output += `**__${key}__**\n${value}\n\n`;
+                output.addField(`**__${key}__**`, value, true);
+                if (++i >= 25) {
+                    break;
+                }
+            }
+        }
+
+        Bot.sendMessage(message.channel, output);
+    }
+
     initializeCommands()
     {
         //Add the "simple commands"
@@ -97,6 +123,12 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "graph",
             true
         );
+        super.addFunctionCommand(
+            "countrole",
+            this.countRoles,
+            "Showd the number of people in each role",
+            "countrole"
+        )
     }
 }
 
