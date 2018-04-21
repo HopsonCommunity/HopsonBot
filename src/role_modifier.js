@@ -83,5 +83,5 @@ function modifyRoles(message, action, languageList)
 function createOutput(languages, userID, verb, dir)
 {
     let sp = languages.length == 1 ?  "role" :  "roles";
-    return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${languages.join("\n>")}"`;
+    return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${languages.join("\n>")}`;
 }
