@@ -36,8 +36,12 @@ module.exports = class CommandHandler extends CommandHandlerBase
         let output = new Discord.RichEmbed()
             .setTitle("Modifiable Roles From >role Command");
 
+        let i = 0;
         for (var roleName of roleArray) {
-            output.addField(roleName,  "~", true);
+            output.addField(`${++i}`,  roleName, true);
+            if (i == 25) {
+                break;
+            }
         }
         Bot.sendMessage(message.channel, output);
     }
