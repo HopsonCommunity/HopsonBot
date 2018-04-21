@@ -12,7 +12,7 @@ var exp = module.exports =
 
         let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
         let creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-        let diff        = getTimeDiffernce(member.joinedAt, member.user.createdAt);
+        let diff        = getTimeDifference(member.joinedAt, member.user.createdAt);
 
         Bot.sendMessage(channel, new Discord.RichEmbed()
             .setTitle("User Join")
@@ -25,27 +25,28 @@ var exp = module.exports =
 
         //Notify Hopson if account is less than 2 days old
         if (diff.notify) {
-            Bot.sendMessage(channel, `<@115025985405059076>`);
+            Bot.sendMessage(channel, `<@&435896380062433295>`);
         }
     }
 }
 
 
-function getTimeDiffernce(join, create)
+function getTimeDifference(join, create)
 {
     let diff = join - create;
-    let diffDate = new Date(0, 0, 0, 0, 0, 0, diff);
+    let diffDate = new Date(diff);
+    let originDate = new Date(0);
 
-    let yearDiff  = diffDate.getFullYear() - 1900;
-    let monthDiff = diffDate.getMonth();
-    let dayDiff   = diffDate.getDate();
-    let hourDiff  = diffDate.getHours();
-    let minDiff   = diffDate.getMinutes();
-    let secDiff   = diffDate.getSeconds();
+    let yearDiff  = diffDate.getFullYear() - originDate.getFullYear();
+    let monthDiff = diffDate.getMonth()    - originDate.getMonth();
+    let dayDiff   = diffDate.getDate()     - originDate.getDate();
+    let hourDiff  = diffDate.getHours()    - originDate.getHours();
+    let minDiff   = diffDate.getMinutes()  - originDate.getMinutes();
+    let secDiff   = diffDate.getSeconds()  - originDate.getSeconds();
 
     return {
         regularDiff: `${yearDiff} years, ${monthDiff} months, ${dayDiff} days, ${hourDiff} hours, ${minDiff} minutes, ${secDiff} seconds`,
         unixTimeDiff: `${diff}`,
-        notify: diff <= 172800000 //2 days
+        notify: diff <= new Date(0, 0, 2 /* days */).getTime()
     }
 }
