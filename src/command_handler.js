@@ -38,7 +38,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 
         let i = 0;
         for (var roleName of roleArray) {
-            output.addField(`${++i}`,  roleName, true);
+            output.addField(`Role ${++i}`,  `${roleName}\n`, true);
             if (i == 25) {
                 break;
             }
