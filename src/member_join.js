@@ -23,9 +23,9 @@ var exp = module.exports =
             .addField("**Milliseconds Difference**", diff.unixTimeDiff)
         );
 
-        //Notify Hopson if account is less than 2 days old
+    //Notify Admins if account is less than 2 days old
         if (diff.notify) {
-            Bot.sendMessage(channel, `<@&435896380062433295>`);
+            Bot.sendMessage(channel, `<@&293440127601082368>`);
         }
     }
 }
