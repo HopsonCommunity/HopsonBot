@@ -38,15 +38,15 @@ function getTimeDifference(join, create)
     let originDate = new Date(0);
 
     let yearDiff  = diffDate.getFullYear() - originDate.getFullYear();
-    let monthDiff = diffDate.getMonth()    - originDate.getMonth();
-    let dayDiff   = diffDate.getDate()     - originDate.getDate();
-    let hourDiff  = diffDate.getHours()    - originDate.getHours();
-    let minDiff   = diffDate.getMinutes()  - originDate.getMinutes();
-    let secDiff   = diffDate.getSeconds()  - originDate.getSeconds();
+    let monthDiff = diffDate.getMonth();
+    let dayDiff   = diffDate.getDate();
+    let hourDiff  = diffDate.getHours();
+    let minDiff   = diffDate.getMinutes();
+    let secDiff   = diffDate.getSeconds();
 
     return {
         regularDiff: `${yearDiff} years, ${monthDiff} months, ${dayDiff} days, ${hourDiff} hours, ${minDiff} minutes, ${secDiff} seconds`,
         unixTimeDiff: `${diff}`,
-        notify: diff <= new Date(0, 0, 2 /* days */).getTime()
+        notify: diff <= 172800000 // ms in 2 days
     }
 }
