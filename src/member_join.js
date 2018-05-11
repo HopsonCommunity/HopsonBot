@@ -39,7 +39,7 @@ function getTimeDifference(join, create)
 
     let yearDiff  = diffDate.getFullYear() - originDate.getFullYear();
     let monthDiff = diffDate.getMonth();
-    let dayDiff   = diffDate.getDate();
+    let dayDiff   = diffDate.getDate() - 1; // [1, 31] to [0, 30]
     let hourDiff  = diffDate.getHours();
     let minDiff   = diffDate.getMinutes();
     let secDiff   = diffDate.getSeconds();
