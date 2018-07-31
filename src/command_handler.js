@@ -1,10 +1,10 @@
 const Bot = require("./hopson_bot");
 const Command   = require("./command");
-const Config    = require('../data/config.json')
+const Config    = require("../data/config.json");
 const RoleMod   = require("./role_modifier");
 const Misc      = require("./misc/misc_commands");
 const Discord    = require("discord.js");
-const Test       = require("./graphs")
+const Test       = require("./graphs");
 
 const CommandHandlerBase = require("./command_handler_base")
 

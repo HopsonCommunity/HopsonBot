@@ -1,9 +1,9 @@
 const Bot             = require("./hopson_bot");
 const CommandHandler  = require("./command_handler");
-const Quiz            = require("./quiz")
+const Quiz            = require("./quiz");
 const MemberJoin      = require("./member_join");
-const Discord         = require('discord.js')
-
+const Discord         = require("discord.js");
+const Config          = require("../data/config.json");
 
 //Main class for the bot, which does what it says on the tin
 module.exports = class EventHandler
@@ -41,14 +41,26 @@ module.exports = class EventHandler
 
         this.client.on("messageDelete", (message) =>
         {
+            for (var blacklistedChannel of Config.logBlacklistedChannels["293438748018999297"]) {
+                if (message.channel.id == blacklistedChannel) {
+                    return;
+                }
+            }
+            
             if (message.guild.id === "293438748018999297")
                 this.handleDelete(message);
         });
 
         this.client.on("messageUpdate", (oldMessage, newMessage) =>
         {
+            for (var blacklistedChannel of Config.logBlacklistedChannels["293438748018999297"]) {
+                if (oldMessage.channel.id == blacklistedChannel) {
+                    return;
+                }
+            }
+
             if (oldMessage.guild.id === "293438748018999297")
-                this.handleEdit(oldMessage, newMessage);
+               this.handleEdit(oldMessage, newMessage);
         });
 
         this.client.on("guildMemberAdd", (member) =>
