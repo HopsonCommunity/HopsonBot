@@ -41,7 +41,7 @@ module.exports = class EventHandler
 
         this.client.on("messageDelete", (message) =>
         {
-            for (var blacklistedChannel of Config.logBlacklistedChannels["293438748018999297"]) {
+            for (var blacklistedChannel of Config.logBlacklistedChannels[message.guild.id]) {
                 if (message.channel.id == blacklistedChannel) {
                     return;
                 }
@@ -53,7 +53,7 @@ module.exports = class EventHandler
 
         this.client.on("messageUpdate", (oldMessage, newMessage) =>
         {
-            for (var blacklistedChannel of Config.logBlacklistedChannels["293438748018999297"]) {
+            for (var blacklistedChannel of Config.logBlacklistedChannels[oldMessage.guild.id]) {
                 if (oldMessage.channel.id == blacklistedChannel) {
                     return;
                 }
