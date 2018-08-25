@@ -67,6 +67,11 @@ module.exports = class EventHandler
         {
             MemberJoin.handleJoin(member);
         });
+
+        this.client.on("userUpdate", (oldUser, newUser) => 
+        {
+            this.handleUserUpdate(oldUser, newUser);
+        });
     }
 
     /*
@@ -144,5 +149,24 @@ module.exports = class EventHandler
 
         Bot.sendMessage(botlog, embed);
         this.handleMessage(newMessage);
+    }
+
+    /*
+     * When a user changes username log the new and old name to #bot_log
+     */
+    handleUserUpdate(oldUser, newUser)
+    {
+        let botlog = this.client.channels.get("362124431801450526");
+        let time = (new Date()).toLocaleString('en-GB');
+
+        if (oldUser.username != newUser.username){
+            let embed = new Discord.RichEmbed()
+            .setDescription(`Username Change at ${time}`)
+            .setColor(9699539)
+            .addField("Old Username", oldUser.username)
+            .addField("New Username", newUser.username);
+
+            Bot.sendMessage(botlog, embed);
+        }
     }
 }
