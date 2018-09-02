@@ -1,7 +1,7 @@
 {
     "quizChannels": [
-            "bot_testing",
-            "trusted_house",
+            "bot-testing",
+            "trusted-house",
             "voice-text-chat",
             "members-voice-text-chat",
             "use-bots-here"

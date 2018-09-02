@@ -25,7 +25,7 @@ module.exports = class CommandHandlerBase
     //Returns true if the user is indeed an admin (has admin role)
     isMessageSentByAdmin(message) 
     {
-        let adminRoleName = Config.adminRole[message.guild.id];
+        let adminRoleName = Config.adminRole;
         return message.member.roles.find("name", adminRoleName) != null;
     }
 

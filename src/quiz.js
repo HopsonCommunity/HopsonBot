@@ -187,7 +187,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
             Bot.sendMessage(message.channel, "You must provide an action, for more info say >quiz help");
             return;
         }
-        let quizChnnels = Config.quizChannels[message.guild.id];
+        let quizChnnels = Config.quizChannels;
         if (quizChnnels.indexOf(channel.name) === -1) {
             Bot.sendMessage(message.channel, `To avoid spam, quizzes only work in the following channels:\n>${quizChnnels.join("\n>")}`);
             return;

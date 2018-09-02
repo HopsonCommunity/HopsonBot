@@ -31,7 +31,7 @@ module.exports = class CommandHandler extends CommandHandlerBase
 
     displayModifiableRoles(message, args) 
     {
-        let roleArray = Config.modifiableRoles[message.guild.id];
+        let roleArray = Config.modifiableRoles;
         let output = new Discord.RichEmbed()
             .setTitle("Modifiable Roles From >role Command");
 

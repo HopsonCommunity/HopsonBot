@@ -38,7 +38,7 @@ function isValidCommand(action, languages, serverID)
         return [false, "Please give me a list of languages from '>rolelist'."];
     }
     for (var language of languages) {
-        if (Config.modifiableRoles[serverID].indexOf(language) === -1) {
+        if (Config.modifiableRoles.indexOf(language) === -1) {
             return [false, `I do not recognise the role "${language}".`];
         }
     }
