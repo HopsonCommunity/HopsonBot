@@ -1,22 +1,12 @@
 {
-    "quizChannels": {
-        "293438748018999297": [
+    "quizChannels": [
             "bot_testing",
             "trusted_house",
             "voice-text-chat",
             "members-voice-text-chat",
             "use-bots-here"
-        ],
-        "134034981373739008": [
-            "general",
-            "bot-commands"
-        ],
-        "113418926909644800": [
-            "general"
-        ]
-    },
-    "modifiableRoles": {
-        "293438748018999297": [
+    ],
+    "modifiableRoles": [
             "C++",
             "Wot++",
             "OpenGL",
@@ -37,28 +27,9 @@
             "PUBG",
             "ProofWatcher"
         ],
-        "134034981373739008": [
-            "Software-Engineering",
-            "Computer-Forensics",
-            "Computer-Science",
-            "Computing",
-            "Business-Information-Systems"
-        ],
-        "113418926909644800": [
-
-        ]
-    },
-    "adminRole": {
-        "293438748018999297": "Admins",
-        "134034981373739008": "Admin",
-        "113418926909644800": "c-y-b-o-y-s"
-    },
-    "memberJoinChannel": {
-        "293438748018999297": "new-members",
-        "134034981373739008": "adminos",
-        "113418926909644800": "c-y-b-o-y-s"
-    },
-    "logBlacklistedChannels": {
-        "293438748018999297": ["293461625426411520"]
-    }
+    "adminRole": "Admins",
+    "memberJoinChannel": "new-members",
+    "logBlacklistedChannels":  [
+        "293461625426411520"
+    ]
 }
