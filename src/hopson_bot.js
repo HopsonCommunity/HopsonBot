@@ -9,11 +9,13 @@ var exp = module.exports =
         message += "\n";
         console.log(message);
     },
+
     sendMessage : function(channel, message)
     {
         console.log(`Message sent by bot in channel "${channel.name}"\n\n`);
         channel.send(message);
     },
+    
     getClient : function() 
     {
         return client;

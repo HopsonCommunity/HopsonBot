@@ -27,6 +27,7 @@
             "PUBG",
             "ProofWatcher"
         ],
+    "welcomeChannel": "welcome",
     "newMemberRole": "NewMember",
     "newMemberChannel": "introductions",
     "adminRole": "Admins",

@@ -9,8 +9,21 @@ var exp = module.exports =
     {
         checkAccountAge(member);
 
+        //Give new member role
         let newMemberRole = member.guild.roles.find('name', Config.newMemberRole);
         member.addRole(newMemberRole);
+
+        let channelName = Config.welcomeChannel;
+        let channel     = Bot.getClient().channels.find("name", channelName);
+
+        //Welcome them
+        Bot.sendMessage(channel,
+            `
+            Welcome to Hopson Community server, <@${member.user.id}>!\n 
+Please take a moment to look at the <#293460068483989504>.\n 
+After, introduce yourself in <#463866762786635777>, and I will give you access to the rest of the server.\n
+Enjoy! :)
+            `)
     }
 }
 
