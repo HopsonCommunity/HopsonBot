@@ -1,14 +1,14 @@
 const questionsFile = "data/quiz_questions.json";
 
-const Bot           = require("./hopson_bot");
-const EventHandle   = require('./event_handler');
-const Util          = require("./misc/util");
+const Bot           = require("../hopson_bot");
+const Util          = require("../misc/util");
 const JSONFile      = require('jsonfile');
-const QuizJSON      = require('../' + questionsFile);
-const Config        = require('../data/config.json');
+const QuizJSON      = require("../../" + questionsFile);
+const CommandHandlerBase = require("../command_handler_base")
+
+const Config        = require('../../data/config.json');
 const fs            = require('fs');
 const Discord       = require('discord.js')
-const CommandHandlerBase = require("./command_handler_base")
 
 const embedColour = 0x28abed;
 
