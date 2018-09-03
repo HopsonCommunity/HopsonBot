@@ -27,6 +27,8 @@
             "PUBG",
             "ProofWatcher"
         ],
+    "newMemberRole": "NewMember",
+    "newMemberChannel": "introductions",
     "adminRole": "Admins",
     "memberJoinChannel": "new-members",
     "logBlacklistedChannels":  [
