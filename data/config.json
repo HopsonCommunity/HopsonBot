@@ -29,6 +29,7 @@
         ],
     "welcomeChannel": "welcome",
     "newMemberRole": "NewMember",
+    "introRole": "Introduced",
     "newMemberChannel": "introductions",
     "adminRole": "Admins",
     "memberJoinChannel": "new-members",

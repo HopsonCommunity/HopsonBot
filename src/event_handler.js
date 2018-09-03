@@ -91,7 +91,9 @@ module.exports = class EventHandler
 
         if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
+            let introduceRole = message.member.guild.roles.find('name', Config.introRole);
             message.member.removeRole(newMemberRole);
+            message.member.addRole(introduceRole);
         }
 
         //A message starting with > indicates it is a command 
