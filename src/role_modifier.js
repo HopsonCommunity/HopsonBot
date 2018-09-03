@@ -15,7 +15,7 @@ module.exports =
             return arr.indexOf(item) == index;
         });
 
-        let [isValid, result] = isValidCommand(action, languages, message.guild.id);
+        let [isValid, result] = isValidCommand(action, languages);
         if (isValid) {
             modifyRoles(message, action, languages);
         }
@@ -26,7 +26,7 @@ module.exports =
 }
 
 //Checks if the command sent is valid
-function isValidCommand(action, languages, serverID)
+function isValidCommand(action, languages)
 {
     //Validify the command's action (add/ remove)
     if (action != "add" && action != "remove") {
@@ -38,7 +38,7 @@ function isValidCommand(action, languages, serverID)
         return [false, "Please give me a list of languages from '>rolelist'."];
     }
     for (var language of languages) {
-        if (Config.modifiableRoles[serverID].indexOf(language) === -1) {
+        if (Config.modifiableRoles.indexOf(language) === -1) {
             return [false, `I do not recognise the role "${language}".`];
         }
     }

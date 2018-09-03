@@ -7,7 +7,7 @@ var exp = module.exports =
 {
     handleJoin : function(member) 
     {
-        let channelName = Config.memberJoinChannel[member.guild.id];
+        let channelName = Config.memberJoinChannel;
         let channel     = Bot.getClient().channels.find("name", channelName);
 
         let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
@@ -23,7 +23,7 @@ var exp = module.exports =
             .addField("**Milliseconds Difference**", diff.unixTimeDiff)
         );
 
-    //Notify Admins if account is less than 2 days old
+        //Notify Admins if account is less than 2 days old
         if (diff.notify) {
             Bot.sendMessage(channel, `<@&293440127601082368>`);
         }

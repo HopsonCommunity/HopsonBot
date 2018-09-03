@@ -41,26 +41,24 @@ module.exports = class EventHandler
 
         this.client.on("messageDelete", (message) =>
         {
-            for (var blacklistedChannel of Config.logBlacklistedChannels[message.guild.id]) {
+            for (var blacklistedChannel of Config.logBlacklistedChannels) {
                 if (message.channel.id == blacklistedChannel) {
                     return;
                 }
             }
             
-            if (message.guild.id === "293438748018999297")
-                this.handleDelete(message);
+            this.handleDelete(message);
         });
 
         this.client.on("messageUpdate", (oldMessage, newMessage) =>
         {
-            for (var blacklistedChannel of Config.logBlacklistedChannels[oldMessage.guild.id]) {
+            for (var blacklistedChannel of Config.logBlacklistedChannels) {
                 if (oldMessage.channel.id == blacklistedChannel) {
                     return;
                 }
             }
 
-            if (oldMessage.guild.id === "293438748018999297")
-                this.handleEdit(oldMessage, newMessage);
+            this.handleEdit(oldMessage, newMessage);
         });
 
         this.client.on("guildMemberAdd", (member) =>
