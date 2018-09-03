@@ -91,6 +91,7 @@ module.exports = class EventHandler
 
         if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
+            let introduceRole = message.member.guild.roles.find('name', Config.newMemberRole);
             message.member.removeRole(newMemberRole);
         }
 
