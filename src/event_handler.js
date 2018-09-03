@@ -47,8 +47,7 @@ module.exports = class EventHandler
                 }
             }
             
-            if (message.guild.id === "293438748018999297")
-                this.handleDelete(message);
+            this.handleDelete(message);
         });
 
         this.client.on("messageUpdate", (oldMessage, newMessage) =>
@@ -59,8 +58,7 @@ module.exports = class EventHandler
                 }
             }
 
-            if (oldMessage.guild.id === "293438748018999297")
-                this.handleEdit(oldMessage, newMessage);
+            this.handleEdit(oldMessage, newMessage);
         });
 
         this.client.on("guildMemberAdd", (member) =>

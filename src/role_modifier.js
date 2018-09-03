@@ -15,7 +15,7 @@ module.exports =
             return arr.indexOf(item) == index;
         });
 
-        let [isValid, result] = isValidCommand(action, languages, message.guild.id);
+        let [isValid, result] = isValidCommand(action, languages);
         if (isValid) {
             modifyRoles(message, action, languages);
         }
@@ -26,7 +26,7 @@ module.exports =
 }
 
 //Checks if the command sent is valid
-function isValidCommand(action, languages, serverID)
+function isValidCommand(action, languages)
 {
     //Validify the command's action (add/ remove)
     if (action != "add" && action != "remove") {
