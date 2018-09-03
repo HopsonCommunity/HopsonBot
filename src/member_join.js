@@ -18,12 +18,13 @@ var exp = module.exports =
 
         //Welcome them
         Bot.sendMessage(channel,
-            `
-            Welcome to Hopson Community server, <@${member.user.id}>!
-Please take a moment to look at the <#293460068483989504>.
-After, introduce yourself in <#463866762786635777>, and I will give you access to the rest of the server.\n
+`
+Welcome to Hopson Community server, <@${member.user.id}>! Take a moment to look at the <#293460068483989504>.
+Also, please ntroduce yourself in <#463866762786635777>, and I will give you access to the rest of the server.\n
 Enjoy! :)
-            `)
+__
+`
+        )
     }
 }
 
