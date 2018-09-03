@@ -10,9 +10,6 @@ const Config        = require('../../data/config.json');
 const fs            = require('fs');
 const Discord       = require('discord.js')
 
-const embedColour = 0x28abed;
-
-
 //Struct holding data about a question
 class Question 
 {
