@@ -89,6 +89,11 @@ module.exports = class EventHandler
             return;
         }
 
+        if (message.channel.name === Config.newMemberChannel) {
+            let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
+            message.member.removeRole(newMemberRole);
+        }
+
         //A message starting with > indicates it is a command 
         if (content.startsWith(">")) {
             this.commandHandler.handleCommand(message);
