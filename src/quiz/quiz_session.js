@@ -6,6 +6,7 @@ const JSONFile      = require('jsonfile');
 const Discord       = require('discord.js')
 
 const embedColour = 0x28abed;
+const MAX_USERS   = 24;
 
 //Struct holding data about a question
 class Question 
@@ -64,7 +65,7 @@ module.exports = class QuizSession
     //Adds a member to this quiz session if they have not yet been added
     tryAddUser(member) 
     {
-        if(!this.users.has(member) && this.users.size < 23) {
+        if(!this.users.has(member) && this.users.size < MAX_USERS) {
             this.users.set(member, new QuizUser());
         }
     }

@@ -73,7 +73,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         if (!this.quizActive) {
             Bot.sendMessage(channel, `Sorry, a quiz is not active.`);
         }
-        else if (channel.name != this.session.channel.name) {   //Cannot end a quiz from a different channel
+        else if (!channelHasQuizSession(message.channel)) {   //Cannot end a quiz from a different channel
             Bot.sendMessage(channel, `Sorry, you can not end a quiz from a different channel from which is currently active, which is **'${this.session.channel.name}'**.`);
         }
         else {
@@ -85,7 +85,7 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
     submitAnswer(message, answer)
     {
         if (!this.quizActive) return;
-        if (this.session.channel != message.channel) return;
+        if (!channelHasQuizSession(message.channel)) return;
 
         this.session.submitAnswer(message.member, answer);
     }
@@ -102,6 +102,10 @@ module.exports = class QuizEventHandler extends CommandHandlerBase
         if(this.quizActive) {
             this.session.addSkip(message.member);
         }
+    }
+
+    channelHasQuizSession(channel) {
+        return this.session.channel === channel;
     }
 
     initializeCommands()
