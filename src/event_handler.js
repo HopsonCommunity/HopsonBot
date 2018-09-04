@@ -1,6 +1,6 @@
 const Bot             = require("./hopson_bot");
 const CommandHandler  = require("./command_handler");
-const Quiz            = require("./quiz");
+const Quiz            = require("./quiz/quiz_command_handler");
 const MemberJoin      = require("./member_join");
 const Discord         = require("discord.js");
 const Config          = require("../data/config.json");
