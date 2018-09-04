@@ -1,11 +1,11 @@
 const questionsFile = "data/quiz_questions.json";
 const QuizJSON      = require("../../" + questionsFile);
 
+const CommandHandlerBase = require("../command_handler_base")
+const Config        = require('../../data/config.json');
 const Bot           = require("../hopson_bot");
 const Util          = require("../misc/util");
-const CommandHandlerBase = require("../command_handler_base")
-const QuizSession = require("./quiz_session")
-const Config        = require('../../data/config.json');
+const QuizSession   = require("./quiz_session")
 
 const fs            = require('fs');
 const Discord       = require('discord.js')
