@@ -1,8 +1,9 @@
-const Discord         = require("discord.js");
-const Config          = require("../data/config.json");
+const Discord         = require('discord.js');
+const Config          = require('../data/config.json');
 
-const MessageSentHandler    = require("./events/message_sent_handler");
-const MessageModifyHandler  = require("./events/message_mod_handler");
+const MessageSentHandler    = require('./events/message_sent_handler');
+const MessageModifyHandler  = require('./events/message_mod_handler');
+const MemeberJoinHandler    = require('./events/member_join_handler');
 
 module.exports = class HopsonBot {
     constructor(client) {
@@ -49,7 +50,7 @@ module.exports = class HopsonBot {
 
         //Event for people joining the server
         this.client.on("guildMemberAdd", (member) => {
-           // MemberJoin.handleJoin(member);
+            MemeberJoinHandler.handleJoin(member);
         });
 
         //Event for a user update (eg changing their usernem)
