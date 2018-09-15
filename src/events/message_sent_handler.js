@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
-const PollCommandHandler = require('../commands/poll_command_handler')
+const PollCommandHandler    = require('../commands/poll_command_handler')
+const RoleCommandHandler    = require('../commands/role_command_handler')
 /**
  * Class to handle messages sent by the user
  */
@@ -10,7 +11,8 @@ module.exports = class MessageSentHandler {
      */
     constructor () {
         this.commandHandlers = [
-            new PollCommandHandler()
+            new PollCommandHandler(),
+            new RoleCommandHandler()
         ]
     }
     /**
