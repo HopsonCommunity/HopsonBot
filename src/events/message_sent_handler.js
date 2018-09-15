@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const MessageInfo = require('../message_info');
 
+const PollCommandHandler = require('../commands/poll_command_handler')
 /**
  * Class to handle messages sent by the user
  */
@@ -10,7 +11,7 @@ module.exports = class MessageSentHandler {
      */
     constructor () {
         this.commandHandlers = [
-            
+            new PollCommandHandler()
         ]
     }
     /**
@@ -20,13 +21,10 @@ module.exports = class MessageSentHandler {
      */
     handleEvent (message, client) {
         const msgInfo = new MessageInfo(message);
-
-        //ignore non-text/ bot-sent messages
+        msgInfo.logInfo();
         if (!msgInfo.isRealTextMessage) {
             return;
         }
-        msgInfo.logInfo();
-
         if (msgInfo.isCommand) {
             this.handleCommand(msgInfo);
         }
@@ -38,7 +36,7 @@ module.exports = class MessageSentHandler {
      */
     handleCommand(msgInfo) {
         for (let handler of this.commandHandlers) {
-            if (handler.isCommand(msgInfo.commandType)) {
+            if (handler.isCommand(msgInfo.commandCategory)) {
                 handler.handleCommand(msgInfo);
             }
         }
@@ -74,4 +72,4 @@ module.exports = class MessageSentHandler {
             console.log(content);
             this.quiz.submitAnswer(message, content.toLowerCase());
         }
-        */
+*/

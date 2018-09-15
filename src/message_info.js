@@ -13,7 +13,7 @@ module.exports = class MessageInfo {
 
         this.isCommand = message.content.startsWith('>');
         const content = message.content
-                            .slice(1)   //Remove the '>'
+                            .slice(this.isCommand ? 1 : 0)   //Remove the '>' if it is there
                             .split(' ')
                             .map((s) => {
                                 return s.toLowerCase()
@@ -22,12 +22,15 @@ module.exports = class MessageInfo {
         this.commandCategory    = content[0];
         this.args               = content.slice(1);
 
+        //misc info
         this.channel            = message.channel;
         this.msg                = message;
-
         this.user               = message.member;
     }
 
+    /**
+     * Logs info about the message to the console
+     */
     logInfo() {
         const ch = this.channel.name;
         const user = this.msg.member.displayName;
