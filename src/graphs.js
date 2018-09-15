@@ -1,5 +1,5 @@
 const Config    = require("../data/config.json");
-const Bot       = require ("./hopson_bot");
+const Bot       = require ("./main");
 const Discord   = require('discord.js')
 
 async function serachChannel(channel) {

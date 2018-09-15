@@ -1,5 +1,5 @@
 const Config    = require("../data/config.json");
-const Bot       = require ("./hopson_bot");
+const Bot       = require ("./main");
 
 module.exports =
 {

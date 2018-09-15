@@ -1,4 +1,4 @@
-const Bot = require("../hopson_bot")
+const Bot = require("../main")
 
 const eight_ball = require("./eight_ball");
 const poll       = require("./poll");

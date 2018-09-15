@@ -1,5 +1,5 @@
 const Util = require('./util');
-const Bot  = require('./../hopson_bot');
+const Bot  = require('../main');
 
 // Contains the possible results for the 8ball
 var ball_results = ["Yes.", "Reply hazy, try again.", "Without a doubt.",

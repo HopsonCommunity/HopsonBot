@@ -4,7 +4,7 @@
 // - Yes / No
 // - Option-based (1, 2, 3, 4)
 
-const Bot = require("../hopson_bot")
+const Bot = require("../main")
 const util = require('./util');
 
 // Number emojis

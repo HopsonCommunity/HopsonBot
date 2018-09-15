@@ -1,4 +1,4 @@
-const Bot       = require("./hopson_bot");
+const Bot       = require("./main");
 const Command   = require("./command.js");
 const Discord   = require('discord.js')
 const Config    = require('../data/config.json')
