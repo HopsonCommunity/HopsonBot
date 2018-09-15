@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 const PollCommandHandler    = require('../commands/poll_command_handler')
 const RoleCommandHandler    = require('../commands/role_command_handler')
 /**
@@ -20,7 +18,7 @@ module.exports = class MessageSentHandler {
      * @param {Discord.TextMessage} message The raw message sent by a user
      * @param {Discord client} client The Discord client the message was sent 
      */
-    handleEvent (message, client) {
+    handleMessageSent(message, client) {
         logMessageInfo(message);
         if ((message.channel.type !== "text") || 
             (message.author.bot)) {

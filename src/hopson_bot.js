@@ -1,12 +1,12 @@
 const Discord         = require("discord.js");
 const Config          = require("../data/config.json");
 
-const MessageSentHandler = require("./events/message_sent_handler")
+const MessageSentHandler    = require("./events/message_sent_handler");
+const MessageModifyHandler  = require("./events/message_mod_handler");
 
 module.exports = class HopsonBot {
     constructor(client) {
         this.client = client;
-
         this.messageSentHandler = new MessageSentHandler();
     }
 
@@ -26,33 +26,33 @@ module.exports = class HopsonBot {
 
         //Event for messages sent to any of the discord channels
         this.client.on("message", (message) => {
-            this.messageSentHandler.handleEvent(message, this.client);
+            this.messageSentHandler.handleMessageSent(message, this.client);
         });
 
-        this.client.on("messageDelete", (message) => {/*
-            for (var blacklistedChannel of Config.logBlacklistedChannels) {
-                if (message.channel.id == blacklistedChannel) {
-                    return;
-                }
-            }
-            
-            this.handleDelete(message);*/
+        //Event for a message delete
+        this.client.on("messageDelete", (message) => {
+            console.log("Message deleted");
+            MessageModifyHandler.handleMessageDelete(
+                this.client, 
+                message
+            );
+        });
+        
+        //Event for a message edit
+        this.client.on("messageUpdate", (oldMessage, newMessage) => {
+            MessageModifyHandler.handleMessageDelete(
+                this.client, 
+                oldMessage, 
+                newMessage
+            );
         });
 
-        this.client.on("messageUpdate", (oldMessage, newMessage) => {/*
-            for (var blacklistedChannel of Config.logBlacklistedChannels) {
-                if (oldMessage.channel.id == blacklistedChannel) {
-                    return;
-                }
-            }
-
-            this.handleEdit(oldMessage, newMessage);*/
-        });
-
+        //Event for people joining the server
         this.client.on("guildMemberAdd", (member) => {
            // MemberJoin.handleJoin(member);
         });
 
+        //Event for a user update (eg changing their usernem)
         this.client.on("userUpdate", (oldUser, newUser) => {
             //this.handleUserUpdate(oldUser, newUser);
         });
