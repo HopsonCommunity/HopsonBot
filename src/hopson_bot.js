@@ -4,6 +4,7 @@ const Config          = require('../data/config.json');
 const MessageSentHandler    = require('./events/message_sent_handler');
 const MessageModifyHandler  = require('./events/message_mod_handler');
 const MemeberJoinHandler    = require('./events/member_join_handler');
+const MemberUpdateHandler   = require('./events/member_update_event');
 
 module.exports = class HopsonBot {
     constructor(client) {
@@ -55,7 +56,7 @@ module.exports = class HopsonBot {
 
         //Event for a user update (eg changing their usernem)
         this.client.on("userUpdate", (oldUser, newUser) => {
-            //this.handleUserUpdate(oldUser, newUser);
+            MemberUpdateHandler.handleUserUpdate(this.client, oldUser, newUser);
         });
     }
 }
