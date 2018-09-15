@@ -1,9 +1,13 @@
 const Discord         = require("discord.js");
 const Config          = require("../data/config.json");
 
+const MessageSentHandler = require("./events/message_sent_handler")
+
 module.exports = class HopsonBot {
     constructor(client) {
         this.client = client;
+
+        this.messageSentHandler = new MessageSentHandler();
     }
 
     runBot() {
@@ -22,7 +26,7 @@ module.exports = class HopsonBot {
 
         //Event for messages sent to any of the discord channels
         this.client.on("message", (message) => {
-            //this.handleMessage(message);
+            this.messageSentHandler.handleEvent(message, this.client);
         });
 
         this.client.on("messageDelete", (message) => {/*

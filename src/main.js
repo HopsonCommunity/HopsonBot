@@ -1,5 +1,6 @@
 const Discord   = require('discord.js');
 const Config    = require('../data/config');
+const HopsonBot = require('./hopson_bot')
 //Log into discord
 const client = new Discord.Client();
 
@@ -20,11 +21,13 @@ var exp = module.exports =
     {
         return client;
     },
-
 }
 
+
+new HopsonBot(client).runBot();
+
 //Start the event handler
-const EventHandler  = require("./event_handler")
-exp.eventHandle = new EventHandler(client).run();
+//const EventHandler  = require("./event_handler")
+//exp.eventHandle = new EventHandler(client).run();
 
 client.login(Config.getToken());
