@@ -25,18 +25,19 @@ module.exports = class CommandHandlerBase {
 
     /**
      * Handles a command
-     * @param {MessageInfo} msgInfo Information about the message sent by the user
-     * @param {Discord.client} client The discord client
+     * @param {Discord Text Message} message The raw message
+     * @param {[String]} args The "args" of the command
      */
-    handleCommand(msgInfo, client) {
-        let command = msgInfo.args[0];
+    handleCommand(message, args, client) {
+        let command = args[0];
+        console.log(command);
         if (this.simpleCommands.has(command)) {
-            msgInfo.channel.send(this.simpleCommands.get(command).action);
+            message.channel.send(this.simpleCommands.get(command).action);
         }
         else if (this.commands.has(command)) {
-            console.log("Wow found something");
+            args.splice(0, 1);//remove command name
             let cmd = this.commands.get(command);
-            cmd.action(msgInfo, client);
+            cmd.action(message, args, client);
         }
     }
 
@@ -57,7 +58,7 @@ module.exports = class CommandHandlerBase {
      * @param {String} commandName The ID/ name of the command that will invoke this
      * @param {String} description Description of what the command does
      * @param {String} example Example useage of the command
-     * @param {function(messageInfo)} action Function that is called in response the command. This must take in a single argument, the message info
+     * @param {function(messageInfo)} action Function that is called in response the command. This must take in a 3 args, (message, args, client)
      */
     addCommand(commandName, description, example, action) {
         let fullExample = `>${this.commandCategory} ${example}`;

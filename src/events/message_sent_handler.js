@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const MessageInfo = require('../message_info');
 
 const PollCommandHandler = require('../commands/poll_command_handler')
 /**
@@ -20,13 +19,13 @@ module.exports = class MessageSentHandler {
      * @param {Discord client} client The Discord client the message was sent 
      */
     handleEvent (message, client) {
-        const msgInfo = new MessageInfo(message);
-        msgInfo.logInfo();
-        if (!msgInfo.isRealTextMessage) {
+        logMessageInfo(message);
+        if ((message.channel.type !== "text") || 
+            (message.author.bot)) {
             return;
         }
-        if (msgInfo.isCommand) {
-            this.handleCommand(msgInfo);
+        if (message.content.startsWith('>')) {
+            this.handleCommand(message, client);
         }
     }
 
@@ -34,13 +33,32 @@ module.exports = class MessageSentHandler {
      * Handles a command message
      * @param {MessageInfo} msgInfo Info about message sent by user
      */
-    handleCommand(msgInfo) {
+    handleCommand(message, client) {
+        const content = message.content
+                            .slice(1)   //Remove the '>' if it is there
+                            .split(' ')
+                            .map((s) => {
+                                return s.toLowerCase()
+                            });
+        const commandCategory = content[0];
+        let args              = content.slice(1);
+
         for (let handler of this.commandHandlers) {
-            if (handler.isCommand(msgInfo.commandCategory)) {
-                handler.handleCommand(msgInfo);
+            if (handler.isCommand(commandCategory)) {
+                handler.handleCommand(message, args, client);
             }
         }
     }
+}
+
+function logMessageInfo(message) {
+    const ch = message.channel.name;
+    const user = message.member.displayName;
+    const msg = message.content;
+
+    console.log("============")
+    console.log(`Message Sent\nChannel: ${ch}\nUser: ${user}\nContent: ${msg}\n`);
+    console.log("============\n")
 }
 
 /*

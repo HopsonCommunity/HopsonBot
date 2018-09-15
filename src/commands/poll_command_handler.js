@@ -1,4 +1,4 @@
-// Command by bag
+// Command category created by bag/ Ruixel @ github
 // Allows for polling via the use of reactions
 // Types of polls:
 // - Yes / No
@@ -28,10 +28,14 @@ module.exports = class PollCommandHandler extends CommandHandler {
     }
 }
 
-function yesno(messageInfo, client) {
-    messageInfo.args.splice(0, 1);
-    let question = messageInfo.args.join(" ");
-    console.log("Question: '" + question + "'");
+/**
+ * 
+ * @param {Discord message} message The raw discord message
+ * @param {[String]} args List of string, the command arguments
+ * @param {_} client unused
+ */
+function yesno(message, args, client) {
+    const question = args.join(" ");
 
     if (question == "" || question == " ") {
         message.channel.send({embed: {
@@ -44,7 +48,7 @@ function yesno(messageInfo, client) {
         return;
     }
     
-    messageInfo.channel.send({embed: {
+    message.channel.send({embed: {
         color: 3447003,
         fields: [{
             name: "*Hopson Polling Station*",
