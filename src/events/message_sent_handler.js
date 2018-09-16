@@ -1,5 +1,6 @@
 const PollCommandHandler    = require('../commands/poll_command_handler')
 const RoleCommandHandler    = require('../commands/role_command_handler')
+const Config                = require('../../data/config.json')
 /**
  * Class to handle messages sent by the user
  */
@@ -24,6 +25,13 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
+        if (message.channel.name === Config.newMemberChannel) {
+            let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
+            let introduceRole = message.member.guild.roles.find('name', Config.introRole);
+            message.member.removeRole(newMemberRole);
+            message.member.addRole(introduceRole);
+        }
+        
         if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
         }
