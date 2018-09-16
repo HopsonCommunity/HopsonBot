@@ -80,7 +80,8 @@ module.exports = class MessageSentHandler {
     _sendHelpList(channel) {
         let defaultCommands = this.defaultCommandHandler.getCommands();
         let output = new Discord.RichEmbed()
-            .setTitle("HopsonBot Command List");
+            .setTitle("HopsonBot Command List")
+            .setColor("#09f228");;
 
         defaultCommands.forEach((command, commandName, _) => {
             if (commandName === "help") return;
