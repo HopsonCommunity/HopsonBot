@@ -1,35 +1,30 @@
-const Config    = require("../data/config.json");
-const Bot       = require ("./main");
-const Discord   = require('discord.js')
-const dateFormat  = require('dateformat');
+const Config        = require("../../data/config.json");
+const Discord       = require('discord.js')
+const dateFormat    = require('dateformat');
 
-var exp = module.exports =
-{
-    handleJoin : function(member) 
-    {
-        checkAccountAge(member);
+module.exports = {
+    handleJoin : function(member, client) {
+        checkAccountAge(member, client);
 
         //Give new member role
         let newMemberRole = member.guild.roles.find('name', Config.newMemberRole);
         member.addRole(newMemberRole);
 
         let channelName = Config.welcomeChannel;
-        let channel     = Bot.getClient().channels.find("name", channelName);
+        let channel     = client.channels.find("name", channelName);
 
         //Welcome them
         channel.send(
 `Welcome to Hopson Community server, <@${member.user.id}>! Take a moment to look at the <#293460068483989504>.
 Also, please ntroduce yourself in <#463866762786635777>, and I will give you access to the rest of the server.\n
-Enjoy! :)
-__`
+Enjoy! :)`
         );
     }
 }
 
-function checkAccountAge(member) 
-{
+function checkAccountAge(member, client) {
     let channelName = Config.memberJoinChannel;
-    let channel     = Bot.getClient().channels.find("name", channelName);
+    let channel     = client.channels.find("name", channelName);
 
     let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     let creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
@@ -51,8 +46,7 @@ function checkAccountAge(member)
 }
 
 
-function getTimeDifference(join, create)
-{
+function getTimeDifference(join, create) {
     let diff = join - create;
     let diffDate = new Date(diff);
     let originDate = new Date(0);

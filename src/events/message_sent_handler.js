@@ -29,6 +29,14 @@ module.exports = class MessageSentHandler {
         }
     }
 
+    /*
+            //If a quiz is currently active, then it may be someone trying to answer it
+        if (this.quiz.quizActive) {
+            console.log(content);
+            this.quiz.submitAnswer(message, content.toLowerCase());
+        }
+        */
+
     /**
      * Handles a command message
      * @param {MessageInfo} msgInfo Info about message sent by user

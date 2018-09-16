@@ -77,14 +77,15 @@ function removeRoles(message, args, client) {
     modifyRoles(message, args, "remove");
 }
 
-function modifyRoles(message, args, action)
-{
-    let rolesToModify   = extractRoles(message.guild, args);
+function modifyRoles(message, args, action) {
+    let roleLists   = extractRoles(message.guild, args);
     let member          = message.member;
+
+    message.channel.send(`I do not recognise the following roles: \n>${roleLists.invalid.join('\n>')}`);
 
     //Add/ Remove the roles
     if (action === "add") {
-        for (role of rolesToModify) {
+        for (role of roleLists.valid) {
             member.addRole(role)
             .then (console.log("Role add successful"));
         }
@@ -92,7 +93,7 @@ function modifyRoles(message, args, action)
         var dir  = "to";
     }
     else if (action === "remove") {
-        for (role of rolesToModify) {
+        for (role of roleLists.valid) {
             member.removeRole(role)
                 .then (console.log("Role remove successful"));
         }
@@ -100,24 +101,33 @@ function modifyRoles(message, args, action)
         var dir  = "from";
     }
     //Send result
-    let output = createOutput(args, message.author.id.toString(), verb, dir);
-    message.channel.send(output);
+    if (roleLists.valid.size != 0) {
+        let output = createOutput(roleLists.valid, message.author.id.toString(), verb, dir);
+        message.channel.send(output);
+    }
 }
 
-function createOutput(languages, userID, verb, dir)
-{
+function createOutput(languages, userID, verb, dir) {
     let sp = languages.length == 1 ?  "role" :  "roles";
     return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${languages.join("\n>")}`;
 }
 
-function extractRoles(guild, languageList)
-{
-    let rolesToMod = [];
+function extractRoles(guild, languageList) {
+    let validRoles = [];
+    let invalidRoles = [];
     for (lang of languageList) {
         role = guild.roles.find((langName) => {
             return langName.name.toLowerCase() === lang;
         });
-        rolesToMod.push(role);
+        if (role != null) {
+            validRoles.push(role);
+        } else {
+            invalidRoles.push(lang);
+        }
     }
-    return rolesToMod;
+
+    return {
+        valid: validRoles,
+        invalid: invalidRoles
+    };
 }
