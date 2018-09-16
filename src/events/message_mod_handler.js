@@ -1,4 +1,5 @@
-const Config = require("../../data/config.json");
+const Config = require('../../data/config.json');
+const Discord = require('discord.js');
 
 module.exports = {
     handleMessageDelete: function(client, message) {

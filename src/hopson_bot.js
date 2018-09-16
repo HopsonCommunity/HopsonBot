@@ -51,7 +51,7 @@ module.exports = class HopsonBot {
 
         //Event for people joining the server
         this.client.on("guildMemberAdd", (member) => {
-            MemeberJoinHandler.handleJoin(member, client);
+            MemeberJoinHandler.handleJoin(member, this.client);
         });
 
         //Event for a user update (eg changing their usernem)
