@@ -2,6 +2,7 @@ const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const Config                = require('../../data/config.json');
+const Discord               = require('discord.js')
 /**
  * Class to handle messages sent by the user
  */
@@ -67,8 +68,32 @@ module.exports = class MessageSentHandler {
                 return;
             }
         }
-        args.unshift(commandCategory);
-        this.defaultCommandHandler.handleCommand(message, args, client);
+        if(commandCategory === "help") {
+            this._sendHelpList(message.channel);
+        } 
+        else {
+            args.unshift(commandCategory);
+            this.defaultCommandHandler.handleCommand(message, args, client);
+        }
+    }
+
+    _sendHelpList(channel) {
+        let defaultCommands = this.defaultCommandHandler.getCommands();
+        let output = new Discord.RichEmbed()
+            .setTitle("HopsonBot Command List");
+
+        defaultCommands.forEach((command, commandName, _) => {
+            if (commandName === "help") return;
+            output.addField(`**__${commandName}__**`, 
+                            `Description: ${command.description}\nExample: *${command.example}*`);
+        });
+
+        for (let handler of this.commandHandlers) {
+            let cat = handler.commandCategory;
+            output.addField(`__**Command Category**: *${cat}*__`, 
+                            `See commands: *>${cat} help*`);
+        }
+        channel.send(output);
     }
 }
 
