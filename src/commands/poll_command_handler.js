@@ -4,7 +4,7 @@
 // - Yes / No
 // - Option-based (1, 2, 3, 4)
 
-const util = require('../misc/util');
+const util = require('../util');
 const CommandHandler = require('./command_handler');
 
 // Number emojis

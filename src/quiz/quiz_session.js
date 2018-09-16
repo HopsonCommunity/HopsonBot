@@ -1,7 +1,7 @@
 const questionsFile = "data/quiz_questions.json";
 
 const Bot           = require("../main");
-const Util          = require("../misc/util");
+const Util          = require("../util");
 const JSONFile      = require('jsonfile');
 const Discord       = require('discord.js')
 

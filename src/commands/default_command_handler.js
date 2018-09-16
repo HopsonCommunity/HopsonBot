@@ -1,6 +1,6 @@
 const Config            = require('../../data/config.json');
 const CommandHandler    = require('./command_handler');
-const Util              = require('../misc/util')
+const Util              = require('../util')
 
 module.exports = class RoleEventHandler extends CommandHandler {
     constructor() {
