@@ -9,67 +9,6 @@ const CommandHandlerBase    = require("./command_handler_base")
 
 module.exports = class CommandHandler extends CommandHandlerBase
 {
-    constructor(eventHandler) 
-    {
-        super("Main Events");
-        this.eventHandle = eventHandler;
-        this.initializeCommands();
-    }
-
-    //Says it on the tin
-    handleCommand (message)
-    {
-        let content = message.content.slice(1); //Remove the ">" from the message
-
-        //Extract the arguments and the command from the message
-        content     = content.split(" ");
-        let command = content[0].toLowerCase();
-        let args    = content.slice(1);
-
-        super.respondToCommand(message, command, args);
-    }
-
-    displayModifiableRoles(message, args) 
-    {
-        let roleArray = Config.modifiableRoles;
-        let output = new Discord.RichEmbed()
-            .setTitle("Modifiable Roles From >role Command");
-
-        let i = 0;
-        for (var roleName of roleArray) {
-            output.addField(`Role ${++i}`,  `${roleName}\n`, true);
-            if (i == 25) {
-                break;
-            }
-        }
-        Bot.sendMessage(message.channel, output);
-    }
-
-    countRoles(message, args)
-    {
-        let roles = message.guild.roles;
-        let roleList = roles.array();
-        let roleMemberCount = new Map();
-
-        for (var role of roleList) {
-            roleMemberCount.set(role.name, role.members.size);
-        }
-
-        let output = new Discord.RichEmbed().setTitle("ROLE COUNTS");
-        
-        let i = 0;
-        for (const [key, value] of roleMemberCount.entries()) {
-            if (!["Rythm", "Dyno", "Boten", "MEE6", "@everyone"].includes(key)) {
-                //output += `**__${key}__**\n${value}\n\n`;
-                output.addField(`**__${key}__**`, value, true);
-                if (++i >= 25) {
-                    break;
-                }
-            }
-        }
-
-        Bot.sendMessage(message.channel, output);
-    }
 
     initializeCommands()
     {
@@ -119,19 +58,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
             "poll <command>",
             true
         );
-        super.addFunctionCommand(
-            "graph",
-            Test.test,
-            "Test",
-            "graph",
-            true
-        );
-        super.addFunctionCommand(
-            "countrole",
-            this.countRoles,
-            "Showd the number of people in each role",
-            "countrole"
-        )
     }
 }
 

@@ -9,7 +9,7 @@ module.exports = {
         const time = (new Date()).toLocaleString('en-GB');
         const content = message.content;
         if (content.length == 0)  return;
-        botlog.send(new Discord.RichEmbed()
+        botLog.send(new Discord.RichEmbed()
             .setDescription(`${message.author} in ${message.channel} at ${time}`)
             .setColor(16711680)
             .addField("Deleted Message", content));
@@ -34,7 +34,7 @@ module.exports = {
             .addField("Old Message", oldContent)
             .addField("New Message", newContent);
 
-        botlog.send(embed);
+        botLog.send(embed);
     }
 }
 
