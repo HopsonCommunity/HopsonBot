@@ -36,7 +36,10 @@ module.exports = class RoleEventHandler extends CommandHandler {
     }
 }
 
-
+/**
+ * Outpus number of members to a single discord role
+ * @param {TextMessage} message The raw discord message       
+ */
 function listRoles(message, args, client) {
     const roleArray = Config.modifiableRoles;
     let output = new Discord.RichEmbed()
@@ -52,6 +55,11 @@ function listRoles(message, args, client) {
     message.channel.send(output);
 }
 
+/**
+ * Outpus number of members to a single discord role
+ * @param {TextMessage} message The raw discord message       
+ * @param {[String]} args args[0] == role to count 
+ */
 function countRole(message, args, client) {
     if (args.length < 1) {
         return;
@@ -77,6 +85,12 @@ function removeRoles(message, args, client) {
     modifyRoles(message, args, "remove");
 }
 
+/**
+ * 
+ * @param {TextMessage} message The raw discord message
+ * @param {[String]} args List of string, supposedly roles names
+ * @param {String} action Add or remove
+ */
 function modifyRoles(message, args, action) {
     let roleLists   = extractRoles(message.guild, args);
     let member          = message.member;
@@ -108,6 +122,13 @@ function modifyRoles(message, args, action) {
     }
 }
 
+/**
+ * 
+ * @param {Role} languages list of discord roles
+ * @param {String} userID the user's ID
+ * @param {String} verb can be "added" or "removed"
+ * @param {String} dir Direction the roles are going (to or from)
+ */
 function createOutput(languages, userID, verb, dir) {
     let sp = languages.length == 1 ?  "role" :  "roles";
     let roleNames = languages.map((role) => {
@@ -116,6 +137,11 @@ function createOutput(languages, userID, verb, dir) {
     return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}`;
 }
 
+/**
+ * Extracts guild roles from a string array of role names
+ * @param {Discord Guild} guild The server where the command was run from
+ * @param {[String]} languageList Array of role names 
+ */
 function extractRoles(guild, languageList) {
     let validRoles = [];
     let invalidRoles = [];
