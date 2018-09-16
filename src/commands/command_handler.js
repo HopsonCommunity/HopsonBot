@@ -30,7 +30,7 @@ module.exports = class CommandHandlerBase {
      */
     handleCommand(message, args, client) {
         let command = args[0];
-        console.log(command);
+        
         if (this.simpleCommands.has(command)) {
             message.channel.send(this.simpleCommands.get(command).action);
         }

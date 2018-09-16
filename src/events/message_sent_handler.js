@@ -1,6 +1,7 @@
-const PollCommandHandler    = require('../commands/poll_command_handler')
-const RoleCommandHandler    = require('../commands/role_command_handler')
-const Config                = require('../../data/config.json')
+const PollCommandHandler    = require('../commands/poll_command_handler');
+const RoleCommandHandler    = require('../commands/role_command_handler');
+const DefaultCommandHandler = require('../commands/default_command_handler');
+const Config                = require('../../data/config.json');
 /**
  * Class to handle messages sent by the user
  */
@@ -9,9 +10,10 @@ module.exports = class MessageSentHandler {
      * Creates the command handlers and constructs the handler
      */
     constructor () {
+        this.defaultCommandHandler = new DefaultCommandHandler();
         this.commandHandlers = [
             new PollCommandHandler(),
-            new RoleCommandHandler()
+            new RoleCommandHandler(),
         ]
     }
     /**
@@ -62,8 +64,11 @@ module.exports = class MessageSentHandler {
         for (let handler of this.commandHandlers) {
             if (handler.isCommand(commandCategory)) {
                 handler.handleCommand(message, args, client);
+                return;
             }
         }
+        args.unshift(commandCategory);
+        this.defaultCommandHandler.handleCommand(message, args, client);
     }
 }
 
@@ -76,34 +81,3 @@ function logMessageInfo(message) {
     console.log(`Message Sent\nChannel: ${ch}\nUser: ${user}\nContent: ${msg}\n`);
     console.log("============\n")
 }
-
-/*
-        if (message.channel.type !== "text") return;
-
-        //Print some message information, which can help with tracking down bugs
-        console.log(`Message Sent\nServer: ${message.guild.name}\nChannel: ${message.channel.name}\nUser: ${message.member.displayName}\nContent: ${message}\n`);
-
-        let content = message.content;
-        //Ignore messages sent by bots
-        if (message.author.bot) {
-            return;
-        }
-
-        if (message.channel.name === Config.newMemberChannel) {
-            let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
-            let introduceRole = message.member.guild.roles.find('name', Config.introRole);
-            message.member.removeRole(newMemberRole);
-            message.member.addRole(introduceRole);
-        }
-
-        //A message starting with > indicates it is a command 
-        if (content.startsWith(">")) {
-            this.commandHandler.handleCommand(message);
-        }
-
-        //If a quiz is currently active, then it may be someone trying to answer it
-        if (this.quiz.quizActive) {
-            console.log(content);
-            this.quiz.submitAnswer(message, content.toLowerCase());
-        }
-*/
