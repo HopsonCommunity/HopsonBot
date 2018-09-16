@@ -1,6 +1,6 @@
 {
   "name": "hopsonbot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Bot for my Discord community server.",
   "main": "scripts/bot.js",
   "scripts": {
