@@ -3,8 +3,8 @@ const QuizJSON      = require("../../" + questionsFile);
 
 const CommandHandlerBase = require("../command_handler_base")
 const Config        = require('../../data/config.json');
-const Bot           = require("../hopson_bot");
-const Util          = require("../misc/util");
+const Bot           = require("../main");
+const Util          = require("../util");
 const QuizSession   = require("./quiz_session")
 
 const fs            = require('fs');

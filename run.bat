@@ -1,4 +1,4 @@
 @echo off
 
-node src/hopson_bot.js
+node src/main.js
 pause

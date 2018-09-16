@@ -1,30 +1,62 @@
-const Discord   = require('discord.js');
-const Config    = require('../data/config');
-//Log into discord
-const client = new Discord.Client();
+const Discord         = require('discord.js');
+const Config          = require('../data/config.json');
 
-var exp = module.exports =
-{
-    logMessage : function(message) {
-        message += "\n";
-        console.log(message);
-    },
+const MessageSentHandler    = require('./events/message_sent_handler');
+const MessageModifyHandler  = require('./events/message_mod_handler');
+const MemeberJoinHandler    = require('./events/member_join_handler');
+const MemberUpdateHandler   = require('./events/member_update_event');
 
-    sendMessage : function(channel, message)
-    {
-        console.log(`Message sent by bot in channel "${channel.name}"\n\n`);
-        channel.send(message);
-    },
-    
-    getClient : function() 
-    {
-        return client;
-    },
+module.exports = class HopsonBot {
+    constructor(client) {
+        this.client = client;
+        this.messageSentHandler = new MessageSentHandler();
+    }
 
+    runBot() {
+        //Event for when the bot starts
+        this.client.on("ready", () => {
+            console.log("Client has logged in to server");
+            this.client.user.setPresence({game: {name : "Type >help"}})
+                .then(console.log)
+                .catch(console.error);
+        });
+
+        //Event for when bot is dissconnected
+        this.client.on("disconnect", (event) => {
+            console.log(`Client has closed with status code ${event.code} and reason ${event.reason}`)
+        });  
+
+        //Event for messages sent to any of the discord channels
+        this.client.on("message", (message) => {
+            this.messageSentHandler.handleMessageSent(message, this.client);
+        });
+
+        //Event for a message delete
+        this.client.on("messageDelete", (message) => {
+            console.log("Message deleted");
+            MessageModifyHandler.handleMessageDelete(
+                this.client, 
+                message
+            );
+        });
+        
+        //Event for a message edit
+        this.client.on("messageUpdate", (oldMessage, newMessage) => {
+            MessageModifyHandler.handleMessageDelete(
+                this.client, 
+                oldMessage, 
+                newMessage
+            );
+        });
+
+        //Event for people joining the server
+        this.client.on("guildMemberAdd", (member) => {
+            MemeberJoinHandler.handleJoin(member, this.client);
+        });
+
+        //Event for a user update (eg changing their usernem)
+        this.client.on("userUpdate", (oldUser, newUser) => {
+            MemberUpdateHandler.handleUserUpdate(this.client, oldUser, newUser);
+        });
+    }
 }
-
-//Start the event handler
-const EventHandler  = require("./event_handler")
-exp.eventHandle = new EventHandler(client).run();
-
-client.login(Config.getToken());
