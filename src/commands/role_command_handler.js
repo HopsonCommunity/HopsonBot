@@ -81,13 +81,14 @@ function modifyRoles(message, args, action) {
     let roleLists   = extractRoles(message.guild, args);
     let member          = message.member;
 
-    message.channel.send(`I do not recognise the following roles: \n>${roleLists.invalid.join('\n>')}`);
+    if (roleLists.invalid.length > 0)
+        message.channel.send(`I do not recognise the following roles: \n>${roleLists.invalid.join('\n>')}`);
 
     //Add/ Remove the roles
     if (action === "add") {
         for (role of roleLists.valid) {
             member.addRole(role)
-            .then (console.log("Role add successful"));
+                .then (console.log("Role add successful"));
         }
         var verb = "added";
         var dir  = "to";
@@ -101,7 +102,7 @@ function modifyRoles(message, args, action) {
         var dir  = "from";
     }
     //Send result
-    if (roleLists.valid.size != 0) {
+    if (roleLists.valid.length > 0) {
         let output = createOutput(roleLists.valid, message.author.id.toString(), verb, dir);
         message.channel.send(output);
     }
@@ -109,7 +110,10 @@ function modifyRoles(message, args, action) {
 
 function createOutput(languages, userID, verb, dir) {
     let sp = languages.length == 1 ?  "role" :  "roles";
-    return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${languages.join("\n>")}`;
+    let roleNames = languages.map((role) => {
+        return role.name;
+    });
+    return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}`;
 }
 
 function extractRoles(guild, languageList) {
@@ -119,7 +123,7 @@ function extractRoles(guild, languageList) {
         role = guild.roles.find((langName) => {
             return langName.name.toLowerCase() === lang;
         });
-        if (role != null) {
+        if (role !== null) {
             validRoles.push(role);
         } else {
             invalidRoles.push(lang);
