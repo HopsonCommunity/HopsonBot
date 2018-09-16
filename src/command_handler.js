@@ -20,22 +20,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
         );
 
         super.addFunctionCommand(
-            "rolelist",
-            this.displayModifiableRoles,
-            "Displays list of roles you are able to add and remove.",
-            "rolelist",
-            false
-        );
-
-        super.addFunctionCommand(
-            "role",
-            RoleMod.tryModifyRole,
-            "Allows the user to add or remove role(s) from '>rolelist'",
-            "role add C++ Java ASM",
-            true
-        );
-
-        super.addFunctionCommand(
             "quiz",
             this.eventHandle.quiz.handleCommand.bind(this.eventHandle.quiz),
             "Access quiz commands. For more info, please use command `>quiz help`",
@@ -48,14 +32,6 @@ module.exports = class CommandHandler extends CommandHandlerBase
             Misc.eightBall,
             "If you cannot make a decision, why not try using an 8ball?",
             "8ball <question here>",
-            true
-        );
-
-        super.addFunctionCommand(
-            "poll",
-            Misc.pollCommand,
-            "Create a poll with reactions as responses",
-            "poll <command>",
             true
         );
     }
