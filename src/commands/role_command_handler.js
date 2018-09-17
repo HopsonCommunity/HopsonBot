@@ -12,25 +12,25 @@ module.exports = class RoleEventHandler extends CommandHandler {
         super.addCommand(
             "list", 
             "Gets a list of roles that can be modified by the user",
-            "list",
+            ">role list",
             listRoles
         );
         super.addCommand(
             "count", 
             "Counts how many people have a certain role",
-            'count Admins',
+            '>role count Admins',
             countRole
         );
         super.addCommand(
             "add",
             "Add 1 or more roles to yourself",
-            "add C++ Java Linux",
+            ">role add C++ Java Linux",
             addRoles
         )
         super.addCommand(
             "remove",
             "Remove 1 or more roles from yourself",
-            "remove C++ Java Linux",
+            ">role remove C++ Java Linux",
             removeRoles
         )
     }

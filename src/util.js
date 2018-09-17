@@ -1,3 +1,4 @@
+
 module.exports = {
     getRandomInt : function(min, max) 
     {

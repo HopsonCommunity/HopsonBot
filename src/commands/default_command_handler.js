@@ -16,7 +16,7 @@ module.exports = class RoleEventHandler extends CommandHandler {
         super.addCommand(
             "8ball", 
             "Ask the magic 8ball for some wisdom.",
-            "Will Hopson upload tomorrow?",
+            ">8ball Will Hopson upload tomorrow?",
             eightball
         )
     }
