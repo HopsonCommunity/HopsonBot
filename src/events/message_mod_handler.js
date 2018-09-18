@@ -6,6 +6,12 @@ module.exports = {
         if (isChannelBlacklisted(message.channel)) {
             return;
         }
+
+        if (message.channel.name === Config.newMemberChannel) {
+            let introduceRole = message.member.guild.roles.find('name', Config.introRole);
+            message.member.removeRole(introduceRole);
+        }
+        
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
         const content = message.content;
