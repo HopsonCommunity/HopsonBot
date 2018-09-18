@@ -27,4 +27,4 @@ Role commands are for changing your roles, as well as seeing how many people hav
 
 The poll commands allow the user to create a poll, and then have people vote using reactions.
 
-![Poll example](blob:https://imgur.com/af187f9d-1280-4926-a023-c6c866b47817)
+![Poll example](https://i.imgur.com/LQwrzEc.png)
