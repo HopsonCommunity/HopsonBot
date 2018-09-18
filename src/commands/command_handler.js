@@ -61,8 +61,7 @@ module.exports = class CommandHandlerBase {
      * @param {function(messageInfo)} action Function that is called in response the command. This must take in a 3 args, (message, args, client)
      */
     addCommand(commandName, description, example, action) {
-        let fullExample = `>${this.commandCategory} ${example}`;
-        this.commands.set(commandName, new Command(description, fullExample, action));
+        this.commands.set(commandName, new Command(description, example, action));
     }
 
     /**

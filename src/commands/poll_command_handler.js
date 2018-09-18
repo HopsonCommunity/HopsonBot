@@ -22,13 +22,13 @@ module.exports = class PollCommandHandler extends CommandHandler {
         super.addCommand(
             "yesno", 
             "Poll yes/no style questions",
-            "yesno Should I go out tonight?",
+            ">poll yesno Should I go out tonight?",
             pollYesno
         );
         super.addCommand(
             "options", 
             "Poll questions with options",
-            'options "Question here" optionA optionB',
+            '>poll options "Question here" optionA optionB',
             pollOptions
         );
     }
