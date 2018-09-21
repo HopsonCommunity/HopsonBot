@@ -24,9 +24,9 @@ module.exports = {
     },
 
     handleMessageUpdate: function(client, oldMessage, newMessage) {
-        if (isChannelBlacklisted(oldMessage.channel)) {
-            return;
-        }
+        if (isChannelBlacklisted(oldMessage.channel)) return;
+        if(oldMessage.content === newMessage.content) return;
+        
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
         const oldContent = oldMessage.content;
