@@ -47,7 +47,7 @@ module.exports = {
 
 function isChannelBlacklisted(channel) {
     for (var blacklistedChannel of Config.logBlacklistedChannels) {
-        if (channel == blacklistedChannel) {
+        if (channel.id == blacklistedChannel) {
             return true;
         }
     }
