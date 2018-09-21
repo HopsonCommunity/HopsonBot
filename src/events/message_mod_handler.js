@@ -24,7 +24,7 @@ module.exports = {
     },
 
     handleMessageUpdate: function(client, oldMessage, newMessage) {
-        if (isChannelBlacklisted(message.channel)) {
+        if (isChannelBlacklisted(oldMessage.channel)) {
             return;
         }
         const botLog = getBotLogChannel(client);
