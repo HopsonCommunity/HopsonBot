@@ -29,15 +29,16 @@ function checkAccountAge(member, client) {
     let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     let creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     let diff        = getTimeDifference(member.joinedAt, member.user.createdAt);
-
-    Bot.sendMessage(channel, new Discord.RichEmbed()
+    
+    const embed = new Discord.RichEmbed()
         .setTitle("User Join")
         .addField("**Name**", `<@${member.user.id}>`)
         .addField("**Account Create Data**", creation)
         .addField("**Join Date**", join)
         .addField("**Time Between Create and Join (est)**", diff.regularDiff)
-        .addField("**Milliseconds Difference**", diff.unixTimeDiff)
-    );
+        .addField("**Milliseconds Difference**", diff.unixTimeDiff);
+    
+    channel.send(embed);
 
     //Notify Admins if account is less than 2 days old
     if (diff.notify) {
