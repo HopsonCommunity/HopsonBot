@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 
 module.exports = {
     handleUserUpdate: function (client, oldUser, newUser)
