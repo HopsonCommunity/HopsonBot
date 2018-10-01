@@ -6,6 +6,12 @@ module.exports = {
         if (isChannelBlacklisted(message.channel)) {
             return;
         }
+
+        if (message.channel.name === Config.newMemberChannel) {
+            let introduceRole = message.member.guild.roles.find('name', Config.introRole);
+            message.member.removeRole(introduceRole);
+        }
+        
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
         const content = message.content;
@@ -18,9 +24,9 @@ module.exports = {
     },
 
     handleMessageUpdate: function(client, oldMessage, newMessage) {
-        if (isChannelBlacklisted(message.channel)) {
-            return;
-        }
+        if (isChannelBlacklisted(oldMessage.channel)) return;
+        if(oldMessage.content === newMessage.content) return;
+        
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
         const oldContent = oldMessage.content;
@@ -41,7 +47,7 @@ module.exports = {
 
 function isChannelBlacklisted(channel) {
     for (var blacklistedChannel of Config.logBlacklistedChannels) {
-        if (channel == blacklistedChannel) {
+        if (channel.id == blacklistedChannel) {
             return true;
         }
     }

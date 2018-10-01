@@ -42,7 +42,7 @@ module.exports = class HopsonBot {
         
         //Event for a message edit
         this.client.on("messageUpdate", (oldMessage, newMessage) => {
-            MessageModifyHandler.handleMessageDelete(
+            MessageModifyHandler.handleMessageUpdate(
                 this.client, 
                 oldMessage, 
                 newMessage
