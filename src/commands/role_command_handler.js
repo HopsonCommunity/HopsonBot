@@ -145,12 +145,17 @@ function createOutput(languages, userID, verb, dir) {
 function extractRoles(guild, languageList) {
     let validRoles = [];
     let invalidRoles = [];
+    let role = null;
     for (lang of languageList) {
-        role = guild.roles.find((langName) => {
-            return langName.name.toLowerCase() === lang;
-        });
+        const roleArray = Config.modifiableRoles;
+        if (lang in roleArray) {
+            role = guild.roles.find((langName) => {
+                return langName.name.toLowerCase() === lang;
+            });
+        }
         if (role !== null) {
             validRoles.push(role);
+            role = null;
         } else {
             invalidRoles.push(lang);
         }
