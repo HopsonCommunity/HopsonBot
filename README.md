@@ -1,7 +1,7 @@
 # HopsonBot
 Discord bot for the Hopson Community Server, written using Discord.js
 
-API key is hideen for obvious reasons. 
+API key is hidden for obvious reasons. 
 
 ## Features
 
