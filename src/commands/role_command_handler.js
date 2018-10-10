@@ -148,7 +148,7 @@ function extractRoles(guild, languageList) {
     let role = null;
     for (lang of languageList) {
         const roleArray = Config.modifiableRoles;
-        if (lang in roleArray) {
+        if (roleArray.includes(lang)) {
             role = guild.roles.find((langName) => {
                 return langName.name.toLowerCase() === lang;
             });
