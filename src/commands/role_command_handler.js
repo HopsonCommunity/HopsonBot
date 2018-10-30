@@ -151,14 +151,21 @@ function extractRoles(guild, roleList) {
         validRoles: [],
         invalidRoles: []
     }
-    const modifiableRoles = Config.modifiableRoles;
+    const modifiableRoles = Config.modifiableRoles.map((val) => {
+        return val.toLowerCase();
+    });
     for (const roleName of roleList) {
-        const role = guild.roles.find((roleToFind) => {
-            return roleToFind.name.toLowerCase() === roleName;
-        });
-        if (role !== null) {
-            result.validRoles.push(role);
-        } 
+        if (modifiableRoles.indexOf(roleName) > -1) {
+            const role = guild.roles.find((roleToFind) => {
+                return roleToFind.name.toLowerCase() === roleName;
+            });
+            if (role !== null) {
+                result.validRoles.push(role);
+            } 
+            else {
+                result.invalidRoles.push(roleName);
+            }
+        }
         else {
             result.invalidRoles.push(roleName);
         }
