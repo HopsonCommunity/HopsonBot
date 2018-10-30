@@ -45,10 +45,9 @@ function listRoles(message) {
     let output = new Discord.RichEmbed()
         .setTitle("Modifiable Roles From >role add/remove Commands");
 
-    let i = 0;
     for (const role in roleArray) {
         output.addField(
-            `Role ${role + 1}`,  
+            `Role ${(role)}`,  
             `${roleArray[role]}\n`, 
             true);
         if (role === 25) {
@@ -89,7 +88,7 @@ function removeRoles(message, args, client) {
 }
 
 /**
- * 
+ * Extracts roles from args and then adds/remove valid ones to/from the user
  * @param {TextMessage} message The raw discord message
  * @param {[String]} args List of string, supposedly roles names
  * @param {String} action Add or remove
@@ -127,7 +126,7 @@ function modifyRoles(message, args, action) {
 }
 
 /**
- * 
+ * Creates the output for roles added to the user
  * @param {Role} rolesAdded list of discord roles
  * @param {String} userID the user's ID
  * @param {String} verb can be "added" or "removed"
@@ -141,7 +140,12 @@ function createOutput(rolesAdded, userID, verb, dir) {
     const roleNames = rolesAdded.map((role) => {
         return role.name;
     });
-    return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}`;
+    let output = `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}\n`;
+    if (rolesAdded.length == 1) {
+        output += `Psst... Are you aware you can have multiple roles ${verb} at once? Give it a go!\n`;
+        output += `Example: >role add/remove C++ Java Rust`;
+    }
+    return output;
 }
 
 /**

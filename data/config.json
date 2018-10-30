@@ -25,7 +25,9 @@
             "Fortnite",
             "Jackbox",
             "PUBG",
-            "ProofWatcher"
+            "ProofWatcher",
+            "Terraria",
+            "Events"
         ],
     "welcomeChannel": "welcome",
     "newMemberRole": "NewMember",

@@ -1,5 +1,6 @@
 const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
+const QuizCommandHandler    = require('../commands/quiz_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
@@ -15,6 +16,7 @@ module.exports = class MessageSentHandler {
         this.commandHandlers = [
             new PollCommandHandler(),
             new RoleCommandHandler(),
+            new QuizCommandHandler()
         ]
     }
     /**
@@ -62,7 +64,7 @@ module.exports = class MessageSentHandler {
         const commandCategory = content[0];
         let args              = content.slice(1);
 
-        for (let handler of this.commandHandlers) {
+        for (const handler of this.commandHandlers) {
             if (handler.isCommand(commandCategory)) {
                 handler.handleCommand(message, args, client);
                 return;
