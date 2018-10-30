@@ -40,7 +40,7 @@ module.exports = class RoleEventHandler extends CommandHandler {
  * Outpus number of members to a single discord role
  * @param {TextMessage} message The raw discord message       
  */
-function listRoles(message, args, client) {
+function listRoles(message) {
     const roleArray = Config.modifiableRoles;
     let output = new Discord.RichEmbed()
         .setTitle("Modifiable Roles From >role add/remove Commands");
@@ -60,11 +60,11 @@ function listRoles(message, args, client) {
  * @param {TextMessage} message The raw discord message       
  * @param {[String]} args args[0] == role to count 
  */
-function countRole(message, args, client) {
+function countRole(message, args) {
     if (args.length < 1) {
         return;
     }
-    let role = message.guild.roles.find((role) => {
+    const role = message.guild.roles.find((role) => {
         return role.name.toLowerCase() === args[0];
     });
 
@@ -92,46 +92,50 @@ function removeRoles(message, args, client) {
  * @param {String} action Add or remove
  */
 function modifyRoles(message, args, action) {
-    let roleLists   = extractRoles(message.guild, args);
-    let member          = message.member;
+    const roleLists = extractRoles(message.guild, args);
+    const member    = message.member;
 
-    if (roleLists.invalid.length > 0)
-        message.channel.send(`I do not recognise the following roles: \n>${roleLists.invalid.join('\n>')}`);
+    if (roleLists.invalidRoles.length > 0) {
+        message.channel.send(`I do not recognise the following roles: \n>${roleLists.invalidRoles.join('\n>')}`);
+    }
 
-    //Add/ Remove the roles
-    if (action === "add") {
-        for (role of roleLists.valid) {
-            member.addRole(role)
-                .then (console.log("Role add successful"));
+    if (roleLists.validRoles.length > 0) {
+        //Add/ Remove the roles
+        if (action === "add") {
+            for (const role of roleLists.validRoles) {
+                member.addRole(role)
+                    .then (console.log("Role add successful"));
+            }
+            var verb = "added";
+            var dir  = "to";
         }
-        var verb = "added";
-        var dir  = "to";
-    }
-    else if (action === "remove") {
-        for (role of roleLists.valid) {
-            member.removeRole(role)
-                .then (console.log("Role remove successful"));
+        else if (action === "remove") {
+            for (role of roleLists.validRoles) {
+                member.removeRole(role)
+                    .then (console.log("Role remove successful"));
+            }
+            var verb = "removed";
+            var dir  = "from";
         }
-        var verb = "removed";
-        var dir  = "from";
-    }
-    //Send result
-    if (roleLists.valid.length > 0) {
-        let output = createOutput(roleLists.valid, message.author.id.toString(), verb, dir);
+        //Send result
+        const output = createOutput(roleLists.validRoles, message.author.id.toString(), verb, dir);
         message.channel.send(output);
     }
 }
 
 /**
  * 
- * @param {Role} languages list of discord roles
+ * @param {Role} rolesAdded list of discord roles
  * @param {String} userID the user's ID
  * @param {String} verb can be "added" or "removed"
  * @param {String} dir Direction the roles are going (to or from)
  */
-function createOutput(languages, userID, verb, dir) {
-    let sp = languages.length == 1 ?  "role" :  "roles";
-    let roleNames = languages.map((role) => {
+function createOutput(rolesAdded, userID, verb, dir) {
+    if (rolesAdded.length === 0) {
+        return;
+    }
+    const sp = rolesAdded.length == 1 ?  "role" :  "roles";
+    const roleNames = rolesAdded.map((role) => {
         return role.name;
     });
     return `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}`;
@@ -140,29 +144,24 @@ function createOutput(languages, userID, verb, dir) {
 /**
  * Extracts guild roles from a string array of role names
  * @param {Discord Guild} guild The server where the command was run from
- * @param {[String]} languageList Array of role names 
+ * @param {[String]} roleList Array of role names to be extracted
  */
-function extractRoles(guild, languageList) {
-    let validRoles = [];
-    let invalidRoles = [];
-    let role = null;
-    for (lang of languageList) {
-        const roleArray = Config.modifiableRoles;
-        if (lang in roleArray) {
-            role = guild.roles.find((langName) => {
-                return langName.name.toLowerCase() === lang;
-            });
-        }
+function extractRoles(guild, roleList) {
+    let result = {
+        validRoles: [],
+        invalidRoles: []
+    }
+    const modifiableRoles = Config.modifiableRoles;
+    for (const roleName of roleList) {
+        const role = guild.roles.find((roleToFind) => {
+            return roleToFind.name.toLowerCase() === roleName;
+        });
         if (role !== null) {
-            validRoles.push(role);
-            role = null;
-        } else {
-            invalidRoles.push(lang);
+            result.validRoles.push(role);
+        } 
+        else {
+            result.invalidRoles.push(roleName);
         }
     }
-
-    return {
-        valid: validRoles,
-        invalid: invalidRoles
-    };
+    return result;
 }
