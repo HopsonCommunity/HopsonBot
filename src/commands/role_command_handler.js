@@ -140,10 +140,10 @@ function createOutput(rolesAdded, userID, verb, dir) {
     const roleNames = rolesAdded.map((role) => {
         return role.name;
     });
-    let output = `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}\n`;
+    let output = `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}\n\n`;
     if (rolesAdded.length == 1) {
         output += `Psst... Are you aware you can have multiple roles ${verb} at once? Give it a go!\n`;
-        output += `Example: >role add/remove C++ Java Rust`;
+        output += `Example: \`>role add/remove C++ Java Rust\``;
     }
     return output;
 }
