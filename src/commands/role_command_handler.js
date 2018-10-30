@@ -46,9 +46,12 @@ function listRoles(message) {
         .setTitle("Modifiable Roles From >role add/remove Commands");
 
     let i = 0;
-    for (var roleName of roleArray) {
-        output.addField(`Role ${++i}`,  `${roleName}\n`, true);
-        if (i == 25) {
+    for (const role in roleArray) {
+        output.addField(
+            `Role ${role + 1}`,  
+            `${roleArray[role]}\n`, 
+            true);
+        if (role === 25) {
             break;
         }
     }
