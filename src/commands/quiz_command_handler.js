@@ -13,5 +13,17 @@ module.exports = class PollCommandHandler extends CommandHandler {
             ">quiz begin",
             () => {}
         );
+
+        super.addCommand(
+            "add",
+            "Adds a new question to the quiz database",
+            ">quiz add Maths \"What is 5 + 5?\" \"10\"",
+
+        )
     }
+}
+
+function addQuizQuestion(message, args) {
+    const channel = message.channel;
+    const author  = message.author;
 }
