@@ -21,6 +21,7 @@
     "dateformat": "^3.0.3",
     "discord.js": "^11.2.1",
     "jsonfile": "^4.0.0",
+    "node-fetch": "^2.3.0",
     "python-shell": "^0.4.0"
   }
 }
