@@ -16,7 +16,7 @@ module.exports = class MessageSentHandler {
         this.commandHandlers = [
             new PollCommandHandler(),
             new RoleCommandHandler(),
-            new QuizCommandHandler(),
+            //new QuizCommandHandler(),
         ]
     }
     /**
