@@ -1,7 +1,6 @@
 const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const QuizCommandHandler    = require('../commands/quiz_command_handler');
-const AOCCommandHandler     = require('../commands/aoc_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
