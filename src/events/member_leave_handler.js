@@ -13,6 +13,6 @@ module.exports = {
         const id            = member.user.id;
 
         //cya
-        channel.send(`"${user}" has left the server ID: <@${id}> - ${id}`);
+        channel.send(`"${user}" has left the server. ID: <@${id}> - ${id}`);
     }
 }
