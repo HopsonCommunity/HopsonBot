@@ -18,7 +18,6 @@ module.exports = class MessageSentHandler {
             new PollCommandHandler(),
             new RoleCommandHandler(),
             new QuizCommandHandler(),
-            new AOCCommandHandler()
         ]
     }
     /**
