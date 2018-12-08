@@ -6,9 +6,9 @@ module.exports = {
     handleLeave(member, client) {
         let channelName = Config.leaveChannel;
         let channel     = client.channels.find("name", channelName);
-        let user        = member.user.id;
+        let user        = member.displayName;
 
         //Welcome them
-        channel.send(`<@${member.user.id}> has left the server.`);
+        channel.send(`"${user}" has left the server.`);
     }
 }
