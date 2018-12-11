@@ -1,10 +1,8 @@
-const Discord         = require('discord.js');
-const Config          = require('../data/config.json');
-
 const MessageSentHandler    = require('./events/message_sent_handler');
 const MessageModifyHandler  = require('./events/message_mod_handler');
 const MemeberJoinHandler    = require('./events/member_join_handler');
 const MemberUpdateHandler   = require('./events/member_update_event');
+const MemnberLeaveHandler   = require('./events/member_leave_handler');
 
 module.exports = class HopsonBot {
     constructor(client) {
@@ -53,6 +51,10 @@ module.exports = class HopsonBot {
         this.client.on("guildMemberAdd", (member) => {
             MemeberJoinHandler.handleJoin(member, this.client);
         });
+
+        this.client.on("guildMemberRemove", (memeber) => {
+            MemnberLeaveHandler.handleLeave(memeber, this.client);
+        })
 
         //Event for a user update (eg changing their usernem)
         this.client.on("userUpdate", (oldUser, newUser) => {
