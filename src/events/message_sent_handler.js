@@ -43,6 +43,10 @@ module.exports = class MessageSentHandler {
         if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
         }
+
+        for (const session of this.gameSessions) {
+            session.update(message);
+        }
     }
 
     /*
