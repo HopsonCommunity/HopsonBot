@@ -15,9 +15,9 @@ module.exports = class MineCommandHandler extends CommandHandler {
     
     initCommands() {
         super.addCommand(
-            "mine", 
-            "Gives you a minesweeper field of NxM with B bombs.",
-            ">mine 5 5 10",
+            "play", 
+            "Gives you a minesweeper field of NxM with B bombs..",
+            ">mine play 5 5 10",
             mineGen
         );
     }
@@ -33,13 +33,16 @@ function mineGen(message, args, client) {
     const mx = args[0];
     const my = args[1];
     const mines = args[2];
-
-    var grid = generateMap(mx, my, mines);
-    var str0 = createView(grid);
-    
-    str0 = message.author.name + " here is your mine field :triangular_flag_on_post: \n" + str0;
-
-    message.channel.send(str0);
+    var str0 = "";
+    if (mx > 15 || my > 15 || mines >= mx*my*(2/3)){
+        message.channel.send("Invalid parameters");
+    } else {
+        message.channel.send("Sending minefield");
+        var grid = generateMap(mx, my, mines);
+        var str0 = createView(grid);
+        str0 = message.author.username + " here is your mine field :triangular_flag_on_post: \n" + str0;
+        message.author.send(str0);
+    }
 }
 
 function generateMap(mx, my, mines) {

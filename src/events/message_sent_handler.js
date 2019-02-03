@@ -104,7 +104,7 @@ module.exports = class MessageSentHandler {
 
 function logMessageInfo(message) {
     const ch = message.channel.name;
-    const user = message.member.displayName;
+    const user = message.member ? message.member.displayName : "No name";
     const msg = message.content;
 
     console.log("============")
