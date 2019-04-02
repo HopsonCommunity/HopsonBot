@@ -1,8 +1,8 @@
 const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const QuizCommandHandler    = require('../commands/quiz_command_handler');
-const MineCommandHandler    = require('../commands/mine_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
+const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
 /**
@@ -13,12 +13,12 @@ module.exports = class MessageSentHandler {
      * Creates the command handlers and constructs the handler
      */
     constructor () {
+        this.gameSessions = []
         this.defaultCommandHandler = new DefaultCommandHandler();
         this.commandHandlers = [
             new PollCommandHandler(),
             new RoleCommandHandler(),
-            //new MineCommandHandler(),
-            new MineCommandHandler(),
+            new RefCommandHandler()
         ]
     }
     /**
@@ -41,6 +41,10 @@ module.exports = class MessageSentHandler {
         
         if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
+        }
+
+        for (const session of this.gameSessions) {
+            session.update(message);
         }
     }
 
