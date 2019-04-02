@@ -3,6 +3,7 @@ const RoleCommandHandler    = require('../commands/role_command_handler');
 const QuizCommandHandler    = require('../commands/quiz_command_handler');
 const GameCommandHandler    = require('../commands/game_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
+const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
 /**
@@ -19,6 +20,7 @@ module.exports = class MessageSentHandler {
             new PollCommandHandler(),
             new RoleCommandHandler(),
             new GameCommandHandler(this.gameSessions),
+            new RefCommandHandler()
             //new QuizCommandHandler(),
         ]
     }
