@@ -1,7 +1,6 @@
 const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const QuizCommandHandler    = require('../commands/quiz_command_handler');
-const GameCommandHandler    = require('../commands/game_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
@@ -19,9 +18,7 @@ module.exports = class MessageSentHandler {
         this.commandHandlers = [
             new PollCommandHandler(),
             new RoleCommandHandler(),
-            new GameCommandHandler(this.gameSessions),
             new RefCommandHandler()
-            //new QuizCommandHandler(),
         ]
     }
     /**
@@ -111,7 +108,7 @@ module.exports = class MessageSentHandler {
 
 function logMessageInfo(message) {
     const ch = message.channel.name;
-    const user = message.member.displayName;
+    const user = message.member ? message.member.displayName : "No name";
     const msg = message.content;
 
     console.log("============")
