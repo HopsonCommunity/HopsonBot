@@ -5,6 +5,7 @@ const DefaultCommandHandler = require('../commands/default_command_handler');
 const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
+const fs                    = require('fs');
 /**
  * Class to handle messages sent by the user
  */
@@ -32,6 +33,7 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
+        collectMessage(message);
         if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
@@ -114,4 +116,55 @@ function logMessageInfo(message) {
     console.log("============")
     console.log(`Message Sent\nChannel: ${ch}\nUser: ${user}\nContent: ${msg}\n`);
     console.log("============\n")
+}
+
+function collectMessage(message) {
+    const messageWords = message.content.split(" ").map(v => v.toLowerCase());
+    const fileName = "data/words.json";
+    //ngl probably a better way than a json file, I will not lie
+    fs.readFile(fileName, 'utf8', (err, data) => {
+            if(err) {
+                console.log(err)
+                return;
+            } 
+            let wordStats = JSON.parse(data);
+            //O(n^2), improve this pls
+            for (const word of messageWords) {
+                found = false;
+                for (const stat of wordStats) {
+                    if (stat.w == word) {
+                        stat.c += 1;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    wordStats.push({
+                        w: word,
+                        c: 1
+                    });
+                }
+            }
+
+            //Sort the data using insertion sort, as the data is mostly sorted already
+            for (let i = 1; i < wordStats.length; i++) {
+                let key = wordStats[i];
+                let j = i - 1;
+                while (j >= 0 && wordStats[j].c < key.c) {
+                    wordStats[j + 1] = wordStats[j];
+                    j = j - 1;
+                }
+                wordStats[j + 1] = key;
+            }
+
+
+            const output = JSON.stringify(wordStats, null, 4);  //Rewrite the file
+            fs.writeFile(fileName, output, err => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            console.log(wordStats);
+            
+        });
 }
