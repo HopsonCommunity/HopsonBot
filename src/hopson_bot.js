@@ -20,17 +20,17 @@ module.exports = class HopsonBot {
         });
 
         //Event for when bot is dissconnected
-        this.client.on("disconnect", (event) => {
+        this.client.on("disconnect", event => {
             console.log(`Client has closed with status code ${event.code} and reason ${event.reason}`)
         });  
 
         //Event for messages sent to any of the discord channels
-        this.client.on("message", (message) => {
+        this.client.on("message", message => {
             this.messageSentHandler.handleMessageSent(message, this.client);
         });
 
         //Event for a message delete
-        this.client.on("messageDelete", (message) => {
+        this.client.on("messageDelete", message => {
             console.log("Message deleted");
             MessageModifyHandler.handleMessageDelete(
                 this.client, 
@@ -48,12 +48,12 @@ module.exports = class HopsonBot {
         });
 
         //Event for people joining the server
-        this.client.on("guildMemberAdd", (member) => {
+        this.client.on("guildMemberAdd", member => {
             MemeberJoinHandler.handleJoin(member, this.client);
         });
 
-        this.client.on("guildMemberRemove", (memeber) => {
-            MemnberLeaveHandler.handleLeave(memeber, this.client);
+        this.client.on("guildMemberRemove", member => {
+            MemnberLeaveHandler.handleLeave(member, this.client);
         })
 
         //Event for a user update (eg changing their usernem)
