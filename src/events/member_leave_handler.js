@@ -1,6 +1,4 @@
 const Config        = require("../../data/config.json");
-const Discord       = require('discord.js')
-const dateFormat    = require('dateformat');
 
 /**
  * Event handler for leaving and that

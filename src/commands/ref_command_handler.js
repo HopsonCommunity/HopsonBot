@@ -1,7 +1,4 @@
-const Config            = require('../../data/config.json');
 const CommandHandler    = require('./command_handler');
-
-const Discord           = require('discord.js');
 
 const rp                = require('request-promise');
 const cheerio           = require('cheerio');

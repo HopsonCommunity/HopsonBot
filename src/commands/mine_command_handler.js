@@ -1,7 +1,5 @@
 // Command category created by oboforty
 // Bot sends minesweeper field using spoilers
-
-const util = require('../util');
 const CommandHandler = require('./command_handler');
 
 // Number emojis
