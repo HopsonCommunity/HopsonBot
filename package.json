@@ -4,8 +4,7 @@
   "description": "Bot for my Discord community server.",
   "main": "scripts/bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/main.js"
+    "start": "nodemon src/main.js --config nodemon-config.json"
   },
   "repository": {
     "type": "git",
