@@ -28,7 +28,7 @@ module.exports = class WordCommandHandler extends CommandHandler {
 }
 
 function doAction(callback) {
-    fs.readFile("data/words.json", 'utf8', (err, data) => {
+    fs.readFile("data/words_db.json", 'utf8', (err, data) => {
         if (err) {
             console.log("Error reading file: " + err);
             return;

@@ -127,7 +127,7 @@ function logMessageInfo(message) {
  */
 function collectMessage(message) {
     const messageWords = message.content.split(" ").map(v => v.toLowerCase());
-    const fileName = "data/words.json";
+    const fileName = "data/words_db.json";
     //ngl probably a better way than a json file, I will not lie
     fs.readFile(fileName, 'utf8', (err, data) => {
             if(err) {
