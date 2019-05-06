@@ -6,7 +6,7 @@ const Discord           = require('discord.js');
 const rp                = require('request-promise');
 const cheerio           = require('cheerio');
 
-module.exports = class RoleEventHandler extends CommandHandler {
+module.exports = class ReferenceCommandHandler extends CommandHandler {
     constructor() {
         super('ref');
         this.initCommands();

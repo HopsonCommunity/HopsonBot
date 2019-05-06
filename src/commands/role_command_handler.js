@@ -158,9 +158,7 @@ function extractRoles(guild, roleList) {
         validRoles: [],
         invalidRoles: []
     }
-    const modifiableRoles = Config.modifiableRoles.map((val) => {
-        return val.toLowerCase();
-    });
+    const modifiableRoles = Config.modifiableRoles.map(val => val.toLowerCase());
     for (const roleName of roleList) {
         if (modifiableRoles.indexOf(roleName) > -1) {
             const role = guild.roles.find((roleToFind) => {

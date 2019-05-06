@@ -2,6 +2,7 @@ const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const QuizCommandHandler    = require('../commands/quiz_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
+const WordsCommandHandler   = require('../commands/words_command_handler');
 const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
@@ -19,7 +20,8 @@ module.exports = class MessageSentHandler {
         this.commandHandlers = [
             new PollCommandHandler(),
             new RoleCommandHandler(),
-            new RefCommandHandler()
+            new RefCommandHandler(),
+            new WordsCommandHandler()
         ]
     }
     /**
@@ -33,7 +35,6 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
-        collectMessage(message);
         if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
@@ -48,6 +49,8 @@ module.exports = class MessageSentHandler {
         for (const session of this.gameSessions) {
             session.update(message);
         }
+
+        collectMessage(message);
     }
 
     /*
@@ -118,6 +121,10 @@ function logMessageInfo(message) {
     console.log("============\n")
 }
 
+/**
+ * An awful idea, but I was curious to see this and all that
+ * @param {Discord message} message The message the user sent
+ */
 function collectMessage(message) {
     const messageWords = message.content.split(" ").map(v => v.toLowerCase());
     const fileName = "data/words.json";
@@ -158,13 +165,11 @@ function collectMessage(message) {
             }
 
 
-            const output = JSON.stringify(wordStats, null, 4);  //Rewrite the file
+            const output = JSON.stringify(wordStats);  //Rewrite the file
             fs.writeFile(fileName, output, err => {
                 if (err) {
                     console.log(err);
                 }
             });
-            console.log(wordStats);
-            
         });
 }
