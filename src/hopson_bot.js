@@ -2,7 +2,7 @@ const MessageSentHandler    = require('./events/message_sent_handler');
 const MessageModifyHandler  = require('./events/message_mod_handler');
 const MemeberJoinHandler    = require('./events/member_join_handler');
 const MemberUpdateHandler   = require('./events/member_update_event');
-const MemnberLeaveHandler   = require('./events/member_leave_handler');
+const MemberLeaveHandler    = require('./events/member_leave_handler');
 
 module.exports = class HopsonBot {
     constructor(client) {
@@ -53,7 +53,7 @@ module.exports = class HopsonBot {
         });
 
         this.client.on("guildMemberRemove", member => {
-            MemnberLeaveHandler.handleLeave(member, this.client);
+            MemberLeaveHandler.handleLeave(member, this.client);
         })
 
         //Event for a user update (eg changing their usernem)
