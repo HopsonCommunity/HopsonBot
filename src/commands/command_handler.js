@@ -29,14 +29,14 @@ module.exports = class CommandHandlerBase {
      * @param {[String]} args The "args" of the command
      */
     handleCommand(message, args, client) {
-        let command = args[0];
+        const command = args[0];
         
         if (this.simpleCommands.has(command)) {
             message.channel.send(this.simpleCommands.get(command).action);
         }
         else if (this.commands.has(command)) {
             args.splice(0, 1);//remove command name
-            let cmd = this.commands.get(command);
+            const cmd = this.commands.get(command);
             cmd.action(message, args, client);
         }
     }
@@ -49,7 +49,7 @@ module.exports = class CommandHandlerBase {
      * @param {String} action The string that is sent by the bot in response
      */
     addBasicCommand(commandName, description, action) {
-        let fullExample = `>${this.commandCategory} ${commandName}`;
+        const fullExample = `>${this.commandCategory} ${commandName}`;
         this.simpleCommands.set(commandName, new Command(description, fullExample, action));
     }
 
