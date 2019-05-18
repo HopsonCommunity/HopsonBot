@@ -50,7 +50,7 @@ module.exports = class MessageSentHandler {
             session.update(message);
         }
 
-        collectMessage(message);
+        //collectMessage(message);
     }
 
     /*
