@@ -154,7 +154,7 @@ function createOutput(rolesAdded, userID, verb, dir) {
  * @param {[String]} roleList Array of role names to be extracted
  */
 function extractRoles(guild, roleList) {
-    let result = {
+    const result = {
         validRoles: [],
         invalidRoles: []
     }

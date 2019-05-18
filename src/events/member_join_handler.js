@@ -7,11 +7,11 @@ module.exports = {
         checkAccountAge(member, client);
 
         //Give new member role
-        let newMemberRole = member.guild.roles.find('name', Config.newMemberRole);
+        const newMemberRole = member.guild.roles.find('name', Config.newMemberRole);
         member.addRole(newMemberRole);
 
-        let channelName = Config.welcomeChannel;
-        let channel     = client.channels.find("name", channelName);
+        const channelName = Config.welcomeChannel;
+        const channel     = client.channels.find("name", channelName);
 
         //Welcome them
         channel.send(
@@ -23,14 +23,14 @@ Enjoy! :)`
 }
 
 function checkAccountAge(member, client) {
-    let channelName = Config.memberJoinChannel;
-    let channel     = client.channels.find("name", channelName);
+    const channelName = Config.memberJoinChannel;
+    const channel     = client.channels.find("name", channelName);
 
-    let join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-    let creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-    let diff        = getTimeDifference(member.joinedAt, member.user.createdAt);
+    const join        = dateFormat(member.joinedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    const creation    = dateFormat(member.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    const diff        = getTimeDifference(member.joinedAt, member.user.createdAt);
     
-    let embed = new Discord.RichEmbed()
+    const embed = new Discord.RichEmbed()
         .setTitle("User Join")
         .addField("**Name**", `<@${member.user.id}>`)
         .addField("**Account Create Data**", creation)
@@ -49,16 +49,16 @@ function checkAccountAge(member, client) {
 
 
 function getTimeDifference(join, create) {
-    let diff = join - create;
-    let diffDate = new Date(diff);
-    let originDate = new Date(0);
+    const diff = join - create;
+    const diffDate = new Date(diff);
+    const originDate = new Date(0);
 
-    let yearDiff  = diffDate.getFullYear() - originDate.getFullYear();
-    let monthDiff = diffDate.getMonth();
-    let dayDiff   = diffDate.getDate() - 1; // [1, 31] to [0, 30]
-    let hourDiff  = diffDate.getHours();
-    let minDiff   = diffDate.getMinutes();
-    let secDiff   = diffDate.getSeconds();
+    const yearDiff  = diffDate.getFullYear() - originDate.getFullYear();
+    const monthDiff = diffDate.getMonth();
+    const dayDiff   = diffDate.getDate() - 1; // [1, 31] to [0, 30]
+    const hourDiff  = diffDate.getHours();
+    const minDiff   = diffDate.getMinutes();
+    const secDiff   = diffDate.getSeconds();
 
     return {
         regularDiff: `${yearDiff} years, ${monthDiff} months, ${dayDiff} days, ${hourDiff} hours, ${minDiff} minutes, ${secDiff} seconds`,
