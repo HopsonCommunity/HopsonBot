@@ -21,7 +21,7 @@ module.exports = class MessageSentHandler {
             new PollCommandHandler(),
             new RoleCommandHandler(),
             new RefCommandHandler(),
-            new WordsCommandHandler()
+            //new WordsCommandHandler()
         ]
     }
     /**
