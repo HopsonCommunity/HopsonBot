@@ -12,12 +12,13 @@ module.exports = class RoleEventHandler extends CommandHandler {
             "source", 
             "Get the HopsonBot source code (link to GitHub", 
             "https://github.com/HopsonCommunity/HopsonBot");
+            /*
         super.addCommand(
             "8ball", 
             "Ask the magic 8ball for some wisdom.",
             ">8ball Will Hopson upload tomorrow?",
             eightball
-        )
+        )*/
     }
 
 
