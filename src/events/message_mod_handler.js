@@ -2,7 +2,7 @@ const Config = require('../../data/config.json');
 const Discord = require('discord.js');
 
 module.exports = {
-    handleMessageDelete: function(client, message) {
+    handleMessageDelete: (client, message) => {
         if (isChannelBlacklisted(message.channel)) {
             return;
         }
@@ -23,7 +23,7 @@ module.exports = {
         
     },
 
-    handleMessageUpdate: function(client, oldMessage, newMessage) {
+    handleMessageUpdate: (client, oldMessage, newMessage) => {
         if (isChannelBlacklisted(oldMessage.channel)) return;
         if(oldMessage.content === newMessage.content) return;
         
