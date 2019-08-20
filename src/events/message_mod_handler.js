@@ -14,7 +14,7 @@ module.exports = {
         
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
-        const content = sliceLongMessage(newMessage.content);
+        const content = sliceLongMessage(message.content);
         if (content.length == 0) {
             return;
         }
