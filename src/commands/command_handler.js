@@ -51,6 +51,7 @@ module.exports = class CommandHandlerBase {
     addBasicCommand(commandName, description, action) {
         const fullExample = `>${this.commandCategory} ${commandName}`;
         this.simpleCommands.set(commandName, new Command(description, fullExample, action));
+        return this;
     }
 
     /**
@@ -62,6 +63,7 @@ module.exports = class CommandHandlerBase {
      */
     addCommand(commandName, description, example, action) {
         this.commands.set(commandName, new Command(description, example, action));
+        return this;
     }
 
     /**

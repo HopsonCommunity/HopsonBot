@@ -6,10 +6,6 @@ const cheerio   = require('cheerio');
 module.exports = class ReferenceCommandHandler extends CommandHandler {
     constructor() {
         super('ref');
-        this.initCommands();
-    }
-    
-    initCommands() {
         super.addCommand(
             "cpp", 
             "Gets a link to C++ reference for a specific header",

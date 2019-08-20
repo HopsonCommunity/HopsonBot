@@ -5,29 +5,25 @@ const Discord           = require('discord.js');
 module.exports = class RoleEventHandler extends CommandHandler {
     constructor() {
         super('role');
-        this.initCommands();
-    }
-    
-    initCommands() {
         super.addCommand(
             "list", 
             "Gets a list of roles that can be modified by the user",
             ">role list",
             listRoles
-        );
-        super.addCommand(
+        )
+        .addCommand(
             "count", 
             "Counts how many people have a certain role",
             '>role count Admins',
             countRole
-        );
-        super.addCommand(
+        )
+        .addCommand(
             "add",
             "Add 1 or more roles to yourself",
             ">role add C++ Java Linux",
             addRoles
         )
-        super.addCommand(
+        .addCommand(
             "remove",
             "Remove 1 or more roles from yourself",
             ">role remove C++ Java Linux",

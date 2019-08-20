@@ -13,17 +13,13 @@ const NUM_EMOJIS = [
 module.exports = class PollCommandHandler extends CommandHandler {
     constructor() {
         super('poll');
-        this.initCommands();
-    }
-    
-    initCommands() {
         super.addCommand(
             "yesno", 
             "Poll yes/no style questions",
             ">poll yesno Should I go out tonight?",
             pollYesno
-        );
-        super.addCommand(
+        )
+        .addCommand(
             "options", 
             "Poll questions with options",
             '>poll options "Question here" optionA optionB',
