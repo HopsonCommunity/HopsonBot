@@ -29,8 +29,8 @@ module.exports = {
         
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
-        const oldContent = oldMessage.content;
-        const newContent = newMessage.content;
+        let oldContent = oldMessage.content;
+        let newContent = newMessage.content;
 
         if (oldContent.length > 1000) oldContent = oldContent.slice(0,1000) + " ...";
         if (newContent.length > 1000) newContent = newContent.slice(0,1000) + " ...";
