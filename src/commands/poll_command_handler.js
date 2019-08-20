@@ -32,6 +32,16 @@ module.exports = class PollCommandHandler extends CommandHandler {
     }
 }
 
+function createHopsonPollingStationEmbed(channel, value) {
+    return channel.send({embed: {
+        color: 3447003,
+        fields: [{
+            name: "*Hopson Polling Station*",
+            value: value
+        }]
+    }});
+}
+
 /**
  * 
  * @param {Discord message} message The raw discord message
@@ -42,31 +52,18 @@ function pollYesno(message, args, client) {
     const question = args.join(" ");
 
     if (question == "" || question == " ") {
-        message.channel.send({embed: {
-            color: 3447003,
-            fields: [{
-            name: "*Hopson Polling Station*",
-            value: "Please add a question."
-            }]
-        }});
+        createHopsonPollingStationEmbed(message.channel, "Please add a question.");
         return;
     }
     
-    message.channel.send({embed: {
-        color: 3447003,
-        fields: [{
-            name: "*Hopson Polling Station*",
-            value: question
-        }]
-    }})
-    .then(function(message) {
-        message.react("✅");
+    createHopsonPollingStationEmbed(message.channel, question)
+        .then(function(message) {
+            message.react("✅");
 
-        // Small delay so the cross always comes last
-        setTimeout(function() 
-        {
-            message.react("❌")
-        }, 500);
+            // Small delay so the cross always comes last
+            setTimeout(_ => {
+                message.react("❌")
+            }, 1000);
     });
 }
 
@@ -101,13 +98,7 @@ function pollOptions(message, args, client) {
 
     // Make sure there's at least two choises
     if (args[0] === undefined || args[1] === undefined) {
-        message.channel.send({embed: {
-            color: 3447003,
-            fields: [{
-            name: "*Hopson Polling Station*",
-            value: "Please insert 2 or more choices"
-            }]
-        }});
+        createHopsonPollingStationEmbed(message.channel, "Please insert 2 or more choices")
         return;
     }
 
@@ -133,18 +124,12 @@ function pollOptions(message, args, client) {
         field_text = field_text + "To vote for " + args[i] + ", react with " + NUM_EMOJIS[i] + "\n";
     }
 
-    message.channel.send({embed: {
-        color: 3447003,
-        fields: [{
-            name: "*Hopson Polling Station*",
-            value: field_text
-        }]
-    }})
-    .then(function(message) {
-        for (let i = 0; i < max_options; i++) {
-            delayedReactWithNumber(message, i);
-        }
-    });
+    createHopsonPollingStationEmbed(message.channel, field_text)
+        .then(function(message) {
+            for (let i = 0; i < max_options; i++) {
+                delayedReactWithNumber(message, i);
+            }
+        });
     
 }
 
