@@ -14,8 +14,10 @@ module.exports = {
         
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
-        const content = message.content;
-        if (content.length == 0)  return;
+        const content = sliceLongMessage(newMessage.content);
+        if (content.length == 0) {
+            return;
+        }
         botLog.send(new Discord.RichEmbed()
             .setDescription(`${message.author} in ${message.channel} at ${time}`)
             .setColor(16711680)
@@ -29,11 +31,8 @@ module.exports = {
         
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
-        let oldContent = oldMessage.content;
-        let newContent = newMessage.content;
-
-        if (oldContent.length > 1000) oldContent = oldContent.slice(0,1000) + " ...";
-        if (newContent.length > 1000) newContent = newContent.slice(0,1000) + " ...";
+        const oldContent = sliceLongMessage(oldMessage.content);
+        const newContent = sliceLongMessage(newMessage.content);
 
         const embed = new Discord.RichEmbed()
             .setDescription(`${oldMessage.author} in ${oldMessage.channel} at ${time}`)
@@ -43,6 +42,11 @@ module.exports = {
 
         botLog.send(embed);
     }
+}
+
+function sliceLongMessage(message) {
+    if (message.length > 1000) message = message.slice(0,1000) + " ...";
+    return message
 }
 
 function isChannelBlacklisted(channel) {
