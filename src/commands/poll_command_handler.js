@@ -39,12 +39,11 @@ function createHopsonPollingStationEmbed(channel, value) {
 }
 
 /**
- * 
+ * Sends a poll message for a yes/no question
  * @param {Discord message} message The raw discord message
  * @param {[String]} args List of string, the command arguments
- * @param {_} client unused
  */
-function pollYesno(message, args, client) {
+function pollYesno(message, args) {
     const question = args.join(" ");
 
     if (question == "" || question == " ") {
@@ -63,7 +62,12 @@ function pollYesno(message, args, client) {
     });
 }
 
-function pollOptions(message, args, client) {
+/**
+ * Sends a poll message for a question with multiple optoions
+ * @param {Discord message} message The raw discord message
+ * @param {[String]} args List of string, the command arguments
+ */
+function pollOptions(message, args) {
     // Check for a prompt
     if (args[0].charAt(0) == '"') {
         // Find the end of the prompt
