@@ -1,7 +1,7 @@
 const CommandHandler    = require('./command_handler');
 
-const rp                = require('request-promise');
-const cheerio           = require('cheerio');
+const request   = require('request-promise');
+const cheerio   = require('cheerio');
 
 module.exports = class ReferenceCommandHandler extends CommandHandler {
     constructor() {
@@ -25,33 +25,33 @@ function cppReference(message, args) {
         return;
     }
 
-    rp("https://en.cppreference.com/w/cpp/header")
-    .then((html) => {
-        const anchors = cheerio('a', html);
-        const hrefs = [];
-        for (let i = 0; i < anchors.length; i++) {
-            const ref = anchors[i].attribs.href;
-            if (ref) {
-                if (ref.startsWith("/w/cpp/")) {
-                    hrefs.push(anchors[i].attribs.href);
+    request("https://en.cppreference.com/w/cpp/header")
+        .then((html) => {
+            const anchors = cheerio('a', html);
+            const hrefs = [];
+            for (let i = 0; i < anchors.length; i++) {
+                const ref = anchors[i].attribs.href;
+                if (ref) {
+                    if (ref.startsWith("/w/cpp/")) {
+                        hrefs.push(anchors[i].attribs.href);
+                    }
                 }
             }
-        }
 
 
-        const results = [];
-        for (const ref of hrefs) {
-            if (ref.search(args[0]) > 0) {
-                console.log(ref);
-                results.push("https://en.cppreference.com/" + ref);
+            const results = [];
+            for (const ref of hrefs) {
+                if (ref.search(args[0]) > 0) {
+                    console.log(ref);
+                    results.push("https://en.cppreference.com/" + ref);
+                }
             }
-        }
-        if (results.length > 0) {
-            channel.send(results);
-        }
-        else {
-            channel.send(`I cannot find anything in C++ with ${args[0]}`);
-        }
+            if (results.length > 0) {
+                channel.send(results);
+            }
+            else {
+                channel.send(`I cannot find anything in C++ with ${args[0]}`);
+            }
     })
     .catch((error) => {
         console.log(`Error: ${error}`);

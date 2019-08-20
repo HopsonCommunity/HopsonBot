@@ -13,7 +13,6 @@ module.exports = class MessageSentHandler {
      * Creates the command handlers and constructs the handler
      */
     constructor () {
-        this.gameSessions = []
         this.defaultCommandHandler = new DefaultCommandHandler();
         this.commandHandlers = [
             new PollCommandHandler(),
@@ -41,10 +40,6 @@ module.exports = class MessageSentHandler {
         
         if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
-        }
-
-        for (const session of this.gameSessions) {
-            session.update(message);
         }
     }
 
