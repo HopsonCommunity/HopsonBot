@@ -110,8 +110,9 @@ function pollOptions(message, args) {
     // Create the main body for the embedded message
     let field_text = prompt + "\n";
 
-    if (prompt == "" )
-    field_text = "Choose: \n";
+    if (prompt == "") {
+        field_text = "Choose: \n";
+    }
     
     for (let i = 0; i < max_options; i++) {
         // Convert the underscores in the options with spaces
