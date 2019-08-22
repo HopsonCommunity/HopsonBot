@@ -62,7 +62,7 @@ function pollYesno(message, args) {
 }
 
 /**
- * Sends a poll message for a question with multiple optoions
+ * Sends a poll message for a question with multiple options
  * @param {Discord message} message The raw discord message
  * @param {[String]} args List of string, the command arguments
  */
@@ -84,6 +84,7 @@ function pollOptions(message, args) {
         return;
     }
 
+    //Extract question
     let question = "";
     let full = args.join(" ").slice(1)
     let isQuestion = false;
@@ -103,6 +104,7 @@ function pollOptions(message, args) {
         return;
     }
 
+    //Extract options
     const options = full
         .split(/(\s+)/)
         .filter(v => v != ' ' && v != '');
@@ -115,11 +117,13 @@ function pollOptions(message, args) {
         return;
     }
 
+    //Add options to the outputted text
     let fieldText = question;
     for (const option in options) {
         fieldText += `\nTo answer with ${options[option]}, react with ${NUM_EMOJIS[option]}`
     }
 
+    //Fire the question
     createHopsonPollingStationEmbed(message.channel, fieldText)
         .then(message => {
             for (const option in options) {
