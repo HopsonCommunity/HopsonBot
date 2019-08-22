@@ -31,14 +31,13 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
-        if (message.channel.name === Config.newMemberChannel) {
+        else if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
             message.member.removeRole(newMemberRole);
             message.member.addRole(introduceRole);
         }
-        
-        if (message.content.startsWith('>')) {
+        else if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
         }
     }

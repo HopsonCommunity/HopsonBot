@@ -1,7 +1,7 @@
 const CommandHandler    = require('./command_handler');
 const Util              = require('../util')
 
-module.exports = class RoleEventHandler extends CommandHandler {
+module.exports = class DefaultCommands extends CommandHandler {
     constructor() {
         super('');
         super.addBasicCommand(  

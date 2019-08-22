@@ -1,0 +1,1 @@
+require("./commands/default_command_handler.test");
