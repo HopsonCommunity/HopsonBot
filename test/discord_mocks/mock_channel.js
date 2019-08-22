@@ -1,3 +1,4 @@
+const MockMessage = require('./mock_message');
 module.exports = class {
     constructor(name = "Default") {
         this.messages = [];
@@ -6,8 +7,12 @@ module.exports = class {
         this.type = "text";
     }
 
-    send(message) {
-        this.messages.push(message);
+    send(message, success = true) {
+        const msg = new MockMessage(message, {});
+        this.messages.push(msg);
+        return {
+            then: f => f(msg)
+        }
     }
 
     lastMessage() {
