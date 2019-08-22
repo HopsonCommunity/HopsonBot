@@ -45,7 +45,6 @@ function createHopsonPollingStationEmbed(channel, value) {
  */
 function pollYesno(message, args) {
     const question = args.join(" ");
-
     if (question == "" || question == " ") {
         createHopsonPollingStationEmbed(message.channel, "Please add a question.");
         return;
@@ -69,66 +68,64 @@ function pollYesno(message, args) {
  */
 function pollOptions(message, args) {
     // Make sure there's at least two choises
-    if (args[0] === undefined || args[1] === undefined) {
-        createHopsonPollingStationEmbed(message.channel, "Please add a question, followed by 2 or more choices")
+    if (args.length < 1) {
+        createHopsonPollingStationEmbed(
+            message.channel, 
+            'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`'
+        );
         return;
     }
 
-    // Check for a prompt
-    if (args[0].charAt(0) == '"') {
-        // Find the end of the prompt
-        var prompt = "";
-
-        // Iterate through each argument until the end is found
-        let index;
-        for (index = 0; index < args.length; index++) {
-            prompt += args[index] + " ";
-            // Check if there's a " at the end of the argument
-            // And also that it is not also part of the first quotation mark 
-            if (args[index].charAt(args[index].length-1) == '"' && index != 0) {
-                // Get rid of excess characters
-                prompt = prompt.substring(1, prompt.length - 2);
-
-                // Break the loop
-                break;
-            }
-        }
-        // Remove the used arguments
-        for (let i = 0; i <= index; i++) {
-            args.splice(0, 1);
-        }
-    }   
-
-    // Set the max number of options
-    let max_options = args.length;
-    if (args.length > 9)
-        max_options = 9;
-
-    // Create the main body for the embedded message
-    let field_text = prompt + "\n";
-
-    if (prompt == "") {
-        field_text = "Choose: \n";
-    }
-    
-    for (let i = 0; i < max_options; i++) {
-        // Convert the underscores in the options with spaces
-        args[i] = args[i].replace(/_/g, " ");
-        
-        // Bag's message
-        //field_text = field_text + "   Select " + NUM_EMOJIS[i] + " for: " + args[i] + "\n";
-
-        // Message from jack/jw999's bot
-        field_text = field_text + "To vote for " + args[i] + ", react with " + NUM_EMOJIS[i] + "\n";
+    if (!args[0].startsWith("\"")) {
+        createHopsonPollingStationEmbed(
+            message.channel, 
+            'Unable to poll! The question should be wrapped between two " characters.'
+        );
+        return;
     }
 
-    createHopsonPollingStationEmbed(message.channel, field_text)
-        .then(function(message) {
-            for (let i = 0; i < max_options; i++) {
-                delayedReactWithNumber(message, i);
+    let question = "";
+    let full = args.join(" ").slice(1)
+    let isQuestion = false;
+    for (const c of full) {
+        full = full.slice(1);
+        if (c === "\"") {
+            isQuestion = true;
+            break;
+        }
+        question += c;
+    }
+    if (!isQuestion) {
+        createHopsonPollingStationEmbed(
+            message.channel, 
+            'Unable to poll! The question should be wrapped between two " characters.'
+        );
+        return;
+    }
+
+    const options = full
+        .split(/(\s+)/)
+        .filter(v => v != ' ' && v != '');
+
+    if (options.length < 2) {
+        createHopsonPollingStationEmbed(
+            message.channel, 
+            'Unable to poll! At least 2 options must be provided.'
+        );
+        return;
+    }
+
+    let fieldText = question;
+    for (const option in options) {
+        fieldText += `\nTo answer with ${options[option]}, react with ${NUM_EMOJIS[option]}`
+    }
+
+    createHopsonPollingStationEmbed(message.channel, fieldText)
+        .then(message => {
+            for (const option in options) {
+                delayedReactWithNumber(message, option);
             }
         });
-    
 }
 
 function delayedReactWithNumber(message, n)

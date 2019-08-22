@@ -12,7 +12,7 @@ QUnit.test(
 
         //Empty message tests
         {
-            messageHandler.handleMessageSent(new MockMessage(">poll yesno", channel), {});
+            messageHandler.handleMessageSent(new MockMessage(">poll yesno", channel, "Tester"), {});
             
             assert.deepEqual(
                 channel.lastMessage().content.embed.fields[0].value,
@@ -30,7 +30,7 @@ QUnit.test(
         //Non-Empty tests
         {
             const QUESTION =  'will this test pass?'
-            messageHandler.handleMessageSent(new MockMessage(`>poll yesno ${QUESTION}`, channel), {});
+            messageHandler.handleMessageSent(new MockMessage(`>poll yesno ${QUESTION}`, channel, "Tester"), {});
             
             assert.deepEqual(
                 channel.lastMessage().content.embed.fields[0].value,
@@ -59,7 +59,7 @@ QUnit.test(
 
         //Empty message tests
         {
-            messageHandler.handleMessageSent(new MockMessage(">poll options", channel), {});
+            messageHandler.handleMessageSent(new MockMessage(">poll options", channel, "Tester"), {});
 
             assert.deepEqual(
                 channel.lastMessage().content.embed.fields[0].value,
@@ -76,9 +76,13 @@ QUnit.test(
 
         //REAL tests
         {
+            messageHandler.handleMessageSent(new MockMessage('>poll options "Question" a b c d e', channel, "Tester"), {});
+            const done = assert.async();
+            setTimeout(_ => {
+                console.log(JSON.stringify(channel.lastMessage()));
+                done();
+            }, 6000);
             
         }
-
-        //Yes
     }
 );
