@@ -68,6 +68,12 @@ function pollYesno(message, args) {
  * @param {[String]} args List of string, the command arguments
  */
 function pollOptions(message, args) {
+    // Make sure there's at least two choises
+    if (args[0] === undefined || args[1] === undefined) {
+        createHopsonPollingStationEmbed(message.channel, "Please add a question, followed by 2 or more choices")
+        return;
+    }
+
     // Check for a prompt
     if (args[0].charAt(0) == '"') {
         // Find the end of the prompt
@@ -87,20 +93,11 @@ function pollOptions(message, args) {
                 break;
             }
         }
-
-        console.log("Prompt : '" + prompt + "'");
-
         // Remove the used arguments
         for (let i = 0; i <= index; i++) {
             args.splice(0, 1);
         }
-    }
-
-    // Make sure there's at least two choises
-    if (args[0] === undefined || args[1] === undefined) {
-        createHopsonPollingStationEmbed(message.channel, "Please insert 2 or more choices")
-        return;
-    }
+    }   
 
     // Set the max number of options
     let max_options = args.length;

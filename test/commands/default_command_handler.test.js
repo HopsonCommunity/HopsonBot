@@ -12,7 +12,7 @@ QUnit.test(
         messageHandler.handleMessageSent(new MockMessage(">source", channel), {});
 
         assert.deepEqual(
-            channel.lastMessage(),
+            channel.lastMessage().content,
             'https://github.com/HopsonCommunity/HopsonBot',
             "The source command should return the GitHub link of the bot."
         );
