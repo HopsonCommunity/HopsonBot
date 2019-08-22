@@ -52,7 +52,7 @@ function pollYesno(message, args) {
     }
     
     createHopsonPollingStationEmbed(message.channel, question)
-        .then(function(message) {
+        .then(message => {
             message.react("✅");
 
             // Small delay so the cross always comes last

@@ -3,5 +3,10 @@ module.exports = class {
         this.content = content;
         this.author = author;
         this.channel = channel;
+        this.reactions = [];
+    }
+
+    react(reaction) {
+        this.reactions.push(reaction);
     }
 }

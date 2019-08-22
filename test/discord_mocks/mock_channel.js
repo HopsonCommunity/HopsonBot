@@ -9,4 +9,8 @@ module.exports = class {
     send(message) {
         this.messages.push(message);
     }
+
+    lastMessage() {
+        return this.messages[this.messages.length - 1];
+    }
 }

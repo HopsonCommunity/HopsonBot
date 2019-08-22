@@ -7,12 +7,12 @@ QUnit.test(
     assert => {
         const messageHandler = new MessageHandler();
         const channel = new MockChannel();
-        
+
         //Testing command source
         messageHandler.handleMessageSent(new MockMessage(">source", channel), {});
 
         assert.deepEqual(
-            channel.messages[channel.messages.length - 1],
+            channel.lastMessage(),
             'https://github.com/HopsonCommunity/HopsonBot',
             "The source command should return the GitHub link of the bot."
         );
