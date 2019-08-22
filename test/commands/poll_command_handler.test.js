@@ -29,8 +29,24 @@ QUnit.test(
 
         //Non-Empty tests
         {
-            messageHandler.handleMessageSent(new MockMessage(">poll yesno Will this test pass?", channel), {});
+            const QUESTION =  'will this test pass?'
+            messageHandler.handleMessageSent(new MockMessage(`>poll yesno ${QUESTION}`, channel), {});
             
+            assert.deepEqual(
+                channel.lastMessage().content.embed.fields[0].value,
+                `${QUESTION}`,
+                `Asking ${QUESTION} will prompt that question`
+            );
+            
+            const done = assert.async();
+            setTimeout(_ => {
+                assert.deepEqual(
+                    channel.lastMessage().reactions,
+                    ['✅', '❌'],
+                    `Asking a quesion will give reactions ✅ and ❌`
+                );
+                done();
+            }, 1200);
         }
     }
 );
@@ -56,6 +72,11 @@ QUnit.test(
                 "*Hopson Polling Station*",
                 "The embed should be called Hopson Polling Station"
             );
+        }
+
+        //REAL tests
+        {
+            
         }
 
         //Yes
