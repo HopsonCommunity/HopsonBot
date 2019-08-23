@@ -119,10 +119,10 @@ function pollOptions(message, args) {
 
     //Add options to the outputted text
     let fieldText = question;
-    if (options.length > 8) {
+    if (options.length > 9) {
         createHopsonPollingStationEmbed(
             message.channel, 
-            'Unable to poll! Maximum of 8 options allowed.'
+            'Unable to poll! Maximum of 9 options allowed.'
         );
         return;
     }
