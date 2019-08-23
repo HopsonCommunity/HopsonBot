@@ -129,7 +129,6 @@ function validationDoesNotPass(validation, errorMessage, channel) {
     return false;
 }
 
-
 /**
  * Sends a reaction to a message using the emojis in the array above    
  * @param {DiscordMessage} message The message to add reactions to
