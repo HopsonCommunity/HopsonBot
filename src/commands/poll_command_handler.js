@@ -68,22 +68,15 @@ function pollYesno(message, args) {
  */
 function pollOptions(message, args) {
     // Make sure there's at least two choises
-    if (args.length < 1) {
-        createHopsonPollingStationEmbed(
-            message.channel, 
-            'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`'
-        );
+    const channel = message.channel;
+
+    if (!passesTest(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
     }
-
-    if (!args[0].startsWith("\"")) {
-        createHopsonPollingStationEmbed(
-            message.channel, 
-            'Unable to poll! The question should be wrapped between two " characters.'
-        );
+    if (!passesTest(!args[0].startsWith("\""), 'Unable to poll! The question should be wrapped between two " characters.', channel)) {
         return;
     }
-
+    
     //Extract question
     let question = "";
     let full = args.join(" ").slice(1)
@@ -96,11 +89,8 @@ function pollOptions(message, args) {
         }
         question += c;
     }
-    if (!isQuestion) {
-        createHopsonPollingStationEmbed(
-            message.channel, 
-            'Unable to poll! The question should be wrapped between two " characters.'
-        );
+
+    if (!passesTest(!isQuestion, 'The question should be wrapped between two " characters.', channel)) {
         return;
     }
 
@@ -109,11 +99,7 @@ function pollOptions(message, args) {
         .split(/(\s+)/)
         .filter(v => v != ' ' && v != '');
 
-    if (options.length < 2) {
-        createHopsonPollingStationEmbed(
-            message.channel, 
-            'Unable to poll! At least 2 options must be provided.'
-        );
+    if (!passesTest(options.length < 2, 'At least 2 options must be provided.', channel)) {
         return;
     }
 
@@ -130,6 +116,19 @@ function pollOptions(message, args) {
                 delayedReactWithNumber(message, option);
             }
         });
+}
+
+function passesTest(test, errorMessage, channel) {
+    if (!test) {
+        createHopsonPollingStationEmbed(
+            channel, 
+            'Unable to poll! At least 2 options must be provided.'
+        );
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 function delayedReactWithNumber(message, n)
