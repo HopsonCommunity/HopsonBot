@@ -60,11 +60,11 @@ function pollOptions(message, args) {
     // Make sure there's at least two choises
     const channel = message.channel;
 
-    if (!passesTest(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
+    if (validationDoesNotPass(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
     }
 
-    if (!passesTest(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
+    if (validationDoesNotPass(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
         return;
     }
     
@@ -81,7 +81,7 @@ function pollOptions(message, args) {
         question += c;
     }
 
-    if (!passesTest(!isQuestion, 'The question should be wrapped between two " characters.', channel)) {
+    if (validationDoesNotPass(!isQuestion, 'The question should be wrapped between two " characters.', channel)) {
         return;
     }
 
@@ -90,19 +90,16 @@ function pollOptions(message, args) {
         .split(/(\s+)/)
         .filter(v => v != ' ' && v != '');
 
-    if (!passesTest(options.length < 2, 'At least 2 options must be provided.', channel)) {
+    if (validationDoesNotPass(options.length < 2, 'At least 2 options must be provided.', channel)) {
+        return;
+    }
+
+    if (validationDoesNotPass(options.length > 9, 'Maximum of 9 options allowed.', channel)) {
         return;
     }
 
     //Add options to the outputted text
     let fieldText = question;
-    if (options.length > 9) {
-        createHopsonPollingStationEmbed(
-            message.channel, 
-            'Maximum of 9 options allowed.'
-        );
-        return;
-    }
     for (const option in options) {
         fieldText += `\nTo answer with ${options[option]}, react with ${NUM_EMOJIS[option]}`
     }
@@ -122,8 +119,8 @@ function pollOptions(message, args) {
  * @param {String} errorMessage The message to send in the case of a failed test
  * @param {DiscordChannel} channel The text channel to send the error message to in the pass of failure
  */
-function passesTest(test, errorMessage, channel) {
-    if (!test) return true;
+function validationDoesNotPass(validation, errorMessage, channel) {
+    if (!validation) return false;
     
     createHopsonPollingStationEmbed(
         channel, 
