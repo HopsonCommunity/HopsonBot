@@ -73,7 +73,7 @@ function pollOptions(message, args) {
     if (!passesTest(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
     }
-    if (!passesTest(!args[0].startsWith("\""), 'Unable to poll! The question should be wrapped between two " characters.', channel)) {
+    if (!passesTest(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
         return;
     }
     
@@ -108,7 +108,7 @@ function pollOptions(message, args) {
     if (options.length > 9) {
         createHopsonPollingStationEmbed(
             message.channel, 
-            'Unable to poll! Maximum of 9 options allowed.'
+            'Maximum of 9 options allowed.'
         );
         return;
     }
@@ -125,17 +125,15 @@ function pollOptions(message, args) {
         });
 }
 
-function passesTest(test, errorMessage, channel) {
-    if (!test) {
+function passesTest(doesTestPass, errorMessage, channel) {
+    if (!doesTestPass) {
         createHopsonPollingStationEmbed(
             channel, 
-            'Unable to poll! At least 2 options must be provided.'
+            `Unable to poll! ${errorMessage}`
         );
         return false;
     }
-    else {
-        return true;
-    }
+    return true;
 }
 
 function delayedReactWithNumber(message, n)
