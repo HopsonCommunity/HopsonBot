@@ -1,6 +1,6 @@
 const MockGuildMember = require('./mock_guild_member')
 const MockUser = require('./mock_user')
-
+const MockGuild = require('./mock_guild')
 module.exports = class {
     /**
      * Creates a mock message
@@ -9,10 +9,11 @@ module.exports = class {
      * @param {MockMember} member The member who sent the message
      * @param {MockUser} author The user who sent the message
      */
-    constructor(content, channel, member, author = new MockUser()) {
+    constructor(content, channel, member, author = new MockUser(), guild = new MockGuild()) {
         this.content = content;
         this.author = author;
         this.member = member;
+        this.guild = guild;
         this.channel = channel;
         this.reactions = [];
     }
