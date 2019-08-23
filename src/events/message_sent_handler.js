@@ -27,6 +27,10 @@ module.exports = class MessageSentHandler {
      */
     handleMessageSent(message, client) {
         logMessageInfo(message);
+        handleMessageSentWithoutLog(message, client);
+    }
+
+    handleMessageSentWithoutLog(message, client) {
         if ((message.channel.type !== "text") || 
             (message.author.bot)) {
             return;

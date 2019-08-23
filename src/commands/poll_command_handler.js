@@ -63,6 +63,7 @@ function pollOptions(message, args) {
     if (!passesTest(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
     }
+
     if (!passesTest(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
         return;
     }
@@ -117,19 +118,18 @@ function pollOptions(message, args) {
 
 /**
  * Tests whether some expression passes, and sends an error message in the case it doesn't
- * @param {Boolean} doesTestPass An expression to yield true or false, aka the test to check
+ * @param {Boolean} test An expression to yield true or false, aka the test to check
  * @param {String} errorMessage The message to send in the case of a failed test
  * @param {DiscordChannel} channel The text channel to send the error message to in the pass of failure
  */
-function passesTest(doesTestPass, errorMessage, channel) {
-    if (!doesTestPass) {
-        createHopsonPollingStationEmbed(
-            channel, 
-            `Unable to poll! ${errorMessage}`
-        );
-        return false;
-    }
-    return true;
+function passesTest(test, errorMessage, channel) {
+    if (!test) return true;
+    
+    createHopsonPollingStationEmbed(
+        channel, 
+        `Unable to poll! ${errorMessage}`
+    );
+    return false;
 }
 
 
