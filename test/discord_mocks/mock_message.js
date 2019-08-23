@@ -7,7 +7,6 @@ module.exports = class {
     }
 
     react(reaction) {
-        console.log("reaction gone sexual: ", reaction);
         this.reactions.push(reaction);
     }
 }

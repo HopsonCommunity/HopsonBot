@@ -12,8 +12,8 @@ QUnit.test(
 
         //Empty message tests
         {
-            messageHandler.handleMessageSent(new MockMessage(">poll yesno", channel, "Tester"), {});
-            
+            messageHandler.handleMessageSentWithoutLog(new MockMessage(">poll yesno", channel, "Tester"), {});
+
             assert.deepEqual(
                 channel.lastMessage().content.embed.fields[0].value,
                 "Please add a question.",
@@ -29,15 +29,15 @@ QUnit.test(
 
         //Non-Empty tests
         {
-            const QUESTION =  'will this test pass?'
-            messageHandler.handleMessageSent(new MockMessage(`>poll yesno ${QUESTION}`, channel, "Tester"), {});
-            
+            const QUESTION = 'will this test pass?'
+            messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll yesno ${QUESTION}`, channel, "Tester"), {});
+
             assert.deepEqual(
                 channel.lastMessage().content.embed.fields[0].value,
                 `${QUESTION}`,
                 `Asking ${QUESTION} will prompt that question`
             );
-            
+
             const done = assert.async();
             setTimeout(_ => {
                 assert.deepEqual(
@@ -52,37 +52,95 @@ QUnit.test(
 );
 
 QUnit.test(
-    "Poll options command tests",
+    "Poll options: Empty args",
     assert => {
         const messageHandler = new MessageHandler();
         const channel = new MockChannel();
 
-        //Empty message tests
-        {
-            messageHandler.handleMessageSent(new MockMessage(">poll options", channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(">poll options", channel, "Tester"), {});
 
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing options with no question or options should yield a prompt to add a question and options"
+        );
+
+        assert.deepEqual(
+            channel.lastMessage().content.embed.fields[0].name,
+            "*Hopson Polling Station*",
+            "The embed should be called Hopson Polling Station"
+        );
+    }
+
+);
+
+QUnit.test(
+    "Poll options: Incorrect args",
+    assert => {
+        const messageHandler = new MessageHandler();
+        const channel = new MockChannel();
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(">poll options this is a question", channel, "Tester"), {});
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing a question without quotations should error"
+        );
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question"`, channel, "Tester"), {});
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing a question without any options should error"
+        );
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question`, channel, "Tester"), {});
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing a question with a single quote should error"
+        );
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question" a`, channel, "Tester"), {});
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing a question with only one option should error"
+        );
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question" a b c d e f g h i j k l m`, channel, "Tester"), {});
+        assert.equal(
+            channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
+            true,
+            "Providing a question with more than 9 options should error"
+        );
+    }
+)
+
+QUnit.test(
+    "Poll options: Correct args",
+    assert => {
+        const messageHandler = new MessageHandler();
+        const channel = new MockChannel();
+
+
+        messageHandler.handleMessageSentWithoutLog(new MockMessage('>poll options "question asking" a b c d e', channel, "Tester"), {});
+        const msg = channel.lastMessage();
+
+        assert.deepEqual(
+            msg.content.embed.fields[0].value.startsWith("question asking"),
+            true,
+            "The polling station should show the question being asked"
+        );
+
+        const done = assert.async();
+        setTimeout(_ => {
             assert.deepEqual(
-                channel.lastMessage().content.embed.fields[0].value,
-                "Please add a question, followed by 2 or more choices",
-                "Providing options with no question or options should yield a prompt to add a question and options"
+                msg.reactions,
+                ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣'],
+                "Giving 5 options should provide 5 reactions"
             );
-
-            assert.deepEqual(
-                channel.lastMessage().content.embed.fields[0].name,
-                "*Hopson Polling Station*",
-                "The embed should be called Hopson Polling Station"
-            );
-        }
-
-        //REAL tests
-        {
-            messageHandler.handleMessageSent(new MockMessage('>poll options "Question" a b c d e', channel, "Tester"), {});
-            const done = assert.async();
-            setTimeout(_ => {
-                console.log(JSON.stringify(channel.lastMessage()));
-                done();
-            }, 6000);
-            
-        }
+            done();
+        }, 5000);
     }
 );

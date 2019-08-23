@@ -9,7 +9,7 @@ QUnit.test(
         const channel = new MockChannel();
 
         //Testing command source
-        messageHandler.handleMessageSent(new MockMessage(">source", channel), {});
+        messageHandler.handleMessageSentWithoutLog(new MockMessage(">source", channel), {});
 
         assert.deepEqual(
             channel.lastMessage().content,
