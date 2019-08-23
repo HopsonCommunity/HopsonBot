@@ -9,7 +9,7 @@ module.exports = class {
      * @param {MockMember} member The member who sent the message
      * @param {MockUser} author The user who sent the message
      */
-    constructor(content, channel, member, author) {
+    constructor(content, channel, member, author = new MockUser()) {
         this.content = content;
         this.author = author;
         this.member = member;

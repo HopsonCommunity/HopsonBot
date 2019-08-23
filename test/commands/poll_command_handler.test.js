@@ -57,7 +57,9 @@ QUnit.test(
         const messageHandler = new MessageHandler();
         const channel = new MockChannel();
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(">poll options", channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(">poll options", channel, "Tester"), {}
+        );
 
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
@@ -80,35 +82,62 @@ QUnit.test(
         const messageHandler = new MessageHandler();
         const channel = new MockChannel();
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(">poll options this is a question", channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                ">poll options this is a question", 
+                channel, 
+                "Tester")
+        );
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
             true,
             "Providing a question without quotations should error"
         );
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question"`, channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                `>poll options "this is a question"`, 
+                channel, 
+                "Tester")
+        );
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
             true,
             "Providing a question without any options should error"
         );
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question`, channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                `>poll options "this is a question`, 
+                channel, 
+                "Tester")
+        );
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
             true,
             "Providing a question with a single quote should error"
         );
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question" a`, channel, "Tester"), {});
+            
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                `>poll options "this is a question" a`, 
+                channel, 
+                "Tester")
+        );
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
             true,
             "Providing a question with only one option should error"
         );
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage(`>poll options "this is a question" a b c d e f g h i j k l m`, channel, "Tester"), {});
+
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                `>poll options "this is a question" a b c d e f g h i j k l m`, 
+                channel, 
+                "Tester")
+        );
         assert.equal(
             channel.lastMessage().content.embed.fields[0].value.startsWith("Unable to poll!"),
             true,
@@ -124,7 +153,13 @@ QUnit.test(
         const channel = new MockChannel();
 
 
-        messageHandler.handleMessageSentWithoutLog(new MockMessage('>poll options "question asking" a b c d e', channel, "Tester"), {});
+        messageHandler.handleMessageSentWithoutLog(
+            new MockMessage(
+                '>poll options "question asking" a b c d e', 
+                channel, 
+                "Tester")
+        );
+
         const msg = channel.lastMessage();
 
         assert.deepEqual(
