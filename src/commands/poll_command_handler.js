@@ -28,16 +28,6 @@ module.exports = class PollCommandHandler extends CommandHandler {
     }
 }
 
-function createHopsonPollingStationEmbed(channel, value) {
-    return channel.send({embed: {
-        color: 3447003,
-        fields: [{
-            name: "*Hopson Polling Station*",
-            value: value
-        }]
-    }});
-}
-
 /**
  * Sends a poll message for a yes/no question
  * @param {Discord message} message The raw discord message
@@ -125,6 +115,12 @@ function pollOptions(message, args) {
         });
 }
 
+/**
+ * Tests whether some expression passes, and sends an error message in the case it doesn't
+ * @param {Boolean} doesTestPass An expression to yield true or false, aka the test to check
+ * @param {String} errorMessage The message to send in the case of a failed test
+ * @param {DiscordChannel} channel The text channel to send the error message to in the pass of failure
+ */
 function passesTest(doesTestPass, errorMessage, channel) {
     if (!doesTestPass) {
         createHopsonPollingStationEmbed(
@@ -136,10 +132,30 @@ function passesTest(doesTestPass, errorMessage, channel) {
     return true;
 }
 
-function delayedReactWithNumber(message, n)
-{
+
+/**
+ * Sends a reaction to a message using the emojis in the array above    
+ * @param {DiscordMessage} message The message to add reactions to
+ * @param {Number} n The emoji to send, number from the array above
+ */
+function delayedReactWithNumber(message, n) {
     // 0.5s timeout seems to be the best when theres a large number of options
     setTimeout(function() {
         message.react(NUM_EMOJIS[n]);
     }, 500*n);
+}
+
+/**
+ * Creates a embed message, using "Hopson Polling Station" as the title
+ * @param {DiscordTextChannel} channel The text channel to send the message to
+ * @param {String} value The string to embed in the polling station message
+ */
+function createHopsonPollingStationEmbed(channel, value) {
+    return channel.send({embed: {
+        color: 3447003,
+        fields: [{
+            name: "*Hopson Polling Station*",
+            value: value
+        }]
+    }});
 }
