@@ -59,15 +59,13 @@ function pollYesno(message, args) {
 function pollOptions(message, args) {
     // Make sure there's at least two choises
     const channel = message.channel;
-
     if (validationDoesNotPass(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
     }
 
     if (validationDoesNotPass(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
         return;
-    }
-    
+    }   
     //Extract question
     let question = "";
     let full = args.join(" ").slice(1)
@@ -120,12 +118,13 @@ function pollOptions(message, args) {
  * @param {DiscordChannel} channel The text channel to send the error message to in the pass of failure
  */
 function validationDoesNotPass(validation, errorMessage, channel) {
-    if (!validation) return false;
-    
-    createHopsonPollingStationEmbed(
-        channel, 
-        `Unable to poll! ${errorMessage}`
-    );
+    if (validation) {
+        createHopsonPollingStationEmbed(
+            channel, 
+            `Unable to poll! ${errorMessage}`
+        );
+        return true;
+    }
     return false;
 }
 
