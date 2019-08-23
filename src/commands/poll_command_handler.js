@@ -105,6 +105,13 @@ function pollOptions(message, args) {
 
     //Add options to the outputted text
     let fieldText = question;
+    if (options.length > 9) {
+        createHopsonPollingStationEmbed(
+            message.channel, 
+            'Unable to poll! Maximum of 9 options allowed.'
+        );
+        return;
+    }
     for (const option in options) {
         fieldText += `\nTo answer with ${options[option]}, react with ${NUM_EMOJIS[option]}`
     }
