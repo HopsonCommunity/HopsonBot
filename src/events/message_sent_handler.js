@@ -27,7 +27,7 @@ module.exports = class MessageSentHandler {
      */
     handleMessageSent(message, client) {
         logMessageInfo(message);
-        handleMessageSentWithoutLog(message, client);
+        this.handleMessageSentWithoutLog(message, client);
     }
 
     handleMessageSentWithoutLog(message, client) {
