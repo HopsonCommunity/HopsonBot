@@ -24,8 +24,7 @@
     "jsonfile": "^4.0.0",
     "node-fetch": "^2.3.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "sqlite3": "^4.1.0"
+    "request-promise": "^4.2.4"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

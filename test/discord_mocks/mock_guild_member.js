@@ -1,9 +1,14 @@
 module.exports = class {
     /**
-     * Creates a mock guild member
+     * Creates a guild member
+     * @param {MockUser} user The user assosiated with the member
+     * @param {Date} joinDate The date the member joined
+     * @param {MockGuild} guild The guild the user is part of
      */
-    constructor() {
+    constructor(user, joinDate, guild) {
         this.roles = [];
+        this.joinedAt = joinDate;
+        this.guild = guild;
     }
 
     /**

@@ -2,10 +2,11 @@ const Config        = require("../../data/config.json");
 const Discord       = require('discord.js')
 const dateFormat    = require('dateformat');
 
+//TODO 
 module.exports = {
-    handleJoin : function(member, client) {
+    handleJoin : (member, client) => {
         checkAccountAge(member, client);
-
+/*
         //Give new member role
         const newMemberRole = member.guild.roles.find('name', Config.newMemberRole);
         member.addRole(newMemberRole);
@@ -19,6 +20,7 @@ module.exports = {
 Also, please introduce yourself in <#463866762786635777>, and I will give you access to the rest of the server.\n
 Enjoy! :)`
         );
+*/
     }
 }
 
