@@ -17,9 +17,8 @@ module.exports = class ReferenceCommandHandler extends CommandHandler {
 
 function cppReference(message, args) {
     const channel = message.channel;
-    if (args.length < 1) {
+    if (args.length < 1)
         return;
-    }
 
     request("https://en.cppreference.com/w/cpp/header")
         .then((html) => {
@@ -34,7 +33,6 @@ function cppReference(message, args) {
                 }
             }
 
-
             const results = [];
             for (const ref of hrefs) {
                 if (ref.search(args[0]) > 0) {
@@ -42,8 +40,17 @@ function cppReference(message, args) {
                     results.push("https://en.cppreference.com/" + ref);
                 }
             }
+			
             if (results.length > 0) {
-                channel.send(results);
+				var l = 0;
+				for (var i = 0; i < results.length; i++)
+					l += results[i].length;
+				
+				if (l < 2000) {
+					channel.send(results);
+				} else {
+					channel.send("Well, those were too many results! Try making your query a bit more specific...");
+				}
             }
             else {
                 channel.send(`I cannot find anything in C++ with ${args[0]}`);
