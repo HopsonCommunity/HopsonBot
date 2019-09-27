@@ -43,18 +43,38 @@ function cppReference(message, args) {
             }
 			
             if (results.length > 0) {
+                var errorMessage = "There are too many results, please use a more specific query";
                 var stringLength = 0;
-                for (var str of results)
+                var msg = `Results found for ${args[0]}:\n`;
+                for (var str of results) {
                     stringLength += str.length;
-		
-                if (stringLength < 2000) {
-                    channel.send(results);
-                } else {
-                    channel.send("Well, those were too many results! Try making your query a bit more specific...");
+
+                    //We implement the limit INSIDE the loop, and break if we are done, so we don't have to loop
+                    //over protentially hundreds of results if we're already out of the limit
+                    if (stringLength > 2000) {
+                        msg = {embed: {
+                            color: 16525315,
+                            fields: [{
+                                name: "Error",
+                                value: errorMessage
+                            }]
+                        }};
+                        break;
+                    }
+
+                    msg += str + "\n";
                 }
+
+                channel.send(msg);
             }
             else {
-                channel.send(`I cannot find anything in C++ with ${args[0]}`);
+                channel.send({embed: {
+                    color: 16525315,
+                    fields: [{
+                        name: "Error",
+                        value: `I cannot find anything in C++ with ${args[0]}`
+                    }]
+                }});
             }
     })
     .catch((error) => {
