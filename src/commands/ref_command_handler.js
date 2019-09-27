@@ -47,7 +47,7 @@ function cppReference(message, args) {
                 for (var str of results)
                     stringLength += str.length;
 		
-                if (l < 2000) {
+                if (stringLength < 2000) {
                     channel.send(results);
                 } else {
                     channel.send("Well, those were too many results! Try making your query a bit more specific...");
