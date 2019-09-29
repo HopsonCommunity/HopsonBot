@@ -4,7 +4,7 @@
   "description": "Bot for my Discord community server.",
   "main": "scripts/bot.js",
   "scripts": {
-    "start": "nodemon -x 'node src/main.js || touch src/main.js' --config nodemon-config.json",
+    "start": "nodemon -x 'node src/main.js ; touch src/main.js' --config nodemon-config.json",
     "test": "cross-env SINGLE=true ./node_modules/.bin/qunit test/test_start.js"
   },
   "repository": {
