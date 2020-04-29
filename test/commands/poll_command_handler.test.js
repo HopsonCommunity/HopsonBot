@@ -1,6 +1,6 @@
 const MessageHandler = require('../../src/events/message_sent_handler');
-const MockMessage = require('../discord_mocks/mock_message')
-const MockChannel = require('../discord_mocks/mock_channel')
+const MockMessage = require('../discord_mocks/mock_message');
+const MockChannel = require('../discord_mocks/mock_channel');
 
 const POLL_STATION_NAME = "*Hopson Polling Station*";
 
@@ -141,7 +141,7 @@ QUnit.test(
             "Providing a question with more than 9 options should error"
         );
     }
-)
+);
 
 QUnit.test(
     "Poll options: Correct args",
