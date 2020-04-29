@@ -1,9 +1,9 @@
-const questionsFile = "data/quiz_questions.json";
+const questionsFile = 'data/quiz_questions.json';
 
-const Bot           = require("../main");
-const Util          = require("../util");
+const Bot           = require('../main');
+const Util          = require('../util');
 const JSONFile      = require('jsonfile');
-const Discord       = require('discord.js')
+const Discord       = require('discord.js');
 
 const embedColour = 0x28abed;
 const MAX_USERS   = 24;
@@ -54,7 +54,7 @@ module.exports = class QuizSession
     //Initiates the next question for the quiz
     nextQuestion() 
     {
-        this.users.forEach(function(user, key, map) {
+        this.users.forEach(function(user) {
             user.hasSkipped = false;
         }.bind(this));
         this.skipVotes = 0;
@@ -65,7 +65,7 @@ module.exports = class QuizSession
     //Adds a member to this quiz session if they have not yet been added
     tryAddUser(member) 
     {
-        if(!this.users.has(member) && this.users.size < MAX_USERS) {
+        if (!this.users.has(member) && this.users.size < MAX_USERS) {
             this.users.set(member, new QuizUser());
         }
     }
@@ -75,29 +75,29 @@ module.exports = class QuizSession
     {
         this.tryAddUser(member);
         //A user cannot skip twice
-        if(this.users.get(member).hasSkipped) {
+        if (this.users.get(member).hasSkipped) {
             this.sendMessage(new Discord.RichEmbed()
-                .setTitle(`You cannot vote to skip twice, ${member.displayName}, sorry.`))
+                .setTitle(`You cannot vote to skip twice, ${member.displayName}, sorry.`));
+            return;
         }
-        else {
-            this.users.get(member).hasSkipped = true
-            this.skipVotes++;
-            let skipsNeeded = Math.floor(this.users.size / 2);
-            //Check if the current question is able to be skipped
-            if (this.skipVotes >= skipsNeeded) {
-                this.sendMessage(new Discord.RichEmbed()
-                .setTitle("Question Skipped!")
-                .addField("Question", this.question.question)
-                .addField("Answer", this.question.answer));
-                this.nextQuestion();
-            }
-            else {
-                this.sendMessage(new Discord.RichEmbed()
-                .setTitle("Skip Vote Registered")
-                .addField("Current Votes", this.skipVotes.toString(), true)
-                .addField("Votes Needed", skipsNeeded.toString(), true));
-            }
+
+        this.users.get(member).hasSkipped = true;
+        this.skipVotes++;
+        let skipsNeeded = Math.floor(this.users.size / 2);
+        //Check if the current question is able to be skipped
+        if (this.skipVotes >= skipsNeeded) {
+            this.sendMessage(new Discord.RichEmbed()
+            .setTitle("Question Skipped!")
+            .addField("Question", this.question.question)
+            .addField("Answer", this.question.answer));
+            this.nextQuestion();
+            return;
         }
+
+        this.sendMessage(new Discord.RichEmbed()
+        .setTitle("Skip Vote Registered")
+        .addField("Current Votes", this.skipVotes.toString(), true)
+        .addField("Votes Needed", skipsNeeded.toString(), true));
     }
 
     //Gets a random question from the main JSON file    
@@ -105,8 +105,7 @@ module.exports = class QuizSession
     {
         let inFile = JSONFile.readFileSync(questionsFile);
         let qIndex = Util.getRandomInt(0, inFile.questions.length);
-        let question =  new Question(inFile.questions[qIndex]);
-        return question;
+        return new Question(inFile.questions[qIndex]);
     }
 
     //Displays the question
@@ -152,13 +151,15 @@ module.exports = class QuizSession
     //Submits an answer to current question, and if the question is answered correctly, then it gets the next question
     submitAnswer(member, answer)
     {
-        if (answer.toLowerCase() == this.question.answer.toLowerCase()) {
-            this.sendMessage(new Discord.RichEmbed()
-                .setTitle("Answered sucessfully!")
-                .addField("Answered By", `<@${member.id}>`));
-            this.addPointTo(member);
-            this.outputScores("Current");
-            this.nextQuestion();
+        if (answer.toLowerCase() !== this.question.answer.toLowerCase()) {
+            return;
         }
+
+        this.sendMessage(new Discord.RichEmbed()
+          .setTitle("Answered successfully!")
+          .addField("Answered By", `<@${member.id}>`));
+        this.addPointTo(member);
+        this.outputScores("Current");
+        this.nextQuestion();
     }
-}
+};

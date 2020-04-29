@@ -25,7 +25,7 @@ module.exports = class WordCommandHandler extends CommandHandler {
             countWords
         );
     }
-}
+};
 
 function doAction(callback) {
     fs.readFile("data/words_db.json", 'utf8', (err, data) => {
@@ -33,6 +33,7 @@ function doAction(callback) {
             console.log("Error reading file: " + err);
             return;
         }
+
         const words = JSON.parse(data);
         callback(words);
     });
@@ -44,16 +45,20 @@ function topNWords(message, args, client) {
     }
     doAction(words => {
         const n = parseInt(args[0]);
+
         if (n != NaN) {
             const topWords = words.slice(0, Math.min(Math.min(words.length, n), 10));
+
             const output = new Discord.RichEmbed()
                 .setTitle(`Top ${n} Words`);
+
             for (const idx in topWords) {
                 output.addField(
                     `Rank ${(parseInt(idx) + 1)}`,
                     `***${topWords[idx].w}***, said ***${topWords[idx].c}*** times`
                 );
             }
+
             message.channel.send(output);
         }
 
@@ -64,9 +69,11 @@ function countWords(message, args, client) {
     if (args.length < 1) {
         return;
     }
+
     console.log("Seratrching");
     doAction(words => {
         const search = args[0];
+
         for (const word of words) {
             if (word.w == search) {
                 console.log("Found");
@@ -74,6 +81,7 @@ function countWords(message, args, client) {
                 return;
             }
         }
+
         message.channel.send(`${search} has never been said`);
     });
 }

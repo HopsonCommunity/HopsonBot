@@ -1,10 +1,10 @@
 /*
     Just random command info
 */
-module.exports = class Comamnd {
+module.exports = class Command {
     /*
     * @param {String} description Description of command
-    * @param {String} example Example useage of command
+    * @param {String} example Example usage of command
     * @param {String or function(MessageInfo)} action Command action
     */
     constructor (description, example, action) {
@@ -12,4 +12,4 @@ module.exports = class Comamnd {
         this.example     = example;
         this.action      = action;
     }
-}
+};

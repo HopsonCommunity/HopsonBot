@@ -15,19 +15,21 @@ module.exports = {
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
         const content = sliceLongMessage(message.content);
-        if (content.length == 0) {
+
+        if (content.length === 0) {
             return;
         }
+
         botLog.send(new Discord.RichEmbed()
             .setDescription(`${message.author} in ${message.channel} at ${time}`)
             .setColor(16711680)
             .addField("Deleted Message", content));
-        
     },
 
     handleMessageUpdate: (client, oldMessage, newMessage) => {
-        if (isChannelBlacklisted(oldMessage.channel)) return;
-        if(oldMessage.content === newMessage.content) return;
+        if (oldMessage.content === newMessage.content || isChannelBlacklisted(oldMessage.channel)) {
+            return;
+        }
         
         const botLog = getBotLogChannel(client);
         const time = (new Date()).toLocaleString('en-GB');
@@ -42,22 +44,26 @@ module.exports = {
 
         botLog.send(embed);
     }
-}
+};
 
 function sliceLongMessage(message) {
-    if (message.length > 1000) message = message.slice(0,1000) + " ...";
-    return message
+    if (message.length > 1000) {
+        message = `${message.slice(0, 1000)} ...`;
+    }
+
+    return message;
 }
 
 function isChannelBlacklisted(channel) {
-    for (var blacklistedChannel of Config.logBlacklistedChannels) {
+    for (let blacklistedChannel of Config.logBlacklistedChannels) {
         if (channel.id == blacklistedChannel) {
             return true;
         }
     }
+
     return false;
 }
 
 function getBotLogChannel(client) {
-    return client.channels.get("362124431801450526");
+    return client.channels.get('362124431801450526');
 }

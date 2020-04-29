@@ -33,8 +33,10 @@ module.exports = class CommandHandlerBase {
         
         if (this.simpleCommands.has(command)) {
             message.channel.send(this.simpleCommands.get(command).action);
+            return;
         }
-        else if (this.commands.has(command)) {
+
+        if (this.commands.has(command)) {
             args.splice(0, 1);//remove command name
             const cmd = this.commands.get(command);
             cmd.action(message, args, client);
@@ -76,8 +78,11 @@ module.exports = class CommandHandlerBase {
             .setColor("#09f228");
 
         function addOutput(m) {
-            m.forEach(function(command, commandName, _) {
-                if (commandName === "help") return;
+            m.forEach((command, commandName, _) => {
+                if (commandName === "help") {
+                    return;
+                }
+
                 output.addField(`**__${commandName}__**`, 
                                 `Description: ${command.description}\nExample: *${command.example}*`);
             });
@@ -86,4 +91,4 @@ module.exports = class CommandHandlerBase {
         addOutput(this.commands);
         msgInfo.channel.send(output);
     }
-}
+};

@@ -13,7 +13,7 @@ module.exports = class ReferenceCommandHandler extends CommandHandler {
             cppReference
         );
     }
-}
+};
 
 function cppReference(message, args) {
     const channel = message.channel;
@@ -69,16 +69,16 @@ function cppReference(message, args) {
                 }
 
                 channel.send(msg);
+                return;
             }
-            else {
-                channel.send({embed: {
-                    color: 16525315,
-                    fields: [{
-                        name: "Error",
-                        value: `I cannot find anything in C++ with ${args[0]}`
-                    }]
-                }});
-            }
+
+            channel.send({embed: {
+                color: 16525315,
+                fields: [{
+                    name: "Error",
+                    value: `I cannot find anything in C++ with ${args[0]}`
+                }]
+            }});
     })
     .catch((error) => {
         console.log(`Error: ${error}`);
