@@ -1,6 +1,6 @@
 const MessageHandler = require('../../src/events/message_sent_handler');
-const MockMessage = require('../discord_mocks/mock_message')
-const MockChannel = require('../discord_mocks/mock_channel')
+const MockMessage = require('../discord_mocks/mock_message');
+const MockChannel = require('../discord_mocks/mock_channel');
 
 QUnit.test(
     "Default command handler tests",
@@ -17,4 +17,4 @@ QUnit.test(
             "The source command should return the GitHub link of the bot."
         );
     }
-)
+);

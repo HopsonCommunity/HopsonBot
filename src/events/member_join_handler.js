@@ -1,5 +1,5 @@
-const Config        = require("../../data/config.json");
-const Discord       = require('discord.js')
+const Config        = require('../../data/config.json');
+const Discord       = require('discord.js');
 const dateFormat    = require('dateformat');
 
 //TODO 
@@ -22,7 +22,7 @@ Enjoy! :)`
         );
 */
     }
-}
+};
 
 function checkAccountAge(member, client) {
     const channelName = Config.memberJoinChannel;
@@ -39,16 +39,11 @@ function checkAccountAge(member, client) {
         .addField("**Join Date**", join)
         .addField("**Time Between Create and Join (est)**", diff.regularDiff)
         .addField("**Milliseconds Difference**", diff.unixTimeDiff);
-    
-    if (diff.notify) {
-        embed.setColor(16711680);
-    } else {
-        embed.setColor(65280);
-    }
+
+    embed.setColor(diff.notify ? 16711680 : 65280);
 
     channel.send(embed);
 }
-
 
 function getTimeDifference(join, create) {
     const diff = join - create;

@@ -21,9 +21,9 @@ module.exports = class PollCommandHandler extends CommandHandler {
 
         )
     }
-}
+};
 
-function addQuizQuestion(message, args) {
-    const channel = message.channel;
-    const author  = message.author;
-}
+// function addQuizQuestion(message, args) {
+//     const channel = message.channel;
+//     const author  = message.author;
+// }

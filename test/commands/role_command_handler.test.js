@@ -1,11 +1,11 @@
-const djs = require('discord.js')
+const djs = require('discord.js');
 const MessageHandler = require('../../src/events/message_sent_handler');
-const MockMessage = require('../discord_mocks/mock_message')
-const MockChannel = require('../discord_mocks/mock_channel')
-const MockMember = require('../discord_mocks/mock_guild_member')
-const MockGuild = require('../discord_mocks/mock_guild')
+const MockMessage = require('../discord_mocks/mock_message');
+const MockChannel = require('../discord_mocks/mock_channel');
+const MockMember = require('../discord_mocks/mock_guild_member');
+const MockGuild = require('../discord_mocks/mock_guild');
 const MockRoles = require('../discord_mocks/mock_role');
-const MockUser = require('../discord_mocks/mock_user')
+const MockUser = require('../discord_mocks/mock_user');
 
 const roles = new djs.Collection();
 roles.set(0, new MockRoles("C++"));

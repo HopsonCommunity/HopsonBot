@@ -26,7 +26,7 @@ module.exports = class PollCommandHandler extends CommandHandler {
             pollOptions
         );
     }
-}
+};
 
 /**
  * Sends a poll message for a yes/no question
@@ -35,6 +35,7 @@ module.exports = class PollCommandHandler extends CommandHandler {
  */
 function pollYesno(message, args) {
     const question = args.join(" ");
+
     if (question == "" || question == " ") {
         createHopsonPollingStationEmbed(message.channel, "Please add a question.");
         return;
@@ -57,7 +58,7 @@ function pollYesno(message, args) {
  * @param {[String]} args List of string, the command arguments
  */
 function pollOptions(message, args) {
-    // Make sure there's at least two choises
+    // Make sure there's at least two choices
     const channel = message.channel;
     if (validationDoesNotPass(args.length < 1, 'Not enough known to create a poll, please provide a question with options eg `">poll option "How many stars is my food?" 1 2 3 4 5"`', channel)) {
         return;
@@ -65,10 +66,11 @@ function pollOptions(message, args) {
 
     if (validationDoesNotPass(!args[0].startsWith("\""), 'The question should be wrapped between two " characters.', channel)) {
         return;
-    }   
+    }
+
     //Extract question
     let question = "";
-    let full = args.join(" ").slice(1)
+    let full = args.join(" ").slice(1);
     let isQuestion = false;
     for (const c of full) {
         full = full.slice(1);
@@ -125,6 +127,7 @@ function validationDoesNotPass(validation, errorMessage, channel) {
         );
         return true;
     }
+
     return false;
 }
 
@@ -134,7 +137,7 @@ function validationDoesNotPass(validation, errorMessage, channel) {
  * @param {Number} n The emoji to send, number from the array above
  */
 function delayedReactWithNumber(message, n) {
-    // 0.5s timeout seems to be the best when theres a large number of options
+    // 0.5s timeout seems to be the best when there's a large number of options
     setTimeout(function() {
         message.react(NUM_EMOJIS[n]);
     }, 500*n);

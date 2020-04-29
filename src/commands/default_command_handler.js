@@ -1,5 +1,5 @@
 const CommandHandler    = require('./command_handler');
-const Util              = require('../util')
+const Util              = require('../util');
 
 module.exports = class DefaultCommands extends CommandHandler {
     constructor() {
@@ -17,11 +17,10 @@ module.exports = class DefaultCommands extends CommandHandler {
         )*/
     }
 
-
     getCommands() {
         return new Map([...this.simpleCommands, ...this.commands])
     }
-}
+};
 
 //8-ball command
 const BALL_RESULTS = ["Yes.", "Reply hazy, try again.", "Without a doubt.",

@@ -1,6 +1,7 @@
-const MockGuildMember = require('./mock_guild_member')
-const MockUser = require('./mock_user')
-const MockGuild = require('./mock_guild')
+const MockGuildMember = require('./mock_guild_member');
+const MockUser = require('./mock_user');
+const MockGuild = require('./mock_guild');
+
 module.exports = class {
     /**
      * Creates a mock message

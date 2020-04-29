@@ -1,6 +1,6 @@
 const MessageSentHandler    = require('./events/message_sent_handler');
 const MessageModifyHandler  = require('./events/message_mod_handler');
-const MemeberJoinHandler    = require('./events/member_join_handler');
+const MemberJoinHandler     = require('./events/member_join_handler');
 const MemberUpdateHandler   = require('./events/member_update_event');
 const MemberLeaveHandler    = require('./events/member_leave_handler');
 
@@ -19,7 +19,7 @@ module.exports = class HopsonBot {
                 .catch(console.error);
         });
 
-        //Event for when bot is dissconnected
+        //Event for when bot is disconnected
         this.client.on("disconnect", event => {
             console.log(`Client has closed with status code ${event.code} and reason ${event.reason}`)
         });
@@ -49,16 +49,16 @@ module.exports = class HopsonBot {
 
         //Event for people joining the server
         this.client.on("guildMemberAdd", member => {
-            MemeberJoinHandler.handleJoin(member, this.client);
+            MemberJoinHandler.handleJoin(member, this.client);
         });
 
         this.client.on("guildMemberRemove", member => {
             MemberLeaveHandler.handleLeave(member, this.client);
-        })
+        });
 
-        //Event for a user update (eg changing their usernem)
+        //Event for a user update (eg changing their username)
         this.client.on("userUpdate", (oldUser, newUser) => {
             MemberUpdateHandler.handleUserUpdate(this.client, oldUser, newUser);
         });
     }
-}
+};

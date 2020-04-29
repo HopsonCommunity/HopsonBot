@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 
 module.exports = {
-    handleUserUpdate: function (client, oldUser, newUser)
-    {
+    handleUserUpdate: (client, oldUser, newUser) => {
         let botlog = client.channels.get("362124431801450526");
         let time = (new Date()).toLocaleString('en-GB');
 
-        if (oldUser.username != newUser.username){
+        if (oldUser.username != newUser.username) {
             let embed = new Discord.RichEmbed()
                 .setDescription(`Username Change at ${time}`)
                 .setColor(9699539)
@@ -16,4 +15,4 @@ module.exports = {
             botlog.send(embed);
         }
     }
-}
+};

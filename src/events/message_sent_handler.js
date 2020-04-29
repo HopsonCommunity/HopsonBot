@@ -3,7 +3,7 @@ const RoleCommandHandler    = require('../commands/role_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const RefCommandHandler     = require('../commands/ref_command_handler');
 const Config                = require('../../data/config.json');
-const Discord               = require('discord.js')
+const Discord               = require('discord.js');
 
 /**
  * Class to handle messages sent by the user
@@ -20,6 +20,7 @@ module.exports = class MessageSentHandler {
             new RefCommandHandler(),
         ]
     }
+
     /**
      * Entry point for handling messages
      * @param {Discord.TextMessage} message The raw message sent by a user
@@ -35,13 +36,15 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
-        else if (message.channel.name === Config.newMemberChannel) {
+        if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
             message.member.removeRole(newMemberRole);
             message.member.addRole(introduceRole);
+            return;
         }
-        else if (message.content.startsWith('>')) {
+
+        if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
         }
     }
@@ -74,24 +77,28 @@ module.exports = class MessageSentHandler {
                 return;
             }
         }
-        if(commandCategory === "help") {
+
+        if (commandCategory === "help") {
             this._sendHelpList(message.channel);
+            return;
         } 
-        else {
-            args.unshift(commandCategory);
-            this.defaultCommandHandler.handleCommand(message, args, client);
-        }
+
+        args.unshift(commandCategory);
+        this.defaultCommandHandler.handleCommand(message, args, client);
     }
 
     _sendHelpList(channel) {
         let defaultCommands = this.defaultCommandHandler.getCommands();
         let output = new Discord.RichEmbed()
             .setTitle("HopsonBot Command List")
-            .setColor("#09f228");;
+            .setColor("#09f228");
 
         defaultCommands.forEach((command, commandName, _) => {
-            if (commandName === "help") return;
-            output.addField(`**__${commandName}__**`, 
+            if (commandName === "help") {
+                return;
+            }
+
+            output.addField(`**__${commandName}__**`,
                             `Description: ${command.description}\nExample: *${command.example}*`);
         });
 
@@ -102,14 +109,14 @@ module.exports = class MessageSentHandler {
         }
         channel.send(output);
     }
-}
+};
 
 function logMessageInfo(message) {
     const ch = message.channel.name;
-    const user = message.member ? message.member.displayName : "No name";
+    const user = message.member ? message.member.displayName : 'No name';
     const msg = message.content;
 
-    console.log("============")
+    console.log("============");
     console.log(`Message Sent\nChannel: ${ch}\nUser: ${user}\nContent: ${msg}\n`);
     console.log("============\n")
 }

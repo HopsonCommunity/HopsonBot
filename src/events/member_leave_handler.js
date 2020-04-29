@@ -1,4 +1,4 @@
-const Config        = require("../../data/config.json");
+const Config = require('../../data/config.json');
 
 /**
  * Event handler for leaving and that
@@ -13,4 +13,4 @@ module.exports = {
         //cya
         channel.send(`"${user}" has left the server. ID: <@${id}> - ${id}`);
     }
-}
+};

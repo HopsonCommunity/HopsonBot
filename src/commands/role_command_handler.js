@@ -30,7 +30,7 @@ module.exports = class RoleEventHandler extends CommandHandler {
             removeRoles
         )
     }
-}
+};
 
 /**
  * Outpus number of members to a single discord role
@@ -50,6 +50,7 @@ function listRoles(message) {
             break;
         }
     }
+
     message.channel.send(output);
 }
 
@@ -66,12 +67,14 @@ function countRole(message, args) {
         return role.name.toLowerCase() === args[0];
     });
 
+    let output = '';
+
     if (role === null) {
-        var output = `Role '${args[0]} does not exist.`;
+        output = `Role '${args[0]} does not exist.`;
+    } else {
+        output = `Number of users with role "**${args[0].toUpperCase()}**": ${role.members.size}`;
     }
-    else {
-        var output = `Number of users with role "**${args[0].toUpperCase()}**": ${role.members.size}`;
-    }
+
     message.channel.send(output);
 }
 
@@ -98,22 +101,27 @@ function modifyRoles(message, args, action) {
     }
 
     if (roleLists.validRoles.length > 0) {
+        let verb = '';
+        let dir = '';
+
         //Add/ Remove the roles
         if (action === "add") {
             for (const role of roleLists.validRoles) {
                 member.addRole(role)
                     .then (console.log("Role add successful"));
             }
-            var verb = "added";
-            var dir  = "to";
+
+            verb = "added";
+            dir  = "to";
         }
         else if (action === "remove") {
             for (role of roleLists.validRoles) {
                 member.removeRole(role)
                     .then (console.log("Role remove successful"));
             }
-            var verb = "removed";
-            var dir  = "from";
+
+            verb = "removed";
+            dir  = "from";
         }
         //Send result
         const output = createOutput(roleLists.validRoles, message.author.id.toString(), verb, dir);
@@ -132,15 +140,18 @@ function createOutput(rolesAdded, userID, verb, dir) {
     if (rolesAdded.length === 0) {
         return;
     }
-    const sp = rolesAdded.length == 1 ?  "role" :  "roles";
+
+    const sp = rolesAdded.length === 1 ?  "role" :  "roles";
     const roleNames = rolesAdded.map((role) => {
         return role.name;
     });
+
     let output = `I have **${verb}** the following ${sp} ${dir} **<@${userID}>**:\n> ${roleNames.join("\n>")}\n\n`;
-    if (rolesAdded.length == 1) {
+    if (rolesAdded.length === 1) {
         output += `Psst... Are you aware you can have multiple roles ${verb} at once? Give it a go!\n`;
         output += `Example: \`>role add/remove C++ Java Rust\``;
     }
+
     return output;
 }
 
@@ -153,23 +164,26 @@ function extractRoles(guild, roleList) {
     const result = {
         validRoles: [],
         invalidRoles: []
-    }
+    };
+
     const modifiableRoles = Config.modifiableRoles.map(val => val.toLowerCase());
     for (const roleName of roleList) {
         if (modifiableRoles.indexOf(roleName) > -1) {
             const role = guild.roles.find((roleToFind) => {
                 return roleToFind.name.toLowerCase() === roleName;
             });
+
             if (role !== null) {
                 result.validRoles.push(role);
-            } 
-            else {
-                result.invalidRoles.push(roleName);
+                continue;
             }
-        }
-        else {
+
             result.invalidRoles.push(roleName);
+            continue;
         }
+
+        result.invalidRoles.push(roleName);
     }
+
     return result;
 }
