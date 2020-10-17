@@ -35,14 +35,27 @@ module.exports = class MessageSentHandler {
             (message.author.bot)) {
             return;
         }
-        else if (message.channel.name === Config.newMemberChannel) {
+
+        let nMentions = message.mentions.members.size;
+        nMentions += message.mentions.roles.size;
+
+        if (nMentions > Config.maxMentions) {
+            message.member.kick("Mention spam").catch(err => console.log(err));
+            console.log(`Kicked ${message.member.displayName} for ${nMentions} mentions in a single message`);
+            return;
+        }
+
+        if (message.channel.name === Config.newMemberChannel) {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
             message.member.removeRole(newMemberRole);
             message.member.addRole(introduceRole);
+            return;
         }
-        else if (message.content.startsWith('>')) {
+
+        if (message.content.startsWith('>')) {
             this.handleCommand(message, client);
+            return;
         }
     }
 
