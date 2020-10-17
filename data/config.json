@@ -38,5 +38,6 @@
     "memberJoinChannel": "new-members",
     "logBlacklistedChannels":  [
         "293461625426411520"
-    ]
+    ],
+    "maxMentions": 3
 }
