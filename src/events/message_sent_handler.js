@@ -49,7 +49,7 @@ module.exports = class MessageSentHandler {
             let newMemberRole = message.member.guild.roles.find('name', Config.newMemberRole);
             let introduceRole = message.member.guild.roles.find('name', Config.introRole);
             message.member.removeRole(newMemberRole);
-            message.member.addRole(introduceRole);
+            //message.member.addRole(introduceRole);
             return;
         }
 
