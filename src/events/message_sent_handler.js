@@ -2,6 +2,7 @@ const PollCommandHandler    = require('../commands/poll_command_handler');
 const RoleCommandHandler    = require('../commands/role_command_handler');
 const DefaultCommandHandler = require('../commands/default_command_handler');
 const RefCommandHandler     = require('../commands/ref_command_handler');
+const PastaCommandHandler   = require('../commands/pasta_command_handler');
 const Config                = require('../../data/config.json');
 const Discord               = require('discord.js')
 
@@ -18,6 +19,7 @@ module.exports = class MessageSentHandler {
             new PollCommandHandler(),
             new RoleCommandHandler(),
             new RefCommandHandler(),
+            new PastaCommandHandler(),
         ]
     }
     /**
@@ -27,7 +29,7 @@ module.exports = class MessageSentHandler {
      */
     handleMessageSent(message, client) {
         logMessageInfo(message);
-        handleMessageSentWithoutLog(message, client);
+        this.handleMessageSentWithoutLog(message, client);
     }
 
     handleMessageSentWithoutLog(message, client) {
