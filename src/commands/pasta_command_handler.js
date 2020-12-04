@@ -1,7 +1,10 @@
 const Config = require('../../data/config.json');
 const CommandHandler = require('./command_handler');
 const Discord = require('discord.js');
-const JsonFile = require("jsonfile")
+const JsonFile = require("jsonfile");
+const {
+    del
+} = require('request-promise');
 
 const PASTA_FILE = "data/pasta.json"
 
@@ -57,14 +60,13 @@ function addPasta(message, args) {
                 return;
             }
         }
-        console.log(message)
         // https://stackoverflow.com/questions/10645994/how-to-format-a-utc-date-as-a-yyyy-mm-dd-hhmmss-string-using-nodejs
         pastas.push({
             name: name,
             value: value,
             dateAdded: new Date().toISOString().
-                replace(/T/, ' ').
-                replace(/\..+/, ''),
+            replace(/T/, ' ').
+            replace(/\..+/, ''),
             author: message.author.username
         });
 
@@ -77,7 +79,28 @@ function addPasta(message, args) {
     }
 }
 
-function removePasta(message, args) {}
+function removePasta(message, args) {
+    if (args.length == 1) {
+        const name = args[0]
+        const pastas = JsonFile.readFileSync(PASTA_FILE);
+        const filtered = pastas.filter(pasta => {
+            pasta["name"] === name
+        });
+
+        console.log(filtered);
+        if (filtered.length < pastas.length) {
+            message.channel.send(`Pasta ${name} removed!`);
+
+        } else {
+            message.channel.send(`I couldn't find pasta ${name}, so nothing was removed.`);
+        }
+        JsonFile.writeFile(PASTA_FILE, filtered, function (err) {
+            if (err) {
+                console.error(err)
+            }
+        });
+    }
+}
 
 function spitPasta(message, args) {
     if (args.length == 0) {
