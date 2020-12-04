@@ -39,6 +39,10 @@ module.exports = class CommandHandlerBase {
             const cmd = this.commands.get(command);
             cmd.action(message, args, client);
         }
+        else if (this.commands.has("ANY_COMMAND")) {
+            const cmd = this.commands.get("ANY_COMMAND");
+            cmd.action(message, args, client);
+        } 
     }
 
     /**
